@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { defaultLocale, getDictionary, isLocale, type Locale } from "@/i18n/config";
 import ContactForm from "@/components/ContactForm";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -68,7 +69,17 @@ export default async function Home({
               {/* Offer */}
               <div className="max-w-2xl">
                 <h1 className="text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-                  {t.hero.title}
+                  {t.hero.title.split(" ").map((word, index, words) => (
+                    <Fragment key={`${word}-${index}`}>
+                      <span
+                        className="hero-word"
+                        style={{ animationDelay: `${index * 55}ms` }}
+                      >
+                        {word}
+                      </span>
+                      {index < words.length - 1 ? " " : null}
+                    </Fragment>
+                  ))}
                 </h1>
                 <p className="mt-5 text-lg leading-relaxed text-muted">
                   {t.hero.subtitle}
@@ -95,7 +106,7 @@ export default async function Home({
 
               {/* Abstract workflow visual (decorative — the interactive version lives below) */}
               <div aria-hidden="true" className="mt-10 lg:mt-0">
-                <ol className="rounded-2xl border border-line bg-surface/30 p-5 sm:p-6 lg:p-7">
+                <ol className="rounded-2xl border border-line bg-surface/30 p-5 transition-colors duration-300 hover:border-line-strong sm:p-6 lg:p-7">
                   {t.hero.flow.map((label, index) => {
                     const last = index === t.hero.flow.length - 1;
                     return (
@@ -121,21 +132,18 @@ export default async function Home({
             </div>
           </div>
 
-          {/* Trust / value strip */}
+          {/* Trust / value strip — compact centered row, content-width items (no equal columns) */}
           <div className="border-y border-line bg-surface/60">
-            <div className="mx-auto grid max-w-6xl grid-cols-1 divide-y divide-line px-6 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+            <ul className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-4 text-sm text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-2.5 lg:gap-x-10">
               {t.trust.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-2.5 py-4 text-sm text-muted sm:px-6 sm:first:pl-0 lg:first:pl-0"
-                >
+                <li key={item} className="flex items-center gap-2.5">
                   <span className="text-accent">
                     <CheckIcon className="shrink-0" />
                   </span>
                   {item}
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </section>
 

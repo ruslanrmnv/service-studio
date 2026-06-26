@@ -43,3 +43,27 @@ body {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* Subtle first-load hero headline reveal (word-by-word). Transform/opacity only —
+   no layout shift; full text stays in the DOM for SEO and screen readers. */
+@keyframes hero-word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-word {
+  display: inline-block;
+  animation: hero-word-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-word {
+    animation: none;
+  }
+}
