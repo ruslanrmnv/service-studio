@@ -1,26 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Warm studio palette — generates utilities like bg-surface, text-muted, border-line, text-accent. */
+@theme {
+  --color-background: #0f0e0b;
+  --color-surface: #171510;
+  --color-surface-soft: #1f1c16;
+  --color-line: rgba(236, 221, 190, 0.1);
+  --color-line-strong: rgba(236, 221, 190, 0.2);
+  --color-ink: #f5f0e8;
+  --color-muted: #b8ad9b;
+  --color-faint: #8b8270;
+  --color-accent: #d6a85a;
+  --color-accent-soft: rgba(214, 168, 90, 0.12);
+  --color-accent-line: rgba(214, 168, 90, 0.3);
+  --color-cream-hover: #e8ddc9;
+
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: rgba(214, 168, 90, 0.3);
+}
+
+/* Polished, consistent keyboard focus in the warm accent (mouse clicks unaffected). */
+:focus-visible {
+  outline: 2px solid rgba(214, 168, 90, 0.9);
+  outline-offset: 2px;
+  border-radius: 4px;
 }

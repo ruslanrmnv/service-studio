@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Service Studio by Ruslan
 
-## Getting Started
+A one-page, multilingual (RU / EN / UK) portfolio + lead-capture site for AI,
+chat, and form automations. Built with **Next.js (App Router)**, **TypeScript**,
+and **Tailwind CSS**, in a warm dark style.
 
-First, run the development server:
+- Locales: **RU / EN / UK** (the root `/` redirects by browser language)
+- Routes: `/ru`, `/en`, `/uk` and `/ru/privacy`, `/en/privacy`, `/uk/privacy`
+- Dark-first, mobile-friendly design
+- Contact form that emails submissions via [Resend](https://resend.com)
+
+## Getting started
 
 ```bash
+npm install
+cp .env.local.example .env.local   # then fill in real values
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 — you'll be redirected to `/ru`, `/en`, or `/uk`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> **Never commit `.env.local`.** It holds real secrets and is git-ignored.
+> Only `.env.local.example` (placeholders only) is committed.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
 
-## Learn More
+See `.env.local.example`. All four are required for the contact form / metadata:
 
-To learn more about Next.js, take a look at the following resources:
+| Variable               | Purpose                                                          |
+| ---------------------- | --------------------------------------------------------------- |
+| `RESEND_API_KEY`       | Resend API key. **Server-side only**, never exposed to client.  |
+| `CONTACT_TO_EMAIL`     | Inbox that receives contact-form submissions.                   |
+| `CONTACT_FROM_EMAIL`   | **Verified-domain** sender, e.g. `Service Studio <hello@yourdomain.com>`. |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL for canonical / OpenGraph metadata (no trailing slash). |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The contact form fails gracefully: if the email vars are missing, the API
+returns a clear `503` and the form shows a friendly "message me directly"
+error instead of breaking.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The contact links (Telegram / WhatsApp / Instagram) are configured in one place:
+`TELEGRAM_URL`, `WHATSAPP_URL`, `INSTAGRAM_URL` in `src/i18n/config.ts`.
 
-## Deploy on Vercel
+## Contact form
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The form submits a `fetch` POST to `src/app/api/contact/route.ts`, which sends
+the email using the official **Resend Node.js SDK** (`resend` package,
+`await resend.emails.send()`). The API key is read only on the server from
+`RESEND_API_KEY` and is never sent to the browser. Email field labels are
+localized (RU / EN / UK) to match the submitting locale.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Email setup (Resend) & deploy to Vercel
+
+1. **Create a Resend API key** — sign up at https://resend.com, then
+   https://resend.com/api-keys → *Create API Key*. Copy the `re_...` value.
+2. **Verify your sending domain** — in Resend → *Domains*, add and verify your
+   domain (add the DNS records it shows), then set `CONTACT_FROM_EMAIL` to an
+   address on that verified domain. A verified-domain sender is required for
+   reliable production delivery.
+3. **Add environment variables on Vercel** — Project → *Settings* →
+   *Environment Variables*, add for the Production (and Preview) environment:
+   - `RESEND_API_KEY`
+   - `CONTACT_TO_EMAIL`
+   - `CONTACT_FROM_EMAIL`
+   - `NEXT_PUBLIC_SITE_URL` (your production URL, e.g. `https://your-domain.com`)
+4. **Redeploy** — trigger a new deployment so the variables take effect.
+5. **Test the form in production** — submit the contact form and confirm the
+   email arrives at `CONTACT_TO_EMAIL`. If the contact method is *Email*,
+   replying to that message goes straight to the visitor.
+
+> Add the env vars in Vercel **before** testing the production form — without
+> them the API returns the graceful `503` and no email is sent.
+
+## Useful scripts
+
+```bash
+npm run dev      # local dev server
+npm run build    # production build
+npm run start    # serve the production build
+npm run lint     # ESLint
+npx tsc --noEmit # type check
+```
+
+## Project structure
+
+- `src/app/[lang]/` — localized home + layout (per-locale metadata)
+- `src/app/[lang]/privacy/` — localized Privacy Policy pages
+- `src/app/api/contact/route.ts` — contact form handler (Resend SDK)
+- `src/components/` — `ContactForm`, `LanguageSwitcher`, `SiteFooter`
+- `src/i18n/` — locale config + `ru` / `en` / `uk` dictionaries
+- `src/proxy.ts` — root locale detection / redirect
