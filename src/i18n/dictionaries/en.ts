@@ -25,8 +25,11 @@ export const en: Dictionary = {
     title: "I reduce manual work with AI, bots, and forms.",
     subtitle:
       "I build working systems for your task: collect requests, answer repeating questions, and keep your data tidy. You can start with one clear setup.",
-    ctaPrimary: "See services",
-    ctaSecondary: "Send request",
+    ctaPrimary: "Discuss a task",
+    ctaSecondary: "See services",
+    personalNote:
+      "I work directly with you: we review the task, choose a clear setup, and build the first working version.",
+    flow: ["Request", "Form / bot / AI", "Table / Telegram", "Notification"],
     preview: {
       caption: "What I can build",
       items: [
@@ -76,43 +79,67 @@ export const en: Dictionary = {
           "One-page sites for a service, product, event, portfolio, promo, or to test an idea.",
       },
       {
-        title: "AI helpers and agents",
+        title: "AI helpers for routine workflows",
         description:
-          "AI helpers and agents that process requests, sort information, prepare replies, analyze text, and handle repeatable actions through a clear workflow.",
+          "AI helpers that process requests, sort information, prepare replies, analyze text, and handle repeatable actions through a clear workflow.",
+      },
+    ],
+  },
+
+  workflow: {
+    heading: "What a solution can look like",
+    intro: "A solution is usually a few clear steps. Here's how it can look:",
+    tabs: [
+      {
+        label: "Form",
+        steps: [
+          "Someone submits a request",
+          "Data goes to a table or system",
+          "You receive a notification",
+          "The request gets a status or next step",
+        ],
+      },
+      {
+        label: "Telegram bot",
+        steps: [
+          "The bot asks the right questions",
+          "It collects contacts and request details",
+          "It sends the data to the right place",
+          "You receive a ready request or notification",
+        ],
+      },
+      {
+        label: "AI helper",
+        steps: [
+          "A text, request, or message comes in",
+          "AI sorts or processes the information",
+          "It prepares a reply, summary, or action",
+          "You make a decision faster",
+        ],
       },
     ],
   },
 
   formats: {
-    heading: "Work formats",
-    note: "The cost depends on the task, the number of steps, and the tools you want to connect. You can start with one clear setup — without a large system or unnecessary complexity.",
-    ctaText: "Not sure which format fits?",
+    heading: "How we can start",
+    note: "You do not need to build a large system right away. We can start with one clear setup and expand it when needed.",
+    ctaText: "Not sure where to start?",
     ctaLink: "Discuss a task",
     items: [
       {
-        title: "Single setup",
+        title: "One setup",
         description:
-          "A form, request, notification, Telegram bot, or one automated step.",
+          "A form, request flow, notification, Telegram bot, or one automated step.",
       },
       {
-        title: "Telegram bot or tool",
+        title: "Working process",
         description:
-          "A bot built around a specific need: survey, requests, reminders, a personal process, or a work scenario.",
+          "A sequence of steps: data collection, table, notifications, statuses, or AI processing.",
       },
       {
-        title: "Process automation",
+        title: "Custom build",
         description:
-          "Connecting chat, form, or bot → table, notification, tracking system, database, or another action.",
-      },
-      {
-        title: "Page + request",
-        description:
-          "A page for a service, product, event, portfolio, or to test an idea, with a request form.",
-      },
-      {
-        title: "Custom setup",
-        description:
-          "A task that needs to be reviewed and designed around a specific process first.",
+          "For tasks that need to be reviewed, designed, and built around a specific process.",
       },
     ],
   },

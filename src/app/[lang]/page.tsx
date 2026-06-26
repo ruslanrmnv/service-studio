@@ -2,6 +2,7 @@ import { defaultLocale, getDictionary, isLocale, type Locale } from "@/i18n/conf
 import ContactForm from "@/components/ContactForm";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import SiteFooter from "@/components/SiteFooter";
+import WorkflowTabs from "@/components/WorkflowTabs";
 
 function CheckIcon({ className }: { className?: string }) {
   return (
@@ -60,61 +61,62 @@ export default async function Home({
       </header>
 
       <main className="flex-1">
-        {/* Hero */}
-        <section className="relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_55%_at_78%_0%,rgba(214,168,90,0.10),transparent_70%)]" />
-          <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20 lg:py-24">
-            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-              {/* Text */}
-              <div>
-                <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
-                  {t.hero.brand}
-                </p>
-                <h1 className="mt-5 text-3xl font-bold leading-[1.15] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+        {/* Hero — offer leads; subtle workflow visual right (desktop) / after CTA (mobile) */}
+        <section className="relative">
+          <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20 lg:py-28">
+            <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
+              {/* Offer */}
+              <div className="max-w-2xl">
+                <h1 className="text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
                   {t.hero.title}
                 </h1>
-                <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+                <p className="mt-5 text-lg leading-relaxed text-muted">
                   {t.hero.subtitle}
                 </p>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <p className="mt-4 leading-relaxed text-muted">
+                  {t.hero.personalNote}
+                </p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                   <a
-                    href="#services"
+                    href="#contact"
                     className="inline-flex items-center justify-center rounded-xl bg-ink px-6 py-3.5 text-base font-semibold text-background transition hover:bg-cream-hover"
                   >
                     {t.hero.ctaPrimary}
                   </a>
                   <a
-                    href="#contact"
-                    className="inline-flex items-center justify-center rounded-xl border border-line bg-surface-soft px-6 py-3.5 text-base font-semibold text-ink transition hover:border-line-strong hover:bg-surface"
+                    href="#services"
+                    className="inline-flex items-center gap-1.5 text-base font-medium text-muted transition hover:text-ink"
                   >
                     {t.hero.ctaSecondary}
+                    <span aria-hidden="true">→</span>
                   </a>
                 </div>
               </div>
 
-              {/* "What I can build" studio note */}
-              <div className="relative lg:pl-4">
-                <div className="pointer-events-none absolute -inset-4 -z-10 rounded-3xl bg-accent-soft opacity-70 blur-2xl" />
-                <div className="rounded-2xl border border-line bg-surface shadow-xl">
-                  <div className="flex items-center gap-2.5 border-b border-line px-5 py-3.5">
-                    <span className="h-2 w-2 rounded-full bg-accent" />
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted">
-                      {t.hero.preview.caption}
-                    </span>
-                  </div>
-                  <ul className="space-y-3.5 p-5">
-                    {t.hero.preview.items.map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-accent-line bg-accent-soft text-accent">
-                          <CheckIcon />
-                        </span>
-                        <span className="text-sm leading-relaxed text-ink/90">
-                          {item}
+              {/* Abstract workflow visual (decorative — the interactive version lives below) */}
+              <div aria-hidden="true" className="mt-10 lg:mt-0">
+                <ol className="rounded-2xl border border-line bg-surface/30 p-5 sm:p-6 lg:p-7">
+                  {t.hero.flow.map((label, index) => {
+                    const last = index === t.hero.flow.length - 1;
+                    return (
+                      <li key={label} className="flex gap-4">
+                        <div className="flex flex-col items-center">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-accent-line bg-accent-soft font-mono text-[10px] font-semibold text-accent">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          {!last && <span className="my-1 w-px flex-1 bg-line" />}
+                        </div>
+                        <span
+                          className={`text-sm leading-snug text-ink/90 ${
+                            last ? "" : "pb-5"
+                          }`}
+                        >
+                          {label}
                         </span>
                       </li>
-                    ))}
-                  </ul>
-                </div>
+                    );
+                  })}
+                </ol>
               </div>
             </div>
           </div>
@@ -137,7 +139,7 @@ export default async function Home({
           </div>
         </section>
 
-        {/* Services — unified editorial block (not floating cards) */}
+        {/* Services — editorial index (thin rules, no card grid) at every width */}
         <section id="services" className="border-t border-line">
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="max-w-2xl">
@@ -146,17 +148,19 @@ export default async function Home({
               </h2>
               <p className="mt-3 text-muted">{t.services.subheading}</p>
             </div>
-            <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid sm:grid-cols-2 sm:gap-x-12 lg:gap-x-20">
               {t.services.items.map((service, index) => (
                 <div
                   key={service.title}
-                  className="bg-background p-6 transition hover:bg-surface"
+                  className="border-t border-line py-6 lg:py-8"
                 >
                   <span className="font-mono text-xs text-accent">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-2 font-semibold text-ink">{service.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                  <h3 className="mt-2 text-lg font-semibold text-ink">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 leading-relaxed text-muted">
                     {service.description}
                   </p>
                 </div>
@@ -165,7 +169,20 @@ export default async function Home({
           </div>
         </section>
 
-        {/* Work formats — horizontal rows */}
+        {/* Workflow — interactive "show, not tell" flow (tabs + connected steps) */}
+        <section id="workflow" className="border-t border-line">
+          <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-bold tracking-tight text-ink">
+                {t.workflow.heading}
+              </h2>
+              <p className="mt-3 text-muted">{t.workflow.intro}</p>
+            </div>
+            <WorkflowTabs tabs={t.workflow.tabs} ariaLabel={t.workflow.heading} />
+          </div>
+        </section>
+
+        {/* How we can start — calm editorial rows */}
         <section id="formats" className="border-t border-line bg-surface/50">
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="max-w-2xl">
@@ -174,19 +191,20 @@ export default async function Home({
               </h2>
               <p className="mt-3 text-muted">{t.formats.note}</p>
             </div>
-            <div className="mt-10 divide-y divide-line rounded-2xl border border-line bg-surface">
+            {/* Starting options as editorial columns: stacked on mobile, thin vertical rules from md. */}
+            <div className="mt-10 grid md:grid-cols-3">
               {t.formats.items.map((format, index) => (
                 <div
                   key={format.title}
-                  className="flex flex-col gap-2 p-6 sm:flex-row sm:items-baseline sm:gap-8"
+                  className="border-t border-line py-6 md:border-t-0 md:border-l md:py-0 md:pl-6 md:first:border-l-0 md:first:pl-0 lg:pl-8"
                 >
-                  <div className="flex items-center gap-3 sm:w-72 sm:shrink-0">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-accent-line bg-accent-soft text-xs font-semibold text-accent">
-                      {index + 1}
-                    </span>
-                    <h3 className="font-semibold text-ink">{format.title}</h3>
-                  </div>
-                  <p className="text-sm leading-relaxed text-muted">
+                  <span className="font-mono text-xs text-accent">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-2 text-lg font-semibold text-ink">
+                    {format.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted md:pr-4">
                     {format.description}
                   </p>
                 </div>
@@ -284,7 +302,8 @@ export default async function Home({
                   ))}
                 </ul>
               </div>
-              <div className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+              {/* Form sits on the page (no heavy card); thin rule separates it on mobile. */}
+              <div className="border-t border-line pt-10 lg:border-t-0 lg:pt-0">
                 <ContactForm lang={locale} copy={t.contact} />
               </div>
             </div>
