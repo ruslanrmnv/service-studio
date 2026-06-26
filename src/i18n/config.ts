@@ -59,3 +59,27 @@ export async function getDictionary(locale: Locale): Promise<Dictionary> {
 export const TELEGRAM_URL = "https://t.me/rslnrr";
 export const WHATSAPP_URL = "https://wa.me/994503412715";
 export const INSTAGRAM_URL = "https://instagram.com/ruslnrmnv";
+
+export const SITE_NAME = "Service Studio by Ruslan";
+
+/**
+ * Absolute site origin for metadata, sitemap, and robots.
+ * Uses NEXT_PUBLIC_SITE_URL (set to https://servicestudiobyruslan.com in
+ * production) and falls back to localhost for local development. Tolerates a
+ * missing/malformed value so metadata generation can never crash.
+ */
+export function getSiteUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL;
+  if (raw) {
+    try {
+      return new URL(raw).origin;
+    } catch {
+      console.warn(
+        `Invalid NEXT_PUBLIC_SITE_URL (${JSON.stringify(
+          raw
+        )}); falling back to http://localhost:3000`
+      );
+    }
+  }
+  return "http://localhost:3000";
+}

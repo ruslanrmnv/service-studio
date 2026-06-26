@@ -4,30 +4,14 @@ import "../globals.css";
 import {
   defaultLocale,
   getDictionary,
+  getSiteUrl,
   isLocale,
   locales,
+  SITE_NAME,
   type Locale,
 } from "@/i18n/config";
 
-// Resolve a valid absolute site URL; tolerate a missing/malformed env value
-// so a bad NEXT_PUBLIC_SITE_URL can't crash metadata generation.
-function resolveSiteUrl(): string {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL;
-  if (raw) {
-    try {
-      return new URL(raw).origin;
-    } catch {
-      console.warn(
-        `Invalid NEXT_PUBLIC_SITE_URL (${JSON.stringify(
-          raw
-        )}); falling back to http://localhost:3000`
-      );
-    }
-  }
-  return "http://localhost:3000";
-}
-
-const SITE_URL = resolveSiteUrl();
+const SITE_URL = getSiteUrl();
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -58,6 +42,8 @@ export async function generateMetadata({
     openGraph: {
       title: metadata.ogTitle,
       description: metadata.ogDescription,
+      url: `/${locale}`,
+      siteName: SITE_NAME,
       type: "website",
       locale: locale === "ru" ? "ru_RU" : locale === "uk" ? "uk_UA" : "en_US",
     },

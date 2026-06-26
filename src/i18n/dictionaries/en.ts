@@ -2,12 +2,12 @@ import type { Dictionary } from "./ru";
 
 export const en: Dictionary = {
   metadata: {
-    title: "Service Studio by Ruslan — AI and automation for custom workflows",
+    title: "Service Studio by Ruslan — AI, Telegram Bots, Forms, and Automations",
     description:
-      "I build simple AI, chat, and form automations built around a specific task: requests, replies, forms, tables, notifications, and other repetitive workflows.",
-    ogTitle: "Service Studio by Ruslan",
+      "I build practical AI automations, Telegram bots, forms, integrations, and working setups for specific business, specialist, and team tasks.",
+    ogTitle: "Service Studio by Ruslan — AI, Telegram Bots, Forms, and Automations",
     ogDescription:
-      "AI, chat, and form automations for custom workflows: requests, replies, forms, tables, notifications, and Telegram bots.",
+      "I build practical AI automations, Telegram bots, forms, integrations, and working setups for specific business, specialist, and team tasks.",
   },
 
   header: {
