@@ -68,7 +68,7 @@ export default async function Home({
             <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
               {/* Offer */}
               <div className="max-w-2xl">
-                <h1 className="text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                <h1 className="text-3xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
                   {t.hero.title.split(" ").map((word, index, words) => (
                     <Fragment key={`${word}-${index}`}>
                       <span
@@ -151,7 +151,7 @@ export default async function Home({
         <section id="services" className="border-t border-line">
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold tracking-tight text-ink">
+              <h2 className="text-3xl font-extrabold tracking-tight text-ink">
                 {t.services.heading}
               </h2>
               <p className="mt-3 text-muted">{t.services.subheading}</p>
@@ -181,7 +181,7 @@ export default async function Home({
         <section id="workflow" className="border-t border-line">
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold tracking-tight text-ink">
+              <h2 className="text-3xl font-extrabold tracking-tight text-ink">
                 {t.workflow.heading}
               </h2>
               <p className="mt-3 text-muted">{t.workflow.intro}</p>
@@ -194,7 +194,7 @@ export default async function Home({
         <section id="formats" className="border-t border-line bg-surface/50">
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold tracking-tight text-ink">
+              <h2 className="text-3xl font-extrabold tracking-tight text-ink">
                 {t.formats.heading}
               </h2>
               <p className="mt-3 text-muted">{t.formats.note}</p>
@@ -243,7 +243,7 @@ export default async function Home({
         <section className="border-t border-line">
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold tracking-tight text-ink">
+              <h2 className="text-3xl font-extrabold tracking-tight text-ink">
                 {t.process.heading}
               </h2>
               <p className="mt-3 text-muted">{t.process.subheading}</p>
@@ -276,7 +276,7 @@ export default async function Home({
         <section id="about" className="border-t border-line bg-surface/50">
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="grid gap-8 md:grid-cols-[1fr_2fr] md:gap-16">
-              <h2 className="text-2xl font-bold tracking-tight text-ink">
+              <h2 className="text-2xl font-extrabold tracking-tight text-ink">
                 {t.about.heading}
               </h2>
               <div className="space-y-4 text-lg leading-relaxed text-muted">
@@ -293,7 +293,7 @@ export default async function Home({
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
             <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight text-ink">
+                <h2 className="text-3xl font-extrabold tracking-tight text-ink">
                   {t.contact.heading}
                 </h2>
                 <p className="mt-4 text-lg leading-relaxed text-muted">

@@ -86,7 +86,7 @@ export default async function PrivacyPage({
               {t.privacy.back}
             </a>
 
-            <h1 className="mt-6 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
               {t.privacy.title}
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-muted">
