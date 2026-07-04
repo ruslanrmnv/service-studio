@@ -27,7 +27,6 @@ export const en: Dictionary = {
     subtitle:
       "I build working systems for your task: collect requests, answer repeating questions, and keep your data tidy. You can start with one clear setup.",
     ctaPrimary: "Send request",
-    ctaSecondary: "See services",
   },
 
   trust: [

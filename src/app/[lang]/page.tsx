@@ -49,19 +49,12 @@ export default async function Home({
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
               {t.hero.subtitle}
             </p>
-            <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row">
+            <div className="mt-10 flex justify-center">
               <a
                 href="#contact"
                 className="inline-flex min-h-12 items-center rounded-full bg-ink px-7 text-sm font-medium uppercase tracking-[0.08em] text-background transition hover:bg-muted"
               >
                 {t.hero.ctaPrimary}
-              </a>
-              <a
-                href="#services"
-                className="inline-flex min-h-11 items-center gap-2 text-sm text-faint transition hover:text-ink"
-              >
-                {t.hero.ctaSecondary}
-                <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
