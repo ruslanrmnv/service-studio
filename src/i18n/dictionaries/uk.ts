@@ -154,7 +154,7 @@ export const uk: Dictionary = {
   },
 
   process: {
-    heading: "Як це працює",
+    heading: "Як ми працюємо",
     subheading: "Зрозумілий і передбачуваний шлях — від розбору до робочої версії.",
     steps: [
       {

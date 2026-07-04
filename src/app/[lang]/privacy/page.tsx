@@ -58,7 +58,7 @@ export default async function PrivacyPage({
               {t.privacy.back}
             </a>
 
-            <h1 className="mt-6 text-3xl tracking-[-0.01em] text-ink sm:text-4xl">
+            <h1 className="mt-6 font-display text-3xl leading-[1.1] text-ink sm:text-4xl">
               {t.privacy.title}
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-muted">
@@ -68,10 +68,8 @@ export default async function PrivacyPage({
             <div className="mt-12 space-y-10">
               {t.privacy.sections.map((section, index) => (
                 <section key={section.heading}>
-                  <h2 className="text-xl text-ink">
-                    <span className="mr-2 font-mono text-base text-accent">
-                      {index + 1}.
-                    </span>
+                  <h2 className="font-display text-xl text-ink">
+                    <span className="mr-2 text-base text-accent">{index + 1}.</span>
                     {section.heading}
                   </h2>
                   {section.paragraphs.map((paragraph) => (

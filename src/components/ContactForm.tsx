@@ -84,7 +84,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 inline-flex min-h-11 items-center text-sm font-medium text-accent-bright transition hover:text-ink"
+          className="mt-6 inline-flex min-h-11 items-center text-sm font-medium text-accent transition hover:text-ink"
         >
           {copy.success.again}
         </button>
@@ -93,7 +93,7 @@ export default function ContactForm({
   }
 
   const inputClass =
-    "w-full rounded-xl border border-line bg-surface-soft px-4 py-3 text-ink placeholder:text-faint outline-none transition focus:border-accent-line focus:ring-2 focus:ring-accent-soft";
+    "w-full rounded-xl border border-line bg-surface-2 px-4 py-3 text-ink placeholder:text-faint outline-none transition focus:border-accent-line focus:ring-2 focus:ring-accent-soft";
   const labelClass = "mb-1.5 block text-sm text-muted";
   const req = <span className="text-faint">*</span>;
   const opt = <span className="text-faint">({copy.form.optional})</span>;
@@ -224,7 +224,7 @@ export default function ContactForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-7 text-sm font-medium uppercase tracking-[0.08em] text-background transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-7 text-[15px] font-medium text-background transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {status === "loading" ? copy.form.submitting : copy.form.submit}
       </button>

@@ -108,7 +108,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                 type="button"
                 aria-pressed={active}
                 onClick={() => selectScenario(s.id)}
-                className={`inline-flex min-h-9 items-center rounded-full border px-4 font-mono text-xs uppercase tracking-[0.08em] transition ${
+                className={`inline-flex min-h-9 items-center rounded-full border px-4 text-sm transition ${
                   active
                     ? "border-transparent bg-ink text-background"
                     : "border-line text-faint hover:border-line-strong hover:text-ink"
@@ -122,7 +122,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         <button
           type="button"
           onClick={() => selectScenario(activeId)}
-          className="inline-flex min-h-9 items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-faint transition hover:text-ink"
+          className="inline-flex min-h-9 items-center gap-2 text-sm text-faint transition hover:text-ink"
         >
           <span aria-hidden="true" className="text-sm leading-none">
             ↻
@@ -131,19 +131,19 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         </button>
       </div>
 
-      {/* Device */}
-      <div className="relative mt-5 overflow-hidden rounded-2xl border border-line bg-surface">
+      {/* Device — panels separated by tone, not rules. */}
+      <div className="relative mt-6 overflow-hidden rounded-2xl border border-line bg-surface-2">
         {/* Title bar */}
-        <div className="flex items-center gap-3 border-b border-line px-5 py-3">
+        <div className="flex items-center gap-3 px-5 py-3.5">
           <span
             className={`h-2 w-2 shrink-0 rounded-full ${
-              showToast ? "bg-accent-bright node-pulse" : "bg-faint"
+              showToast ? "bg-accent node-pulse" : "bg-faint"
             }`}
             aria-hidden="true"
           />
-          <span className="font-mono text-xs text-muted">{scenario.source}</span>
+          <span className="text-sm text-muted">{scenario.source}</span>
           <span
-            className={`ml-auto font-mono text-[11px] uppercase tracking-[0.12em] text-accent transition-opacity motion-reduce:transition-none ${
+            className={`ml-auto text-xs text-accent transition-opacity motion-reduce:transition-none ${
               showProcessing ? "opacity-100" : "opacity-0"
             }`}
             aria-hidden={!showProcessing}
@@ -153,9 +153,9 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         </div>
 
         {/* Body: incoming (left) → system (right) */}
-        <div className="grid min-h-[300px] md:grid-cols-2">
+        <div className="grid gap-3 p-3 md:grid-cols-2">
           {/* Incoming */}
-          <div className="flex flex-col gap-3 border-b border-line p-5 md:border-b-0 md:border-r">
+          <div className="flex min-h-[248px] flex-col gap-3 rounded-xl bg-background p-5">
             {scenario.lines.map((line, i) => {
               const visible = i < revealed;
               const isUser = line.role === "user";
@@ -168,18 +168,16 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                   } ${isField ? "" : isUser ? "flex justify-end" : "flex justify-start"}`}
                 >
                   {isField ? (
-                    <div className="flex items-baseline gap-3 rounded-lg border border-line bg-surface-soft px-3.5 py-2.5">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-faint">
-                        {line.label}
-                      </span>
+                    <div className="flex items-baseline gap-3 rounded-lg bg-surface-2 px-3.5 py-2.5">
+                      <span className="text-[13px] text-faint">{line.label}</span>
                       <span className="text-sm text-ink">{line.text}</span>
                     </div>
                   ) : (
                     <div
                       className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
                         isUser
-                          ? "rounded-br-sm border border-accent-line text-ink"
-                          : "rounded-bl-sm bg-surface-soft text-muted"
+                          ? "rounded-br-sm bg-accent-soft text-ink"
+                          : "rounded-bl-sm bg-surface-3 text-muted"
                       }`}
                     >
                       {line.text}
@@ -191,17 +189,15 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
           </div>
 
           {/* System: the table the request lands in */}
-          <div className="p-5">
-            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
-              {copy.tableTitle}
-            </p>
+          <div className="rounded-xl bg-background p-5">
+            <p className="mb-4 text-sm text-faint">{copy.tableTitle}</p>
             <table className="w-full border-collapse text-left">
               <thead>
                 <tr>
                   {copy.columns.map((col, i) => (
                     <th
                       key={col}
-                      className={`border-b border-line pb-2 font-mono text-[10px] font-normal uppercase tracking-[0.1em] text-faint ${
+                      className={`pb-3 text-xs font-normal text-faint ${
                         i === 0 ? "hidden sm:table-cell" : ""
                       }`}
                     >
@@ -220,19 +216,27 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                   {rowCells.map((cell, i) => (
                     <td
                       key={i}
-                      className={`border-b border-line py-3 align-top text-sm ${
+                      className={`py-2.5 align-top text-sm ${
                         i === 0
-                          ? "hidden font-mono text-xs text-faint sm:table-cell"
+                          ? "hidden text-xs text-faint sm:table-cell"
                           : i === 3
                             ? "text-ink"
                             : "text-muted"
-                      } ${i === 0 && showRow ? "border-l-2 border-l-accent-bright pl-2" : ""}`}
+                      }`}
                     >
-                      {i === 3 ? (
+                      {i === 1 ? (
+                        <span
+                          className={
+                            showRow ? "border-l-2 border-l-accent pl-2" : "pl-2"
+                          }
+                        >
+                          {cell}
+                        </span>
+                      ) : i === 3 ? (
                         <span className="inline-flex items-center gap-1.5">
                           <span
                             aria-hidden="true"
-                            className="h-1.5 w-1.5 rounded-full bg-accent-bright"
+                            className="h-1.5 w-1.5 rounded-full bg-accent"
                           />
                           {cell}
                         </span>
@@ -247,11 +251,9 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                     {copy.columns.map((col, i) => (
                       <td
                         key={col}
-                        className={`border-b border-line py-3 ${
-                          i === 0 ? "hidden sm:table-cell" : ""
-                        }`}
+                        className={`py-2.5 ${i === 0 ? "hidden sm:table-cell" : ""}`}
                       >
-                        <span className="block h-3.5 w-full rounded bg-line/40" />
+                        <span className="block h-3.5 w-full rounded bg-surface-3" />
                       </td>
                     ))}
                   </tr>
@@ -264,13 +266,13 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         {/* Notification toast */}
         <div
           aria-live="polite"
-          className={`pointer-events-none absolute bottom-4 right-4 flex max-w-[80%] items-center gap-2.5 rounded-xl border border-accent-line bg-background/95 px-4 py-3 shadow-lg transition-all duration-500 motion-reduce:transition-none ${
+          className={`pointer-events-none absolute bottom-5 right-5 flex max-w-[80%] items-center gap-2.5 rounded-xl border border-accent-line bg-surface-3 px-4 py-3 shadow-xl transition-all duration-500 motion-reduce:transition-none ${
             showToast ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
           }`}
         >
           <span
             aria-hidden="true"
-            className="h-2 w-2 shrink-0 rounded-full bg-accent-bright"
+            className="h-2 w-2 shrink-0 rounded-full bg-accent"
           />
           <span className="text-sm text-ink">
             {showToast ? scenario.notification : ""}

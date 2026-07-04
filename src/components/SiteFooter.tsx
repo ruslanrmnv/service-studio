@@ -25,22 +25,20 @@ export default function SiteFooter({
   pathSuffix?: string;
 }) {
   return (
-    <footer className="border-t border-line">
-      <div className="mx-auto max-w-6xl px-6 py-14 sm:py-16">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-0">
-          <div className="max-w-sm md:pr-12">
-            <p className="text-sm leading-relaxed text-muted">{copy.tagline}</p>
-            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.15em] text-faint">
-              {copy.contact}
-            </p>
-            <ul className="mt-4 flex flex-wrap gap-2.5">
+    <footer className="bg-surface">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+        <div className="grid gap-12 md:grid-cols-2">
+          <div className="max-w-sm">
+            <p className="leading-relaxed text-muted">{copy.tagline}</p>
+            <p className="mt-8 text-sm text-faint">{copy.contact}</p>
+            <ul className="mt-3 flex flex-wrap gap-2.5">
               {SOCIALS.map((social) => (
                 <li key={social.label}>
                   <a
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-5 text-xs font-medium uppercase tracking-[0.08em] text-muted transition hover:border-line-strong hover:text-ink"
+                    className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line bg-surface-2 px-5 text-sm text-muted transition hover:border-accent-line hover:text-ink"
                   >
                     {social.label}
                     <span aria-hidden="true" className="text-[10px]">
@@ -51,15 +49,17 @@ export default function SiteFooter({
               ))}
             </ul>
           </div>
-          <div className="flex items-center border-t border-line pt-10 md:justify-end md:border-l md:border-t-0 md:pl-12 md:pt-0">
-            <p className="text-3xl leading-tight tracking-[-0.01em] text-ink sm:text-4xl">
+          <div className="flex items-end md:justify-end">
+            <p className="font-display text-4xl leading-none text-ink sm:text-5xl">
               Service Studio
-              <span className="block text-lg text-faint sm:text-xl">by Ruslan</span>
+              <span className="mt-2 block text-lg font-normal text-faint sm:text-xl">
+                by Ruslan
+              </span>
             </p>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-faint sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-4 text-sm text-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
             {"©"} {new Date().getFullYear()} {copy.brand}
           </p>
@@ -70,7 +70,7 @@ export default function SiteFooter({
                   key={loc}
                   href={`/${loc}${pathSuffix}`}
                   aria-current={loc === locale ? "page" : undefined}
-                  className={`inline-flex min-h-8 items-center transition hover:text-ink ${
+                  className={`inline-flex min-h-8 items-center uppercase transition hover:text-ink ${
                     loc === locale ? "text-ink" : ""
                   }`}
                 >

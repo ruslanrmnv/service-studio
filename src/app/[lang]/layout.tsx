@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Onest } from "next/font/google";
+import { Onest, Unbounded } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
-/* Variable fonts, self-hosted by next/font. Onest covers every text role
-   (body 400, headings 400–500); JetBrains Mono is reserved for system-flavored
-   details: small labels, numerals, statuses. Both ship full Cyrillic
-   (Ukrainian і/ї/є/ґ included). */
+/* Variable fonts, self-hosted by next/font. Onest carries body and UI; Unbounded
+   is the display face for headings and brand moments, used with restraint. Both
+   ship full Cyrillic (Ukrainian і/ї/є/ґ included). */
 const onest = Onest({
   subsets: ["latin", "cyrillic"],
   variable: "--font-onest",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin", "cyrillic", "cyrillic-ext"],
-  variable: "--font-jetbrains-mono",
+const unbounded = Unbounded({
+  subsets: ["latin", "cyrillic"],
+  weight: ["500", "600", "700"],
+  variable: "--font-unbounded",
   display: "swap",
 });
 import {
@@ -80,7 +80,7 @@ export default async function LangLayout({
   return (
     <html
       lang={lang}
-      className={`${onest.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${onest.variable} ${unbounded.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-ink">
         {children}

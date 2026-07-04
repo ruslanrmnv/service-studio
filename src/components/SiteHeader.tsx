@@ -20,7 +20,7 @@ export default function SiteHeader({
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-4 sm:px-6">
-        <a href={base} className="text-base tracking-tight text-ink">
+        <a href={base} className="font-display text-[15px] text-ink">
           Service&nbsp;Studio
           <span className="hidden text-faint sm:inline"> by Ruslan</span>
         </a>
@@ -44,7 +44,7 @@ export default function SiteHeader({
           <LanguageSwitcher current={locale} label={copy.language} />
           <a
             href={anchor("contact")}
-            className="hidden min-h-11 items-center rounded-full bg-ink px-5 text-xs font-medium uppercase tracking-[0.08em] text-background transition hover:bg-muted sm:inline-flex"
+            className="hidden min-h-11 items-center rounded-full bg-ink px-5 text-sm font-medium text-background transition hover:bg-muted sm:inline-flex"
           >
             {copy.cta}
           </a>

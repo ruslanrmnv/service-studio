@@ -154,7 +154,7 @@ export const en: Dictionary = {
   },
 
   process: {
-    heading: "How it works",
+    heading: "How we work",
     subheading: "A clear, predictable path — from review to a working version.",
     steps: [
       {

@@ -40,7 +40,7 @@ export default function LanguageSwitcher({
                   ? "Українська"
                   : "English"
             }
-            className={`rounded-full px-2.5 py-1.5 font-mono text-xs uppercase tracking-wide transition ${
+            className={`rounded-full px-2.5 py-1.5 text-xs font-medium uppercase transition ${
               active
                 ? "bg-ink text-background"
                 : "text-faint hover:text-ink"
