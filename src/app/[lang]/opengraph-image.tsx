@@ -16,90 +16,98 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#100E0A",
+          background: "#000000",
           padding: "80px",
-          color: "#F5F0E8",
+          color: "#FFFFFF",
           fontFamily: "sans-serif",
         }}
       >
-        {/* Top: monogram + eyebrow */}
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 88,
-              height: 88,
-              borderRadius: 20,
-              background: "#1A1710",
-              border: "2px solid rgba(214,168,90,0.5)",
-              color: "#D6A85A",
-              fontSize: 50,
-              fontWeight: 700,
-            }}
-          >
-            R
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 26,
-              letterSpacing: 8,
-              textTransform: "uppercase",
-              color: "#D6A85A",
-            }}
-          >
-            Service Studio
-          </div>
-        </div>
-
-        {/* Middle: headline + subline */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 78,
-              fontWeight: 700,
-              lineHeight: 1.05,
-            }}
-          >
-            Service Studio by Ruslan
-          </div>
-          <div
-            style={{
-              display: "flex",
-              marginTop: 28,
-              fontSize: 36,
-              color: "#B8AD9B",
-              maxWidth: 940,
-              lineHeight: 1.3,
-            }}
-          >
-            AI automations, Telegram bots, forms, and working systems
-          </div>
-        </div>
-
-        {/* Bottom: domain + accent rule */}
+        {/* Top: wordmark + hairline rule */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            flexDirection: "column",
+            gap: 28,
           }}
         >
-          <div style={{ display: "flex", fontSize: 30, color: "#D6A85A" }}>
-            servicestudiobyruslan.com
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ display: "flex", fontSize: 28 }}>
+              Service Studio
+              <span style={{ color: "rgba(255,255,255,0.5)", marginLeft: 10 }}>
+                by Ruslan
+              </span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 20,
+                letterSpacing: 6,
+                textTransform: "uppercase",
+                color: "#6390C1",
+              }}
+            >
+              AI · Bots · Forms
+            </div>
           </div>
           <div
             style={{
               display: "flex",
-              width: 140,
-              height: 6,
-              borderRadius: 3,
-              background: "#D6A85A",
+              height: 1,
+              width: "100%",
+              background: "rgba(255,255,255,0.25)",
             }}
           />
+        </div>
+
+        {/* Middle: headline */}
+        <div
+          style={{
+            display: "flex",
+            fontSize: 72,
+            lineHeight: 1.12,
+            letterSpacing: -1.5,
+            maxWidth: 1000,
+          }}
+        >
+          I reduce manual work with AI, bots, and forms.
+        </div>
+
+        {/* Bottom: hairline rule + domain */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 28,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              height: 1,
+              width: "100%",
+              background: "rgba(255,255,255,0.25)",
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ display: "flex", fontSize: 26, color: "rgba(255,255,255,0.5)" }}>
+              servicestudiobyruslan.com
+            </div>
+            <div style={{ display: "flex", fontSize: 26, color: "#198CFF" }}>
+              EN · UK · RU
+            </div>
+          </div>
         </div>
       </div>
     ),

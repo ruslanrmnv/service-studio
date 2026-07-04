@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { defaultLocale, getDictionary, isLocale, type Locale } from "@/i18n/config";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 
 export async function generateMetadata({
   params,
@@ -45,35 +45,7 @@ export default async function PrivacyPage({
 
   return (
     <>
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-          <a href={base} className="text-base font-semibold tracking-tight text-ink">
-            Service&nbsp;Studio
-            <span className="text-faint"> by Ruslan</span>
-          </a>
-          <div className="flex items-center gap-3 sm:gap-6">
-            <nav className="hidden items-center gap-6 text-sm text-muted md:flex">
-              <a href={`${base}#services`} className="transition hover:text-ink">
-                {t.header.nav.services}
-              </a>
-              <a href={`${base}#formats`} className="transition hover:text-ink">
-                {t.header.nav.formats}
-              </a>
-              <a href={`${base}#about`} className="transition hover:text-ink">
-                {t.header.nav.about}
-              </a>
-            </nav>
-            <LanguageSwitcher current={locale} label={t.header.language} />
-            <a
-              href={`${base}#contact`}
-              className="hidden rounded-lg bg-ink px-4 py-2 text-sm font-semibold text-background transition hover:bg-cream-hover sm:inline-flex"
-            >
-              {t.header.cta}
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader locale={locale} copy={t.header} onHome={false} />
 
       <main className="flex-1">
         <section>
@@ -86,7 +58,7 @@ export default async function PrivacyPage({
               {t.privacy.back}
             </a>
 
-            <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+            <h1 className="mt-6 text-3xl tracking-[-0.01em] text-ink sm:text-4xl">
               {t.privacy.title}
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-muted">
@@ -96,8 +68,10 @@ export default async function PrivacyPage({
             <div className="mt-12 space-y-10">
               {t.privacy.sections.map((section, index) => (
                 <section key={section.heading}>
-                  <h2 className="text-xl font-semibold text-ink">
-                    <span className="mr-2 text-accent">{index + 1}.</span>
+                  <h2 className="text-xl text-ink">
+                    <span className="mr-2 font-mono text-base text-accent">
+                      {index + 1}.
+                    </span>
                     {section.heading}
                   </h2>
                   {section.paragraphs.map((paragraph) => (

@@ -24,7 +24,7 @@ export default function LanguageSwitcher({
     <div
       role="group"
       aria-label={label}
-      className="flex items-center gap-0.5 rounded-lg border border-line bg-surface-soft p-0.5"
+      className="flex items-center gap-0.5 rounded-full border border-line p-0.5"
     >
       {locales.map((locale) => {
         const active = locale === current;
@@ -40,10 +40,10 @@ export default function LanguageSwitcher({
                   ? "Українська"
                   : "English"
             }
-            className={`rounded-md px-2.5 py-1 text-xs font-semibold uppercase tracking-wide transition ${
+            className={`rounded-full px-2.5 py-1.5 font-mono text-xs uppercase tracking-wide transition ${
               active
                 ? "bg-ink text-background"
-                : "text-muted hover:text-ink"
+                : "text-faint hover:text-ink"
             }`}
           >
             {locale}

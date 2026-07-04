@@ -4,29 +4,24 @@
   color-scheme: dark;
 }
 
-/* Warm studio palette — generates utilities like bg-surface, text-muted, border-line, text-accent. */
+/* "Black lab" palette — pure-black ground, hairline rules, steel-blue section
+   voice, azure micro-accent. Generates utilities like bg-surface, text-muted,
+   border-line. */
 @theme {
-  --color-background: #0f0e0b;
-  --color-surface: #171510;
-  --color-surface-soft: #1f1c16;
-  --color-line: rgba(236, 221, 190, 0.1);
-  --color-line-strong: rgba(236, 221, 190, 0.2);
-  --color-ink: #f5f0e8;
-  --color-muted: #b8ad9b;
-  --color-faint: #8b8270;
-  --color-accent: #d6a85a;
-  --color-accent-soft: rgba(214, 168, 90, 0.12);
-  --color-accent-line: rgba(214, 168, 90, 0.3);
-  --color-cream-hover: #e8ddc9;
+  --color-background: #000000;
+  --color-surface: #0e0e10;
+  --color-surface-soft: #131316;
+  --color-line: hsla(0, 0%, 100%, 0.16);
+  --color-line-strong: hsla(0, 0%, 100%, 0.4);
+  --color-ink: #ffffff;
+  --color-muted: hsla(0, 0%, 100%, 0.78);
+  --color-faint: hsla(0, 0%, 100%, 0.5);
+  --color-accent: #6390c1;
+  --color-accent-bright: #198cff;
+  --color-accent-soft: rgba(25, 140, 255, 0.1);
+  --color-accent-line: rgba(99, 144, 193, 0.45);
 
-  /* Foundations for upcoming artifact cards / workflow UI (not used by
-     current sections yet): light "paper" surfaces and functional statuses. */
-  --color-paper: #fbf8f2;
-  --color-paper-ink: #26221b;
-  --color-status-new: #5ea8d8;
-  --color-status-ok: #8fbe6e;
-
-  --font-sans: var(--font-golos), ui-sans-serif, system-ui, -apple-system,
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo,
     Consolas, "Liberation Mono", monospace;
@@ -43,22 +38,21 @@ body {
 }
 
 ::selection {
-  background: rgba(214, 168, 90, 0.3);
+  background: rgba(25, 140, 255, 0.35);
 }
 
-/* Polished, consistent keyboard focus in the warm accent (mouse clicks unaffected). */
+/* Polished, consistent keyboard focus in azure (mouse clicks unaffected). */
 :focus-visible {
-  outline: 2px solid rgba(214, 168, 90, 0.9);
+  outline: 2px solid #198cff;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Subtle first-load hero headline reveal (word-by-word). Transform/opacity only —
-   no layout shift; full text stays in the DOM for SEO and screen readers. */
-@keyframes hero-word-in {
+/* Single quiet hero reveal — one block, transform/opacity only. */
+@keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(0.35em);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -66,13 +60,30 @@ body {
   }
 }
 
-.hero-word {
-  display: inline-block;
-  animation: hero-word-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+.hero-rise {
+  animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll cue at the hero's foot: a slow, small drift. */
+@keyframes cue-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+}
+
+.scroll-cue {
+  animation: cue-drift 2.4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-word {
+  .hero-rise,
+  .scroll-cue {
     animation: none;
   }
 }

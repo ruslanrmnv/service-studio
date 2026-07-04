@@ -77,14 +77,14 @@ export default function ContactForm({
         aria-live="polite"
         className="rounded-2xl border border-accent-line bg-accent-soft p-8 text-center"
       >
-        <h3 className="text-xl font-semibold text-accent">
+        <h3 className="text-xl text-ink">
           {copy.success.title}
         </h3>
-        <p className="mt-2 text-ink/85">{copy.success.text}</p>
+        <p className="mt-2 text-muted">{copy.success.text}</p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 text-sm font-medium text-accent transition hover:text-ink"
+          className="mt-6 inline-flex min-h-11 items-center text-sm font-medium text-accent-bright transition hover:text-ink"
         >
           {copy.success.again}
         </button>
@@ -94,7 +94,7 @@ export default function ContactForm({
 
   const inputClass =
     "w-full rounded-xl border border-line bg-surface-soft px-4 py-3 text-ink placeholder:text-faint outline-none transition focus:border-accent-line focus:ring-2 focus:ring-accent-soft";
-  const labelClass = "mb-1.5 block text-sm font-medium text-muted";
+  const labelClass = "mb-1.5 block text-sm text-muted";
   const req = <span className="text-faint">*</span>;
   const opt = <span className="text-faint">({copy.form.optional})</span>;
 
@@ -162,7 +162,7 @@ export default function ContactForm({
               {copy.form.contactMethodPlaceholder}
             </option>
             {METHODS.map((method) => (
-              <option key={method} value={method} className="bg-[#1f1c16]">
+              <option key={method} value={method}>
                 {copy.form.methods[method]}
               </option>
             ))}
@@ -215,7 +215,7 @@ export default function ContactForm({
 
       <div aria-live="assertive">
         {status === "error" && (
-          <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
             {errorMessage}
           </p>
         )}
@@ -224,7 +224,7 @@ export default function ContactForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="inline-flex w-full items-center justify-center rounded-xl bg-ink px-6 py-3.5 text-base font-semibold text-background transition hover:bg-cream-hover disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-7 text-sm font-medium uppercase tracking-[0.08em] text-background transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {status === "loading" ? copy.form.submitting : copy.form.submit}
       </button>

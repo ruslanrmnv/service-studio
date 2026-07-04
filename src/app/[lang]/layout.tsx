@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Golos_Text, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Onest } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
-/* Variable fonts, self-hosted by next/font. Golos covers every text role
-   (body 400 → display 800); JetBrains Mono is reserved for system-flavored
+/* Variable fonts, self-hosted by next/font. Onest covers every text role
+   (body 400, headings 400–500); JetBrains Mono is reserved for system-flavored
    details: small labels, numerals, statuses. Both ship full Cyrillic
-   (cyrillic-ext covers Ukrainian і/ї/є/ґ). */
-const golos = Golos_Text({
-  subsets: ["latin", "cyrillic", "cyrillic-ext"],
-  variable: "--font-golos",
+   (Ukrainian і/ї/є/ґ included). */
+const onest = Onest({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-onest",
   display: "swap",
 });
 
@@ -80,7 +80,7 @@ export default async function LangLayout({
   return (
     <html
       lang={lang}
-      className={`${golos.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${onest.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-ink">
         {children}

@@ -13,7 +13,7 @@ export const en: Dictionary = {
   header: {
     nav: {
       services: "Services",
-      formats: "Formats",
+      formats: "How to start",
       about: "About",
     },
     cta: "Send request",
@@ -22,23 +22,12 @@ export const en: Dictionary = {
 
   hero: {
     brand: "Service Studio by Ruslan",
-    title: "I reduce manual work with AI, bots, and forms.",
+    // `backtick` segments render in mono/cobalt in the hero h1.
+    title: "I reduce manual work with `AI`, `bots`, and `forms`.",
     subtitle:
       "I build working systems for your task: collect requests, answer repeating questions, and keep your data tidy. You can start with one clear setup.",
-    ctaPrimary: "Discuss a task",
+    ctaPrimary: "Send request",
     ctaSecondary: "See services",
-    personalNote:
-      "I work directly with you: we review the task, choose a clear setup, and build the first working version.",
-    flow: ["Request", "Form / bot / AI", "Table / Telegram", "Notification"],
-    preview: {
-      caption: "What I can build",
-      items: [
-        "Telegram bot for requests or questionnaires",
-        "Form that sends data to a table",
-        "Notifications for new requests",
-        "AI helper for replies and routine tasks",
-      ],
-    },
   },
 
   trust: [
@@ -86,45 +75,11 @@ export const en: Dictionary = {
     ],
   },
 
-  workflow: {
-    heading: "What a solution can look like",
-    intro: "A solution is usually a few clear steps. Here's how it can look:",
-    tabs: [
-      {
-        label: "Form",
-        steps: [
-          "Someone submits a request",
-          "Data goes to a table or system",
-          "You receive a notification",
-          "The request gets a status or next step",
-        ],
-      },
-      {
-        label: "Telegram bot",
-        steps: [
-          "The bot asks the right questions",
-          "It collects contacts and request details",
-          "It sends the data to the right place",
-          "You receive a ready request or notification",
-        ],
-      },
-      {
-        label: "AI helper",
-        steps: [
-          "A text, request, or message comes in",
-          "AI sorts or processes the information",
-          "It prepares a reply, summary, or action",
-          "You make a decision faster",
-        ],
-      },
-    ],
-  },
-
   formats: {
     heading: "How we can start",
     note: "You do not need to build a large system right away. We can start with one clear setup and expand it when needed.",
     ctaText: "Not sure where to start?",
-    ctaLink: "Discuss a task",
+    ctaLink: "Send request",
     items: [
       {
         title: "One setup",
