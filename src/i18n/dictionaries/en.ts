@@ -26,7 +26,10 @@ export const en: Dictionary = {
     title: "I reduce manual work with `AI`, `bots`, and `forms`.",
     subtitle:
       "I build working systems for your task: collect requests, answer repeating questions, and keep your data tidy. You can start with one clear setup.",
+    availability: "Available for new projects",
     ctaPrimary: "Send request",
+    // Signature flow at the foot of the hero — the pipeline the studio builds.
+    flow: ["Request", "Form / bot / AI", "Table / Telegram", "Notification"],
   },
 
   trust: [

@@ -64,26 +64,53 @@ body {
   animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Scroll cue at the hero's foot: a slow, small drift. */
-@keyframes cue-drift {
+/* Hero atmosphere — a faint blueprint grid, radially masked so it fades to
+   pure black at the edges. Gives the black ground depth without any glow.
+   The subject builds systems; graph-paper reads as precision/engineering. */
+.hero-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+      to right,
+      hsla(0, 0%, 100%, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, hsla(0, 0%, 100%, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 42%,
+    #000 0%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 42%,
+    #000 0%,
+    transparent 78%
+  );
+}
+
+/* Signature flow — the last node pulses to imply data arriving. */
+@keyframes node-pulse {
   0%,
   100% {
-    transform: translateY(0);
-    opacity: 0.5;
+    opacity: 0.55;
+    box-shadow: 0 0 0 0 rgba(25, 140, 255, 0.4);
   }
   50% {
-    transform: translateY(4px);
     opacity: 1;
+    box-shadow: 0 0 0 5px rgba(25, 140, 255, 0);
   }
 }
 
-.scroll-cue {
-  animation: cue-drift 2.4s ease-in-out infinite;
+.node-pulse {
+  animation: node-pulse 2.8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-rise,
-  .scroll-cue {
+  .node-pulse {
     animation: none;
   }
 }

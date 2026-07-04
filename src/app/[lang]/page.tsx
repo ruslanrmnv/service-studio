@@ -5,12 +5,16 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
 /* Blue editorial section label — the page's recurring "voice" (steel blue,
-   regular weight), sitting in the left column of each section. */
+   regular weight), sitting in the left column of each section. A short azure
+   rule anchors it and gives the otherwise-empty label column a deliberate mark. */
 function SectionHeading({ id, children }: { id?: string; children: React.ReactNode }) {
   return (
-    <h2 id={id} className="text-2xl leading-snug text-accent">
-      {children}
-    </h2>
+    <div className="md:sticky md:top-24">
+      <h2 id={id} className="text-2xl leading-snug text-accent">
+        {children}
+      </h2>
+      <span aria-hidden="true" className="mt-4 block h-px w-10 bg-accent-bright" />
+    </div>
   );
 }
 
@@ -28,10 +32,15 @@ export default async function Home({
       <SiteHeader locale={locale} copy={t.header} />
 
       <main className="flex-1">
-        {/* Hero — a full-height typographic statement on black. `backtick`
-            segments of the title are the studio's materials, set in mono/azure. */}
-        <section className="relative flex min-h-[86svh] items-center justify-center px-6">
-          <div className="hero-rise mx-auto max-w-4xl pb-24 pt-16 text-center sm:pb-28">
+        {/* Hero — a typographic statement over a faint blueprint field.
+            `backtick` segments of the title are the studio's materials, set in
+            mono/azure; the flow strip at the foot shows what actually gets built. */}
+        <section className="hero-grid relative flex min-h-[92svh] flex-col justify-center overflow-hidden px-6">
+          <div className="hero-rise mx-auto w-full max-w-4xl pt-20 text-center">
+            <p className="mb-8 inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-faint">
+              <span aria-hidden="true" className="node-pulse h-2 w-2 rounded-full bg-accent-bright" />
+              {t.hero.availability}
+            </p>
             <h1 className="text-4xl leading-[1.12] tracking-[-0.02em] text-ink sm:text-5xl lg:text-6xl">
               {t.hero.title.split("`").map((segment, index) =>
                 index % 2 === 1 ? (
@@ -58,12 +67,33 @@ export default async function Home({
               </a>
             </div>
           </div>
-          <p
+
+          {/* Signature: the request → system → notification pipeline, drawn in
+              the site's own language. Desktop only; the mobile hero is already
+              full without it. */}
+          <div
             aria-hidden="true"
-            className="scroll-cue absolute inset-x-0 bottom-7 text-center font-mono text-[11px] uppercase tracking-[0.3em] text-faint"
+            className="hero-rise mx-auto mt-20 hidden w-full max-w-3xl items-center gap-3 sm:flex"
           >
-            scroll
-          </p>
+            {t.hero.flow.map((step, index) => {
+              const last = index === t.hero.flow.length - 1;
+              return (
+                <Fragment key={step}>
+                  <div className="flex shrink-0 flex-col items-center gap-2.5">
+                    <span
+                      className={`h-2.5 w-2.5 rounded-full ${
+                        last ? "node-pulse bg-accent-bright" : "bg-faint"
+                      }`}
+                    />
+                    <span className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
+                      {step}
+                    </span>
+                  </div>
+                  {!last && <span className="mb-6 h-px flex-1 bg-line" />}
+                </Fragment>
+              );
+            })}
+          </div>
         </section>
 
         {/* Working principles — a hairline-ruled strip (text, not fake stats). */}
@@ -96,9 +126,11 @@ export default async function Home({
                 {t.services.items.map((service) => (
                   <li
                     key={service.title}
-                    className="grid gap-2 border-t border-line py-6 sm:grid-cols-[1fr_1.6fr] sm:gap-8"
+                    className="group grid gap-2 border-t border-line py-6 transition-colors sm:grid-cols-[1fr_1.6fr] sm:gap-8"
                   >
-                    <h3 className="text-lg leading-snug text-ink">{service.title}</h3>
+                    <h3 className="text-lg leading-snug text-ink transition-colors group-hover:text-accent">
+                      {service.title}
+                    </h3>
                     <p className="leading-relaxed text-muted">{service.description}</p>
                   </li>
                 ))}
