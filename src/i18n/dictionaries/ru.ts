@@ -26,8 +26,60 @@ export const ru = {
       "Делаю рабочие системы под вашу задачу: собрать заявки, отвечать на повторяющиеся вопросы и навести порядок в данных. Можно начать с одного понятного сценария.",
     availability: "Открыт для новых проектов",
     ctaPrimary: "Оставить заявку",
-    // Signature flow at the foot of the hero — the pipeline the studio builds.
-    flow: ["Заявка", "Форма / бот / AI", "Таблица / Telegram", "Уведомление"],
+  },
+
+  // Live demo — the interactive centerpiece: a request travels from an
+  // incoming message to a table row and a notification, played out on screen.
+  demo: {
+    heading: "Как это работает",
+    intro:
+      "Не на словах, а вживую. Выберите сценарий — и посмотрите, как запрос проходит весь путь: от сообщения до строки в таблице и уведомления вам.",
+    liveLabel: "Демо в реальном времени",
+    processing: "Обрабатываю",
+    replay: "Повторить",
+    tableTitle: "Заявки",
+    columns: ["Время", "От", "Запрос", "Статус"],
+    scenarios: [
+      {
+        id: "form",
+        label: "Форма",
+        source: "Форма на сайте",
+        kind: "form",
+        lines: [
+          { role: "field", label: "Имя", text: "Анна" },
+          { role: "field", label: "Услуга", text: "Запись на консультацию" },
+          { role: "field", label: "Контакт", text: "@anna" },
+        ],
+        row: { time: "10:42", from: "Анна", request: "Запись на консультацию", status: "Новая" },
+        notification: "Новая заявка от Анны",
+      },
+      {
+        id: "bot",
+        label: "Telegram-бот",
+        source: "@studio_bot",
+        kind: "chat",
+        lines: [
+          { role: "bot", label: "", text: "Здравствуйте! Как вас зовут?" },
+          { role: "user", label: "", text: "Игорь" },
+          { role: "bot", label: "", text: "Что нужно автоматизировать?" },
+          { role: "user", label: "", text: "Нужен бот для заявок" },
+        ],
+        row: { time: "10:45", from: "Игорь", request: "Бот для заявок", status: "Новая" },
+        notification: "Игорь оставил заявку через бота",
+      },
+      {
+        id: "ai",
+        label: "AI-помощник",
+        source: "AI-помощник",
+        kind: "chat",
+        lines: [
+          { role: "user", label: "", text: "Клиент прислал письмо с пятью вопросами." },
+          { role: "bot", label: "", text: "Собрал ответ: 5 пунктов, вежливый тон, готов к отправке." },
+        ],
+        row: { time: "10:51", from: "Письмо клиента", request: "Ответ подготовлен", status: "Готово" },
+        notification: "AI подготовил ответ — проверьте",
+      },
+    ],
   },
 
   trust: [

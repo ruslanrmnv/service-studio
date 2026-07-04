@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { defaultLocale, getDictionary, isLocale, type Locale } from "@/i18n/config";
 import ContactForm from "@/components/ContactForm";
+import LiveDemo from "@/components/LiveDemo";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -29,14 +30,14 @@ export default async function Home({
 
   return (
     <>
-      <SiteHeader locale={locale} copy={t.header} />
+      <SiteHeader locale={locale} copy={t.header} demoLabel={t.demo.heading} />
 
       <main className="flex-1">
         {/* Hero — a typographic statement over a faint blueprint field.
             `backtick` segments of the title are the studio's materials, set in
-            mono/azure; the flow strip at the foot shows what actually gets built. */}
-        <section className="hero-grid relative flex min-h-[92svh] flex-col justify-center overflow-hidden px-6">
-          <div className="hero-rise mx-auto w-full max-w-4xl pt-20 text-center">
+            mono/azure. The live demo below shows what actually gets built. */}
+        <section className="hero-grid relative flex min-h-[82svh] flex-col justify-center overflow-hidden px-6">
+          <div className="hero-rise mx-auto w-full max-w-4xl py-20 text-center">
             <p className="mb-8 inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-faint">
               <span aria-hidden="true" className="node-pulse h-2 w-2 rounded-full bg-accent-bright" />
               {t.hero.availability}
@@ -58,41 +59,34 @@ export default async function Home({
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
               {t.hero.subtitle}
             </p>
-            <div className="mt-10 flex justify-center">
+            <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row">
               <a
                 href="#contact"
                 className="inline-flex min-h-12 items-center rounded-full bg-ink px-7 text-sm font-medium uppercase tracking-[0.08em] text-background transition hover:bg-muted"
               >
                 {t.hero.ctaPrimary}
               </a>
+              <a
+                href="#demo"
+                className="inline-flex min-h-11 items-center gap-2 text-sm text-faint transition hover:text-ink"
+              >
+                {t.demo.heading}
+                <span aria-hidden="true">↓</span>
+              </a>
             </div>
           </div>
+        </section>
 
-          {/* Signature: the request → system → notification pipeline, drawn in
-              the site's own language. Desktop only; the mobile hero is already
-              full without it. */}
-          <div
-            aria-hidden="true"
-            className="hero-rise mx-auto mt-20 hidden w-full max-w-3xl items-center gap-3 sm:flex"
-          >
-            {t.hero.flow.map((step, index) => {
-              const last = index === t.hero.flow.length - 1;
-              return (
-                <Fragment key={step}>
-                  <div className="flex shrink-0 flex-col items-center gap-2.5">
-                    <span
-                      className={`h-2.5 w-2.5 rounded-full ${
-                        last ? "node-pulse bg-accent-bright" : "bg-faint"
-                      }`}
-                    />
-                    <span className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
-                      {step}
-                    </span>
-                  </div>
-                  {!last && <span className="mb-6 h-px flex-1 bg-line" />}
-                </Fragment>
-              );
-            })}
+        {/* Live demo — the centerpiece: watch a request travel end to end. */}
+        <section id="demo" aria-labelledby="demo-heading" className="border-t border-line">
+          <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 sm:py-28 md:grid-cols-[240px_1fr] md:gap-16">
+            <SectionHeading id="demo-heading">{t.demo.heading}</SectionHeading>
+            <div>
+              <p className="max-w-2xl leading-relaxed text-muted">{t.demo.intro}</p>
+              <div className="mt-10">
+                <LiveDemo copy={t.demo} />
+              </div>
+            </div>
           </div>
         </section>
 

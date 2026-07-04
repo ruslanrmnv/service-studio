@@ -28,8 +28,60 @@ export const uk: Dictionary = {
       "Роблю робочі системи під вашу задачу: зібрати заявки, відповідати на повторювані питання та навести лад у даних. Можна почати з одного зрозумілого сценарію.",
     availability: "Відкритий для нових проєктів",
     ctaPrimary: "Залишити заявку",
-    // Signature flow at the foot of the hero — the pipeline the studio builds.
-    flow: ["Заявка", "Форма / бот / ШІ", "Таблиця / Telegram", "Сповіщення"],
+  },
+
+  // Live demo — the interactive centerpiece: a request travels from an
+  // incoming message to a table row and a notification, played out on screen.
+  demo: {
+    heading: "Як це працює",
+    intro:
+      "Не на словах, а наживо. Оберіть сценарій — і подивіться, як запит проходить увесь шлях: від повідомлення до рядка в таблиці та сповіщення вам.",
+    liveLabel: "Демо в реальному часі",
+    processing: "Обробляю",
+    replay: "Повторити",
+    tableTitle: "Заявки",
+    columns: ["Час", "Від", "Запит", "Статус"],
+    scenarios: [
+      {
+        id: "form",
+        label: "Форма",
+        source: "Форма на сайті",
+        kind: "form",
+        lines: [
+          { role: "field", label: "Ім’я", text: "Анна" },
+          { role: "field", label: "Послуга", text: "Запис на консультацію" },
+          { role: "field", label: "Контакт", text: "@anna" },
+        ],
+        row: { time: "10:42", from: "Анна", request: "Запис на консультацію", status: "Нова" },
+        notification: "Нова заявка від Анни",
+      },
+      {
+        id: "bot",
+        label: "Telegram-бот",
+        source: "@studio_bot",
+        kind: "chat",
+        lines: [
+          { role: "bot", label: "", text: "Вітаю! Як вас звати?" },
+          { role: "user", label: "", text: "Ігор" },
+          { role: "bot", label: "", text: "Що потрібно автоматизувати?" },
+          { role: "user", label: "", text: "Потрібен бот для заявок" },
+        ],
+        row: { time: "10:45", from: "Ігор", request: "Бот для заявок", status: "Нова" },
+        notification: "Ігор залишив заявку через бота",
+      },
+      {
+        id: "ai",
+        label: "AI-помічник",
+        source: "AI-помічник",
+        kind: "chat",
+        lines: [
+          { role: "user", label: "", text: "Клієнт надіслав лист із п’ятьма запитаннями." },
+          { role: "bot", label: "", text: "Зібрав відповідь: 5 пунктів, ввічливий тон, готово до відправлення." },
+        ],
+        row: { time: "10:51", from: "Лист клієнта", request: "Відповідь підготовлено", status: "Готово" },
+        notification: "AI підготував відповідь — перевірте",
+      },
+    ],
   },
 
   trust: [

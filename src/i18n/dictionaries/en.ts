@@ -28,8 +28,60 @@ export const en: Dictionary = {
       "I build working systems for your task: collect requests, answer repeating questions, and keep your data tidy. You can start with one clear setup.",
     availability: "Available for new projects",
     ctaPrimary: "Send request",
-    // Signature flow at the foot of the hero — the pipeline the studio builds.
-    flow: ["Request", "Form / bot / AI", "Table / Telegram", "Notification"],
+  },
+
+  // Live demo — the interactive centerpiece: a request travels from an
+  // incoming message to a table row and a notification, played out on screen.
+  demo: {
+    heading: "See it work",
+    intro:
+      "Not a description — the real thing. Pick a scenario and watch a request travel the whole path: from a message to a table row and a notification to you.",
+    liveLabel: "Live demo",
+    processing: "Processing",
+    replay: "Replay",
+    tableTitle: "Requests",
+    columns: ["Time", "From", "Request", "Status"],
+    scenarios: [
+      {
+        id: "form",
+        label: "Form",
+        source: "Website form",
+        kind: "form",
+        lines: [
+          { role: "field", label: "Name", text: "Anna" },
+          { role: "field", label: "Service", text: "Book a consultation" },
+          { role: "field", label: "Contact", text: "@anna" },
+        ],
+        row: { time: "10:42", from: "Anna", request: "Book a consultation", status: "New" },
+        notification: "New request from Anna",
+      },
+      {
+        id: "bot",
+        label: "Telegram bot",
+        source: "@studio_bot",
+        kind: "chat",
+        lines: [
+          { role: "bot", label: "", text: "Hi! What's your name?" },
+          { role: "user", label: "", text: "Igor" },
+          { role: "bot", label: "", text: "What would you like to automate?" },
+          { role: "user", label: "", text: "I need a bot for requests" },
+        ],
+        row: { time: "10:45", from: "Igor", request: "Bot for requests", status: "New" },
+        notification: "Igor sent a request through the bot",
+      },
+      {
+        id: "ai",
+        label: "AI helper",
+        source: "AI helper",
+        kind: "chat",
+        lines: [
+          { role: "user", label: "", text: "A client sent an email with five questions." },
+          { role: "bot", label: "", text: "Reply ready: 5 points, polite tone, ready to send." },
+        ],
+        row: { time: "10:51", from: "Client email", request: "Reply prepared", status: "Done" },
+        notification: "AI prepared a reply — please review",
+      },
+    ],
   },
 
   trust: [
