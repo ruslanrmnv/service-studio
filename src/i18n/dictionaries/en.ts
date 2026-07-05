@@ -148,34 +148,44 @@ export const en: Dictionary = {
       {
         title: "AI & chat automation",
         description:
-          "Automating messages, replies, and repetitive scenarios in messengers, forms, or on your site.",
+          "I answer common questions for you in messengers, forms, and on your site — the client gets a reply now, not in an hour.",
       },
       {
         title: "Telegram bots for your task",
         description:
-          "Bots for requests, surveys, reminders, internal processes, personal scenarios, or working systems.",
+          "A bot collects requests and surveys, sends reminders, and walks the client through the steps — with you out of the routine.",
       },
       {
         title: "Forms & data collection",
         description:
-          "Link-based forms for requests, briefs, bookings, surveys, collecting contacts, or structured information.",
+          "A link-based form drops requests, briefs, and bookings straight into a table — all in one place, nothing lost.",
       },
       {
-        title: "Integrations, tracking, and notifications",
+        title: "Integrations & notifications",
         description:
-          "Requests, forms, and messages can be connected to tables, email, Telegram, or work tools — with statuses, history, and notifications.",
+          "I connect forms, chats, and tables to email, Telegram, and your tools — with statuses, history, and a ping on every request.",
       },
       {
         title: "Pages for a specific goal",
         description:
-          "One-page sites for a service, product, event, portfolio, promo, or to test an idea.",
+          "A one-page site for a service, product, or promo — to test an idea and start selling fast.",
       },
       {
-        title: "AI helpers for routine workflows",
+        title: "AI helpers for routine",
         description:
-          "AI helpers that process requests, sort information, prepare replies, analyze text, and handle repeatable actions through a clear workflow.",
+          "AI sorts requests, drafts replies, and prepares summaries — the repetitive processing runs itself.",
       },
     ],
+  },
+
+  // Real work / proof. Renders only when `items` has entries — no fake cases.
+  cases: {
+    heading: "Selected work",
+    intro: "Short breakdowns: the client's task, what I built, and what it changed.",
+    taskLabel: "Task",
+    builtLabel: "What I built",
+    resultLabel: "Result",
+    items: [],
   },
 
   formats: {

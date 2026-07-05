@@ -6,6 +6,7 @@ import {
   isLocale,
   TELEGRAM_URL,
   WHATSAPP_URL,
+  type Dictionary,
   type Locale,
 } from "@/i18n/config";
 import ContactForm from "@/components/ContactForm";
@@ -46,6 +47,37 @@ const DIRECT = [
   { label: "WhatsApp", href: WHATSAPP_URL },
   { label: "Instagram", href: INSTAGRAM_URL },
 ] as const;
+
+/* Real work / proof. Renders nothing until `cases.items` has real projects —
+   add them in the dictionaries (task → what was built → result). */
+function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
+  if (copy.items.length === 0) return null;
+  return (
+    <section id="cases" aria-labelledby="cases-heading">
+      <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+        <Reveal>
+          <SectionHeader id="cases-heading" title={copy.heading} intro={copy.intro} />
+        </Reveal>
+        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {copy.items.map((c, i) => (
+            <Reveal key={i} delay={i * 60}>
+              <div className="h-full rounded-2xl border border-line bg-surface-2 p-6">
+                <p className="text-xs text-faint">{copy.taskLabel}</p>
+                <p className="mt-1 font-display text-lg leading-snug text-ink">
+                  {c.task}
+                </p>
+                <p className="mt-4 text-xs text-faint">{copy.builtLabel}</p>
+                <p className="mt-1 text-[15px] leading-relaxed text-muted">{c.built}</p>
+                <p className="mt-4 text-xs text-faint">{copy.resultLabel}</p>
+                <p className="mt-1 font-medium leading-relaxed text-accent">{c.result}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default async function Home({
   params,
@@ -148,6 +180,9 @@ export default async function Home({
             </div>
           </div>
         </section>
+
+        {/* Selected work — appears once real cases are added to the dictionary. */}
+        <CasesSection copy={t.cases} />
 
         {/* How to start — three entry points as raised cards. */}
         <section id="formats" aria-labelledby="formats-heading" className="bg-surface">
