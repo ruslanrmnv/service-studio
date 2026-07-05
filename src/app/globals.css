@@ -69,18 +69,69 @@ body {
   animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Hero atmosphere — a soft radial lift from the center, no lines, no glow ring.
-   Gives the black ground depth so the type doesn't float on flat void. */
-.hero-glow::before {
+/* Hero atmosphere — living azure light, adapted from the reference's ambient
+   accent glow. Two soft radial lights on the black ground breathe and drift
+   slowly, so the hero feels alive without gradients-as-fill or clutter. */
+.hero-glow::before,
+.hero-glow::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+.hero-glow::before {
   background: radial-gradient(
-    ellipse 70% 60% at 50% 38%,
-    rgba(25, 140, 255, 0.09) 0%,
+    ellipse 62% 54% at 50% 36%,
+    rgba(25, 140, 255, 0.12) 0%,
+    transparent 68%
+  );
+  animation: glow-breathe 11s ease-in-out infinite;
+}
+.hero-glow::after {
+  background: radial-gradient(
+    ellipse 46% 42% at 32% 66%,
+    rgba(25, 140, 255, 0.07) 0%,
     transparent 70%
   );
+  animation: glow-drift 15s ease-in-out infinite;
+}
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.09);
+  }
+}
+@keyframes glow-drift {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate3d(4%, -3%, 0);
+  }
+}
+
+/* Hero accent word — a gentle azure light on the highlighted word, echoing the
+   reference's glowing headline accent (not a gradient fill). */
+.accent-glow {
+  text-shadow: 0 0 22px rgba(25, 140, 255, 0.4);
+  animation: accent-pulse 4.5s ease-in-out infinite;
+}
+@keyframes accent-pulse {
+  0%,
+  100% {
+    text-shadow: 0 0 16px rgba(25, 140, 255, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(25, 140, 255, 0.6);
+  }
 }
 
 /* Signature flow — the last node pulses to imply data arriving. */
@@ -169,7 +220,10 @@ body {
   .node-pulse,
   .typing-dot,
   .row-sweep,
-  .explorer-card {
+  .explorer-card,
+  .accent-glow,
+  .hero-glow::before,
+  .hero-glow::after {
     animation: none;
   }
 

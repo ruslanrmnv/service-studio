@@ -38,6 +38,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local agent config & reference material (not part of the site)
+.claude/
+*.pdf
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -45,6 +45,41 @@ function sanitizeSubject(value: string): string {
   return value.replace(/[\r\n\t]+/g, " ").replace(/\s+/g, " ").trim();
 }
 
+// Best-effort in-memory rate limit per IP. On serverless each instance keeps its
+// own window, so this throttles bursts rather than enforcing a strict global cap
+// — enough for a low-traffic contact form paired with the honeypot. For a hard
+// global limit, swap this for a shared store (e.g. Upstash/Vercel KV) keyed the
+// same way.
+const RATE_LIMIT = { windowMs: 10 * 60 * 1000, max: 5 };
+const rateHits = new Map<string, { count: number; resetAt: number }>();
+
+function clientIp(request: Request): string {
+  const fwd = request.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0].trim();
+  return request.headers.get("x-real-ip") || "unknown";
+}
+
+/** Returns true if the request is allowed, false if the IP is over its window quota. */
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+
+  // Opportunistic cleanup so the map can't grow without bound.
+  if (rateHits.size > 5000) {
+    for (const [key, entry] of rateHits) {
+      if (now > entry.resetAt) rateHits.delete(key);
+    }
+  }
+
+  const entry = rateHits.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateHits.set(ip, { count: 1, resetAt: now + RATE_LIMIT.windowMs });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT.max) return false;
+  entry.count += 1;
+  return true;
+}
+
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try {
@@ -59,9 +94,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  // Validate locale: ru or en (fall back to en).
+  // Validate locale: ru, en, or uk (fall back to en).
   const locale: Locale = isLocale(body.locale as string) ? (body.locale as Locale) : "en";
   const t = await getDictionary(locale);
+
+  // Throttle abuse before doing any real work (validation, dictionary, email).
+  if (!checkRateLimit(clientIp(request))) {
+    return NextResponse.json(
+      { error: t.contact.error.generic },
+      { status: 429 }
+    );
+  }
 
   // Normalize string fields.
   const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");

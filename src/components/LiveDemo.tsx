@@ -48,6 +48,11 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     y: number;
     landed: boolean;
   } | null>(null);
+  // Quiet ambient feed: sample requests keep arriving while the demo is idle
+  // and the visitor hasn't taken over. `ambientRow` overrides the row content.
+  const [ambientRow, setAmbientRow] = useState<{ from: string; request: string } | null>(null);
+  const [userTookOver, setUserTookOver] = useState(false);
+  const [inView, setInView] = useState(false);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const deviceRef = useRef<HTMLDivElement>(null);
@@ -56,6 +61,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
   const revealTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const sysTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const flyTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const ambientIndex = useRef(0);
 
   const scenario = copy.scenarios.find((s) => s.id === activeId) ?? first;
   const isForm = scenario.kind === "form";
@@ -113,10 +119,9 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     if (!el) return;
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          setStarted(true);
-          io.disconnect();
-        }
+        const visible = entries[0].isIntersecting;
+        setInView(visible);
+        if (visible) setStarted(true);
       },
       { threshold: 0.3 }
     );
@@ -138,12 +143,23 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     );
   }
 
+  // One ambient tick: pull the next sample request and run it through.
+  function runAmbient() {
+    const pool = copy.ambient;
+    if (!pool.length) return;
+    const item = pool[ambientIndex.current % pool.length];
+    ambientIndex.current += 1;
+    setAmbientRow(item);
+    runSystem(item.from);
+  }
+
   // Reveal incoming lines, then hand off to the system phase.
   useEffect(() => {
     if (!started) return;
     clearReveal();
     clearSys();
     clearFlyTimers();
+    ambientIndex.current = 0;
 
     if (reduce) {
       revealTimers.current.push(
@@ -151,6 +167,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
           setRevealed(lineCount);
           setTypingLine(-1);
           setFly(null);
+          setAmbientRow(null);
           if (isForm) {
             setNameValue(formDefault);
             setSentName(formDefault);
@@ -170,6 +187,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         setRevealed(0);
         setTypingLine(-1);
         setFly(null);
+        setAmbientRow(null);
         setPhase("incoming");
         if (isForm) {
           setNameValue(formDefault);
@@ -215,16 +233,47 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, activeId, runId, reduce]);
 
+  // Ambient feed (stable): one interval reads live flags via refs and fires the
+  // next sample request whenever the form demo is idle, in view, motion is
+  // allowed, and the visitor hasn't taken over. No effect re-arm fragility.
+  const ambientFlags = useRef({ isForm, started, inView, reduce, userTookOver, phase });
+  const runAmbientRef = useRef(runAmbient);
+  useEffect(() => {
+    ambientFlags.current = { isForm, started, inView, reduce, userTookOver, phase };
+    runAmbientRef.current = runAmbient;
+  }, [isForm, started, inView, reduce, userTookOver, phase, runAmbient]);
+  useEffect(() => {
+    const id = setInterval(() => {
+      const f = ambientFlags.current;
+      if (
+        f.isForm &&
+        f.started &&
+        f.inView &&
+        !f.reduce &&
+        !f.userTookOver &&
+        f.phase === "done"
+      ) {
+        runAmbientRef.current();
+      }
+    }, 5200);
+    return () => clearInterval(id);
+  }, []);
+
   const showProcessing = phase === "processing";
   const showRow = phase === "row" || phase === "done";
   const showToast = phase === "done";
   const revealDone = revealed >= lineCount;
 
-  const displayName = isForm ? sentName || formDefault : scenario.row.from;
+  const displayName = ambientRow
+    ? ambientRow.from
+    : isForm
+      ? sentName || formDefault
+      : scenario.row.from;
+  const displayRequest = ambientRow ? ambientRow.request : scenario.row.request;
   const rowCells = [
     scenario.row.time,
     displayName,
-    scenario.row.request,
+    displayRequest,
     scenario.row.status,
   ];
   const toastText = isForm
@@ -232,6 +281,8 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     : scenario.notification;
 
   function selectScenario(id: string) {
+    setUserTookOver(true);
+    setAmbientRow(null);
     setActiveId(id);
     setStarted(true);
     setRunId((n) => n + 1);
@@ -323,7 +374,11 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                         {i === 0 ? (
                           <input
                             value={nameValue}
-                            onChange={(e) => setNameValue(e.target.value)}
+                            onChange={(e) => {
+                              setUserTookOver(true);
+                              setNameValue(e.target.value);
+                            }}
+                            onFocus={() => setUserTookOver(true)}
                             maxLength={24}
                             aria-label={line.label}
                             className="w-full bg-transparent text-sm text-ink caret-accent outline-none"
@@ -378,7 +433,11 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                 <p className="text-xs leading-relaxed text-faint">{copy.tryHint}</p>
                 <button
                   type="button"
-                  onClick={() => runSystem(nameValue.trim() || formDefault)}
+                  onClick={() => {
+                    setUserTookOver(true);
+                    setAmbientRow(null);
+                    runSystem(nameValue.trim() || formDefault);
+                  }}
                   className="inline-flex min-h-10 w-fit items-center rounded-full bg-accent px-5 text-sm font-medium text-background transition hover:brightness-110"
                 >
                   {copy.sendLabel}

@@ -106,7 +106,7 @@ export default async function Home({
             <h1 className="font-display text-[2rem] leading-[1.14] text-ink sm:text-5xl lg:text-6xl">
               {t.hero.title.split("`").map((segment, index) =>
                 index % 2 === 1 ? (
-                  <span key={index} className="text-accent">
+                  <span key={index} className="accent-glow text-accent">
                     {segment}
                   </span>
                 ) : (

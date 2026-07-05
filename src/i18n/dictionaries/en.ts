@@ -88,6 +88,14 @@ export const en: Dictionary = {
     sendLabel: "Send",
     tryHint: "Type your own name and send — watch your request land in the table.",
     newRequest: "New request",
+    // Quiet ambient feed — sample requests keep arriving while idle.
+    ambient: [
+      { from: "Igor", request: "Bot for requests" },
+      { from: "Maria", request: "Booking form" },
+      { from: "Oleg", request: "Client reminders" },
+      { from: "Dana", request: "AI replies" },
+      { from: "Peter", request: "Report from sheets" },
+    ],
     tableTitle: "Requests",
     columns: ["Time", "From", "Request", "Status"],
     scenarios: [
@@ -174,6 +182,21 @@ export const en: Dictionary = {
         title: "AI helpers for routine",
         description:
           "AI sorts requests, drafts replies, and prepares summaries — the repetitive processing runs itself.",
+      },
+      {
+        title: "Auto funnels & broadcasts",
+        description:
+          "Scheduled or triggered messages, warm-ups, and reminders in messengers — so clients get the right nudge on time.",
+      },
+      {
+        title: "Dashboards & reports",
+        description:
+          "I pull data from forms, sheets, and chats into one screen — you see what's happening without manual reports.",
+      },
+      {
+        title: "Mini-CRM & client portal",
+        description:
+          "Clients, requests, and statuses tracked around your process — the whole history and next steps in one place.",
       },
     ],
   },
