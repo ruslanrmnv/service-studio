@@ -41,10 +41,21 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     first.kind === "form" ? first.lines[0].text : ""
   );
   const [sentName, setSentName] = useState("");
+  // The "morph": a clone that flies from the incoming side and lands as the row.
+  const [fly, setFly] = useState<{
+    text: string;
+    x: number;
+    y: number;
+    landed: boolean;
+  } | null>(null);
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const deviceRef = useRef<HTMLDivElement>(null);
+  const incomingRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLTableRowElement>(null);
   const revealTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const sysTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const flyTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const scenario = copy.scenarios.find((s) => s.id === activeId) ?? first;
   const isForm = scenario.kind === "form";
@@ -58,6 +69,42 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
   function clearSys() {
     sysTimers.current.forEach(clearTimeout);
     sysTimers.current = [];
+  }
+  function clearFlyTimers() {
+    flyTimers.current.forEach(clearTimeout);
+    flyTimers.current = [];
+  }
+  // Only safe to call outside an effect body (it sets state synchronously).
+  function clearFly() {
+    clearFlyTimers();
+    setFly(null);
+  }
+
+  // Morph: measure incoming panel + target row, then animate a clone between
+  // them. The clone shrinks and fades as it lands, and the real row reveals
+  // underneath — so the message visibly *becomes* the row.
+  function startFly(name: string) {
+    const dev = deviceRef.current;
+    const src = incomingRef.current;
+    const row = rowRef.current;
+    if (reduce || !dev || !src || !row) return;
+    const d = dev.getBoundingClientRect();
+    const s = src.getBoundingClientRect();
+    const r = row.getBoundingClientRect();
+    setFly({
+      text: name,
+      x: s.left - d.left + 24,
+      y: s.top - d.top + Math.min(s.height * 0.42, 96),
+      landed: false,
+    });
+    const endX = r.left - d.left + 2;
+    const endY = r.top - d.top + 2;
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() =>
+        setFly((f) => (f ? { ...f, x: endX, y: endY, landed: true } : f))
+      )
+    );
+    flyTimers.current.push(setTimeout(() => setFly(null), 760));
   }
 
   // Kick off the first play when the demo scrolls into view.
@@ -77,11 +124,14 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     return () => io.disconnect();
   }, []);
 
-  // System phase: processing → row → notification, with a chosen name.
+  // System phase: processing → row → notification, with a chosen name. The
+  // clone flies during "processing" and lands exactly as the row reveals.
   function runSystem(name: string) {
     clearSys();
+    clearFly();
     setSentName(name);
     setPhase("processing");
+    startFly(name);
     sysTimers.current.push(
       setTimeout(() => setPhase("row"), 760),
       setTimeout(() => setPhase("done"), 760 + 640)
@@ -93,12 +143,14 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     if (!started) return;
     clearReveal();
     clearSys();
+    clearFlyTimers();
 
     if (reduce) {
       revealTimers.current.push(
         setTimeout(() => {
           setRevealed(lineCount);
           setTypingLine(-1);
+          setFly(null);
           if (isForm) {
             setNameValue(formDefault);
             setSentName(formDefault);
@@ -109,6 +161,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
       return () => {
         clearReveal();
         clearSys();
+        clearFlyTimers();
       };
     }
 
@@ -116,6 +169,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
       setTimeout(() => {
         setRevealed(0);
         setTypingLine(-1);
+        setFly(null);
         setPhase("incoming");
         if (isForm) {
           setNameValue(formDefault);
@@ -155,6 +209,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     return () => {
       clearReveal();
       clearSys();
+      clearFlyTimers();
     };
     // scenario/lineCount/isForm/formDefault all derive from activeId
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -219,7 +274,10 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
       </div>
 
       {/* Device */}
-      <div className="relative mt-6 overflow-hidden rounded-2xl border border-line bg-surface-2">
+      <div
+        ref={deviceRef}
+        className="relative mt-6 overflow-hidden rounded-2xl border border-line bg-surface-2"
+      >
         {/* Title bar */}
         <div className="flex items-center gap-3 px-5 py-3.5">
           <span
@@ -242,7 +300,10 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         {/* Body: incoming (left) → system (right) */}
         <div className="grid gap-3 p-3 md:grid-cols-2">
           {/* Incoming */}
-          <div className="flex min-h-[260px] flex-col gap-3 rounded-xl bg-background p-5">
+          <div
+            ref={incomingRef}
+            className="flex min-h-[260px] flex-col gap-3 rounded-xl bg-background p-5"
+          >
             {isForm
               ? scenario.lines.map((line, i) => {
                   const shown = i < revealed;
@@ -346,6 +407,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
               </thead>
               <tbody>
                 <tr
+                  ref={rowRef}
                   className={`transition-opacity duration-500 motion-reduce:transition-none ${
                     showRow ? "row-sweep opacity-100" : "opacity-0"
                   }`}
@@ -397,6 +459,25 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
             </table>
           </div>
         </div>
+
+        {/* Morph — the message flies from the incoming side and lands as the row */}
+        {fly && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute z-10 whitespace-nowrap rounded-full border border-accent-line bg-accent-soft px-3 py-1.5 text-sm text-ink shadow-lg"
+            style={{
+              left: fly.x,
+              top: fly.y,
+              transition: fly.landed
+                ? "left 0.62s cubic-bezier(0.5,0,0.2,1), top 0.62s cubic-bezier(0.5,0,0.2,1), opacity 0.5s ease 0.15s, transform 0.62s cubic-bezier(0.5,0,0.2,1)"
+                : "none",
+              transform: fly.landed ? "scale(0.82)" : "scale(1)",
+              opacity: fly.landed ? 0 : 1,
+            }}
+          >
+            {fly.text}
+          </div>
+        )}
 
         {/* Notification toast */}
         <div
