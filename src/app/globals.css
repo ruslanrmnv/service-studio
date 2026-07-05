@@ -100,9 +100,82 @@ body {
   animation: node-pulse 2.8s ease-in-out infinite;
 }
 
+/* Scroll reveal — content rises in as it enters the viewport. The <Reveal>
+   client component toggles .is-visible; CSS carries the motion. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Task explorer: the answer card fades up each time a task is picked. */
+@keyframes explorer-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.explorer-card {
+  animation: explorer-in 0.35s ease both;
+}
+
+/* Demo: a small "typing" indicator (three bouncing dots) before a bot line. */
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+
+/* Demo: brief azure sweep when a new row is written into the table. */
+@keyframes row-sweep {
+  0% {
+    background-color: rgba(25, 140, 255, 0.16);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.row-sweep {
+  animation: row-sweep 1.1s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-rise,
-  .node-pulse {
+  .node-pulse,
+  .typing-dot,
+  .row-sweep,
+  .explorer-card {
     animation: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

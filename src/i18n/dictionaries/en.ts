@@ -22,12 +22,58 @@ export const en: Dictionary = {
 
   hero: {
     brand: "Service Studio by Ruslan",
-    // `backtick` segments render in mono/cobalt in the hero h1.
-    title: "I reduce manual work with `AI`, `bots`, and `forms`.",
+    // `backtick` segments render as the azure accent in the hero h1.
+    title: "I automate `anything` that slows your business down.",
     subtitle:
-      "I build working systems for your task: collect requests, answer repeating questions, and keep your data tidy. You can start with one clear setup.",
+      "Bots, forms, AI helpers, and integrations — built around your task. So you reply faster, lose nothing, and spend time on growth instead of routine.",
     availability: "Available for new projects",
     ctaPrimary: "Send request",
+  },
+
+  // Interactive value block — visitor picks a business task and sees what I'd
+  // build and the result. Extensible: add a task by adding an entry.
+  explorer: {
+    prompt: "What can I help with?",
+    buildLabel: "What I'll build",
+    resultLabel: "Result",
+    tasks: [
+      {
+        id: "leads",
+        label: "Requests & leads",
+        build: "A form or bot that collects requests into one table and pings you instantly.",
+        result: "No request ever slips through.",
+      },
+      {
+        id: "replies",
+        label: "Customer replies",
+        build: "A bot that answers common questions and hands the tricky ones to you.",
+        result: "Customers don't wait for hours.",
+      },
+      {
+        id: "data",
+        label: "Tidy data",
+        build: "Auto-collection from forms, chats, and sheets in one place — no manual merging.",
+        result: "Order instead of chaos and leaks.",
+      },
+      {
+        id: "reminders",
+        label: "Reminders",
+        build: "A system that nudges clients and you about the right steps on time.",
+        result: "Nothing forgotten or overdue.",
+      },
+      {
+        id: "ai",
+        label: "AI helper",
+        build: "An AI that sorts requests and drafts replies in your tone.",
+        result: "Routine runs on autopilot.",
+      },
+      {
+        id: "custom",
+        label: "Your own task",
+        build: "Describe your process — I'll propose a scenario and build the system for it.",
+        result: "Built for your business, not a template.",
+      },
+    ],
   },
 
   // Live demo — the interactive centerpiece: a request travels from an
@@ -39,6 +85,9 @@ export const en: Dictionary = {
     liveLabel: "Live demo",
     processing: "Processing",
     replay: "Replay",
+    sendLabel: "Send",
+    tryHint: "Type your own name and send — watch your request land in the table.",
+    newRequest: "New request",
     tableTitle: "Requests",
     columns: ["Time", "From", "Request", "Status"],
     scenarios: [

@@ -19,23 +19,46 @@ function usePrefersReducedMotion() {
 }
 
 /**
- * The site's centerpiece: a request travels, on screen, from an incoming
- * message (form / Telegram / AI) to a written table row and a notification.
- * It plays once when scrolled into view, and replays on tab switch or replay.
- * Under prefers-reduced-motion it renders the finished state with no motion.
+ * The site's centerpiece. A request travels, on screen, from an incoming
+ * message to a written table row and a notification. The form scenario is
+ * interactive: the visitor edits the name and presses send to watch their own
+ * request land. Chat scenarios auto-play with a typing indicator. Plays once on
+ * scroll-into-view; prefers-reduced-motion jumps to the finished state.
  */
 export default function LiveDemo({ copy }: { copy: DemoCopy }) {
-  const [activeId, setActiveId] = useState(copy.scenarios[0].id);
+  const first = copy.scenarios[0];
+  const [activeId, setActiveId] = useState(first.id);
   const [runId, setRunId] = useState(0);
-  const [stage, setStage] = useState(0);
   const [started, setStarted] = useState(false);
   const reduce = usePrefersReducedMotion();
-  const rootRef = useRef<HTMLDivElement>(null);
 
-  const scenario =
-    copy.scenarios.find((s) => s.id === activeId) ?? copy.scenarios[0];
+  const [revealed, setRevealed] = useState(0);
+  const [typingLine, setTypingLine] = useState(-1);
+  const [phase, setPhase] = useState<"incoming" | "processing" | "row" | "done">(
+    "incoming"
+  );
+  const [nameValue, setNameValue] = useState(
+    first.kind === "form" ? first.lines[0].text : ""
+  );
+  const [sentName, setSentName] = useState("");
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const revealTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const sysTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const scenario = copy.scenarios.find((s) => s.id === activeId) ?? first;
+  const isForm = scenario.kind === "form";
   const lineCount = scenario.lines.length;
-  const maxStage = lineCount + 3;
+  const formDefault = isForm ? scenario.lines[0].text : "";
+
+  function clearReveal() {
+    revealTimers.current.forEach(clearTimeout);
+    revealTimers.current = [];
+  }
+  function clearSys() {
+    sysTimers.current.forEach(clearTimeout);
+    sysTimers.current = [];
+  }
 
   // Kick off the first play when the demo scrolls into view.
   useEffect(() => {
@@ -54,29 +77,104 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     return () => io.disconnect();
   }, []);
 
-  // Step through the timeline on start, tab switch, or replay. Every stage
-  // change is scheduled (never set synchronously in the effect body), so the
-  // reset and the reduced-motion jump also go through timers.
+  // System phase: processing → row → notification, with a chosen name.
+  function runSystem(name: string) {
+    clearSys();
+    setSentName(name);
+    setPhase("processing");
+    sysTimers.current.push(
+      setTimeout(() => setPhase("row"), 760),
+      setTimeout(() => setPhase("done"), 760 + 640)
+    );
+  }
+
+  // Reveal incoming lines, then hand off to the system phase.
   useEffect(() => {
     if (!started) return;
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    if (reduce) {
-      timers.push(setTimeout(() => setStage(maxStage), 0));
-      return () => timers.forEach(clearTimeout);
-    }
-    timers.push(setTimeout(() => setStage(0), 0));
-    let at = 350;
-    for (let s = 1; s <= maxStage; s++) {
-      at += s <= lineCount ? 640 : s === lineCount + 1 ? 780 : 640;
-      timers.push(setTimeout(() => setStage(s), at));
-    }
-    return () => timers.forEach(clearTimeout);
-  }, [started, activeId, runId, reduce, lineCount, maxStage]);
+    clearReveal();
+    clearSys();
 
-  const revealed = Math.min(stage, lineCount);
-  const showProcessing = stage === lineCount + 1;
-  const showRow = stage >= lineCount + 2;
-  const showToast = stage >= lineCount + 3;
+    if (reduce) {
+      revealTimers.current.push(
+        setTimeout(() => {
+          setRevealed(lineCount);
+          setTypingLine(-1);
+          if (isForm) {
+            setNameValue(formDefault);
+            setSentName(formDefault);
+          }
+          setPhase("done");
+        }, 0)
+      );
+      return () => {
+        clearReveal();
+        clearSys();
+      };
+    }
+
+    revealTimers.current.push(
+      setTimeout(() => {
+        setRevealed(0);
+        setTypingLine(-1);
+        setPhase("incoming");
+        if (isForm) {
+          setNameValue(formDefault);
+          setSentName("");
+        }
+      }, 0)
+    );
+
+    let at = 350;
+    for (let i = 0; i < lineCount; i++) {
+      const idx = i;
+      if (scenario.lines[i].role === "bot") {
+        revealTimers.current.push(setTimeout(() => setTypingLine(idx), at));
+        at += 520;
+        revealTimers.current.push(
+          setTimeout(() => {
+            setTypingLine(-1);
+            setRevealed(idx + 1);
+          }, at)
+        );
+        at += 360;
+      } else {
+        revealTimers.current.push(
+          setTimeout(() => {
+            setTypingLine(-1);
+            setRevealed(idx + 1);
+          }, at)
+        );
+        at += isForm ? 300 : 520;
+      }
+    }
+
+    revealTimers.current.push(
+      setTimeout(() => runSystem(isForm ? formDefault : scenario.row.from), at + 150)
+    );
+
+    return () => {
+      clearReveal();
+      clearSys();
+    };
+    // scenario/lineCount/isForm/formDefault all derive from activeId
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [started, activeId, runId, reduce]);
+
+  const showProcessing = phase === "processing";
+  const showRow = phase === "row" || phase === "done";
+  const showToast = phase === "done";
+  const revealDone = revealed >= lineCount;
+
+  const displayName = isForm ? sentName || formDefault : scenario.row.from;
+  const rowCells = [
+    scenario.row.time,
+    displayName,
+    scenario.row.request,
+    scenario.row.status,
+  ];
+  const toastText = isForm
+    ? `${copy.newRequest}: ${displayName}`
+    : scenario.notification;
 
   function selectScenario(id: string) {
     setActiveId(id);
@@ -84,22 +182,11 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
     setRunId((n) => n + 1);
   }
 
-  const rowCells = [
-    scenario.row.time,
-    scenario.row.from,
-    scenario.row.request,
-    scenario.row.status,
-  ];
-
   return (
     <div ref={rootRef}>
       {/* Controls: scenario tabs + replay */}
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div
-          role="group"
-          aria-label={copy.liveLabel}
-          className="flex flex-wrap gap-1.5"
-        >
+        <div role="group" aria-label={copy.liveLabel} className="flex flex-wrap gap-1.5">
           {copy.scenarios.map((s) => {
             const active = s.id === activeId;
             return (
@@ -131,7 +218,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         </button>
       </div>
 
-      {/* Device — panels separated by tone, not rules. */}
+      {/* Device */}
       <div className="relative mt-6 overflow-hidden rounded-2xl border border-line bg-surface-2">
         {/* Title bar */}
         <div className="flex items-center gap-3 px-5 py-3.5">
@@ -155,37 +242,88 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
         {/* Body: incoming (left) → system (right) */}
         <div className="grid gap-3 p-3 md:grid-cols-2">
           {/* Incoming */}
-          <div className="flex min-h-[248px] flex-col gap-3 rounded-xl bg-background p-5">
-            {scenario.lines.map((line, i) => {
-              const visible = i < revealed;
-              const isUser = line.role === "user";
-              const isField = line.role === "field";
-              return (
-                <div
-                  key={i}
-                  className={`transition-all duration-500 motion-reduce:transition-none ${
-                    visible ? "translate-y-0 opacity-100" : "translate-y-1.5 opacity-0"
-                  } ${isField ? "" : isUser ? "flex justify-end" : "flex justify-start"}`}
-                >
-                  {isField ? (
-                    <div className="flex items-baseline gap-3 rounded-lg bg-surface-2 px-3.5 py-2.5">
-                      <span className="text-[13px] text-faint">{line.label}</span>
-                      <span className="text-sm text-ink">{line.text}</span>
-                    </div>
-                  ) : (
+          <div className="flex min-h-[260px] flex-col gap-3 rounded-xl bg-background p-5">
+            {isForm
+              ? scenario.lines.map((line, i) => {
+                  const shown = i < revealed;
+                  return (
                     <div
-                      className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
-                        isUser
-                          ? "rounded-br-sm bg-accent-soft text-ink"
-                          : "rounded-bl-sm bg-surface-3 text-muted"
+                      key={i}
+                      className={`transition-all duration-500 motion-reduce:transition-none ${
+                        shown
+                          ? "translate-y-0 opacity-100"
+                          : "pointer-events-none translate-y-1.5 opacity-0"
                       }`}
                     >
-                      {line.text}
+                      <div className="flex items-baseline gap-3 rounded-lg bg-surface-2 px-3.5 py-2.5">
+                        <span className="w-16 shrink-0 text-[13px] text-faint">
+                          {line.label}
+                        </span>
+                        {i === 0 ? (
+                          <input
+                            value={nameValue}
+                            onChange={(e) => setNameValue(e.target.value)}
+                            maxLength={24}
+                            aria-label={line.label}
+                            className="w-full bg-transparent text-sm text-ink caret-accent outline-none"
+                          />
+                        ) : (
+                          <span className="text-sm text-ink">{line.text}</span>
+                        )}
+                      </div>
                     </div>
-                  )}
+                  );
+                })
+              : scenario.lines.map((line, i) => {
+                  if (i >= revealed) return null;
+                  const isUser = line.role === "user";
+                  return (
+                    <div key={i} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+                      <div
+                        className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
+                          isUser
+                            ? "rounded-br-sm bg-accent-soft text-ink"
+                            : "rounded-bl-sm bg-surface-3 text-muted"
+                        }`}
+                      >
+                        {line.text}
+                      </div>
+                    </div>
+                  );
+                })}
+
+            {/* Chat typing indicator */}
+            {!isForm && typingLine >= 0 && (
+              <div className="flex justify-start">
+                <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-surface-3 px-3.5 py-3">
+                  {[0, 1, 2].map((d) => (
+                    <span
+                      key={d}
+                      className="typing-dot h-1.5 w-1.5 rounded-full bg-faint"
+                      style={{ animationDelay: `${d * 160}ms` }}
+                    />
+                  ))}
                 </div>
-              );
-            })}
+              </div>
+            )}
+
+            {/* Form: try-it controls */}
+            {isForm && (
+              <div
+                className={`mt-auto flex flex-col gap-3 pt-2 transition-opacity duration-500 motion-reduce:transition-none ${
+                  revealDone ? "opacity-100" : "pointer-events-none opacity-0"
+                }`}
+              >
+                <p className="text-xs leading-relaxed text-faint">{copy.tryHint}</p>
+                <button
+                  type="button"
+                  onClick={() => runSystem(nameValue.trim() || formDefault)}
+                  className="inline-flex min-h-10 w-fit items-center rounded-full bg-accent px-5 text-sm font-medium text-background transition hover:brightness-110"
+                >
+                  {copy.sendLabel}
+                </button>
+              </div>
+            )}
           </div>
 
           {/* System: the table the request lands in */}
@@ -207,10 +345,9 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                 </tr>
               </thead>
               <tbody>
-                {/* The written row lands in the top slot, then two empty slots. */}
                 <tr
-                  className={`transition-all duration-500 motion-reduce:transition-none ${
-                    showRow ? "opacity-100" : "opacity-0"
+                  className={`transition-opacity duration-500 motion-reduce:transition-none ${
+                    showRow ? "row-sweep opacity-100" : "opacity-0"
                   }`}
                 >
                   {rowCells.map((cell, i) => (
@@ -226,9 +363,7 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
                     >
                       {i === 1 ? (
                         <span
-                          className={
-                            showRow ? "border-l-2 border-l-accent pl-2" : "pl-2"
-                          }
+                          className={showRow ? "border-l-2 border-l-accent pl-2" : "pl-2"}
                         >
                           {cell}
                         </span>
@@ -270,13 +405,8 @@ export default function LiveDemo({ copy }: { copy: DemoCopy }) {
             showToast ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
           }`}
         >
-          <span
-            aria-hidden="true"
-            className="h-2 w-2 shrink-0 rounded-full bg-accent"
-          />
-          <span className="text-sm text-ink">
-            {showToast ? scenario.notification : ""}
-          </span>
+          <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-accent" />
+          <span className="text-sm text-ink">{showToast ? toastText : ""}</span>
         </div>
       </div>
     </div>

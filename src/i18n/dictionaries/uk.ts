@@ -22,12 +22,58 @@ export const uk: Dictionary = {
 
   hero: {
     brand: "Service Studio by Ruslan",
-    // `backtick` segments render in mono/cobalt in the hero h1.
-    title: "Прибираю ручну рутину за допомогою `ШІ`, `ботів` і `форм`.",
+    // `backtick` segments render as the azure accent in the hero h1.
+    title: "Автоматизую `все`, що гальмує ваш бізнес.",
     subtitle:
-      "Роблю робочі системи під вашу задачу: зібрати заявки, відповідати на повторювані питання та навести лад у даних. Можна почати з одного зрозумілого сценарію.",
+      "Боти, форми, AI-помічники та інтеграції — збираю під вашу задачу. Щоб ви відповідали швидше, нічого не втрачали й займалися зростанням, а не рутиною.",
     availability: "Відкритий для нових проєктів",
     ctaPrimary: "Залишити заявку",
+  },
+
+  // Interactive value block — visitor picks a business task and sees what I'd
+  // build and the result. Extensible: add a task by adding an entry.
+  explorer: {
+    prompt: "З чим допомогти?",
+    buildLabel: "Що зберу",
+    resultLabel: "Результат",
+    tasks: [
+      {
+        id: "leads",
+        label: "Заявки та ліди",
+        build: "Форму або бота, що збирає заявки в одну таблицю й одразу шле вам сповіщення.",
+        result: "Жодна заявка не загубиться.",
+      },
+      {
+        id: "replies",
+        label: "Відповіді клієнтам",
+        build: "Бота, який відповідає на часті питання й передає складне особисто вам.",
+        result: "Клієнти не чекають на відповідь годинами.",
+      },
+      {
+        id: "data",
+        label: "Лад у даних",
+        build: "Автозбір даних із форм, чатів і таблиць в одному місці, без ручного зведення.",
+        result: "Лад замість хаосу й втрат.",
+      },
+      {
+        id: "reminders",
+        label: "Нагадування",
+        build: "Систему, яка вчасно нагадує клієнтам і вам про потрібні кроки.",
+        result: "Нічого не забуто й не прострочено.",
+      },
+      {
+        id: "ai",
+        label: "AI-помічник",
+        build: "AI, який сортує запити, готує відповіді та чернетки у вашому стилі.",
+        result: "Рутина йде на автопілот.",
+      },
+      {
+        id: "custom",
+        label: "Своя задача",
+        build: "Опишіть свій процес — запропоную сценарій і зберу систему під нього.",
+        result: "Рішення під ваш бізнес, а не шаблон.",
+      },
+    ],
   },
 
   // Live demo — the interactive centerpiece: a request travels from an
@@ -39,6 +85,9 @@ export const uk: Dictionary = {
     liveLabel: "Демо в реальному часі",
     processing: "Обробляю",
     replay: "Повторити",
+    sendLabel: "Надіслати",
+    tryHint: "Впишіть своє ім’я та надішліть — побачите свою заявку в таблиці.",
+    newRequest: "Нова заявка",
     tableTitle: "Заявки",
     columns: ["Час", "Від", "Запит", "Статус"],
     scenarios: [

@@ -10,8 +10,10 @@ import {
 } from "@/i18n/config";
 import ContactForm from "@/components/ContactForm";
 import LiveDemo from "@/components/LiveDemo";
+import Reveal from "@/components/Reveal";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import TaskExplorer from "@/components/TaskExplorer";
 
 /* Section header — one display title (+ optional intro), left-aligned. Structure
    comes from tonal bands and spacing, not hairline rules. */
@@ -101,53 +103,47 @@ export default async function Home({
           </div>
         </section>
 
-        {/* Principles — a quiet row, dot-separated, no boxes and no rules. */}
-        <div className="px-6 py-8">
-          <ul className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-x-7 gap-y-2 text-center text-sm text-faint sm:flex-row sm:flex-wrap">
-            {t.trust.map((item, index) => (
-              <li key={item} className="flex items-center gap-7">
-                {index > 0 && (
-                  <span aria-hidden="true" className="hidden text-accent sm:inline">
-                    ·
-                  </span>
-                )}
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Interactive value explorer — pick a task, see what I'd build. */}
+        <section aria-label={t.explorer.prompt} className="px-6 pb-16 pt-2 sm:pb-20">
+          <Reveal className="mx-auto w-full max-w-4xl">
+            <TaskExplorer copy={t.explorer} />
+          </Reveal>
+        </section>
 
         {/* Live demo — the centerpiece. Sits on a raised tonal band. */}
         <section id="demo" aria-labelledby="demo-heading" className="bg-surface">
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <SectionHeader id="demo-heading" title={t.demo.heading} intro={t.demo.intro} />
-            <div className="mt-12">
+            <Reveal>
+              <SectionHeader id="demo-heading" title={t.demo.heading} intro={t.demo.intro} />
+            </Reveal>
+            <Reveal className="mt-12" delay={80}>
               <LiveDemo copy={t.demo} />
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* Services — tonal cards, not ruled rows. */}
         <section id="services" aria-labelledby="services-heading">
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <SectionHeader
-              id="services-heading"
-              title={t.services.heading}
-              intro={t.services.subheading}
-            />
+            <Reveal>
+              <SectionHeader
+                id="services-heading"
+                title={t.services.heading}
+                intro={t.services.subheading}
+              />
+            </Reveal>
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {t.services.items.map((service) => (
-                <div
-                  key={service.title}
-                  className="rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-accent-line hover:bg-surface-2"
-                >
-                  <h3 className="font-display text-lg leading-snug text-ink">
-                    {service.title}
-                  </h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-muted">
-                    {service.description}
-                  </p>
-                </div>
+              {t.services.items.map((service, i) => (
+                <Reveal key={service.title} delay={i * 60}>
+                  <div className="h-full rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-accent-line hover:bg-surface-2">
+                    <h3 className="font-display text-lg leading-snug text-ink">
+                      {service.title}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-relaxed text-muted">
+                      {service.description}
+                    </p>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -156,27 +152,28 @@ export default async function Home({
         {/* How to start — three entry points as raised cards. */}
         <section id="formats" aria-labelledby="formats-heading" className="bg-surface">
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <SectionHeader
-              id="formats-heading"
-              title={t.formats.heading}
-              intro={t.formats.note}
-            />
+            <Reveal>
+              <SectionHeader
+                id="formats-heading"
+                title={t.formats.heading}
+                intro={t.formats.note}
+              />
+            </Reveal>
             <div className="mt-12 grid gap-4 md:grid-cols-3">
-              {t.formats.items.map((format) => (
-                <div
-                  key={format.title}
-                  className="rounded-2xl border border-line bg-surface-2 p-7"
-                >
-                  <h3 className="font-display text-lg leading-snug text-ink">
-                    {format.title}
-                  </h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-muted">
-                    {format.description}
-                  </p>
-                </div>
+              {t.formats.items.map((format, i) => (
+                <Reveal key={format.title} delay={i * 60}>
+                  <div className="h-full rounded-2xl border border-line bg-surface-2 p-7">
+                    <h3 className="font-display text-lg leading-snug text-ink">
+                      {format.title}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-relaxed text-muted">
+                      {format.description}
+                    </p>
+                  </div>
+                </Reveal>
               ))}
             </div>
-            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <Reveal className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <span className="text-muted">{t.formats.ctaText}</span>
               <a
                 href="#contact"
@@ -184,23 +181,30 @@ export default async function Home({
               >
                 {t.formats.ctaLink}
               </a>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* Process — the one true sequence, so the one vertical connector. */}
         <section aria-labelledby="process-heading">
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <SectionHeader
-              id="process-heading"
-              title={t.process.heading}
-              intro={t.process.subheading}
-            />
+            <Reveal>
+              <SectionHeader
+                id="process-heading"
+                title={t.process.heading}
+                intro={t.process.subheading}
+              />
+            </Reveal>
             <ol className="mt-12 max-w-3xl">
               {t.process.steps.map((step, index) => {
                 const last = index === t.process.steps.length - 1;
                 return (
-                  <li key={step.title} className="grid grid-cols-[auto_1fr] gap-x-5 sm:gap-x-7">
+                  <Reveal
+                    as="li"
+                    key={step.title}
+                    delay={index * 70}
+                    className="grid grid-cols-[auto_1fr] gap-x-5 sm:gap-x-7"
+                  >
                     <div className="flex flex-col items-center">
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent font-display text-sm text-background">
                         {index + 1}
@@ -215,7 +219,7 @@ export default async function Home({
                         {step.description}
                       </p>
                     </div>
-                  </li>
+                  </Reveal>
                 );
               })}
             </ol>
@@ -225,32 +229,34 @@ export default async function Home({
         {/* About — prose with a human anchor card, no hairlines. */}
         <section id="about" aria-labelledby="about-heading" className="bg-surface">
           <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:py-28 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
-            <div>
+            <Reveal>
               <SectionHeader id="about-heading" title={t.about.heading} />
               <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted">
                 {t.about.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
-            </div>
-            <aside className="self-start rounded-2xl border border-line bg-surface-2 p-8">
-              <p className="font-display text-2xl text-ink">Ruslan</p>
-              <p className="mt-2 leading-relaxed text-muted">{t.footer.tagline}</p>
-              <p className="mt-6 inline-flex items-center gap-2.5 text-sm text-faint">
-                <span
-                  aria-hidden="true"
-                  className="node-pulse h-2 w-2 rounded-full bg-accent"
-                />
-                {t.hero.availability}
-              </p>
-            </aside>
+            </Reveal>
+            <Reveal as="div" delay={90} className="self-start">
+              <aside className="rounded-2xl border border-line bg-surface-2 p-8">
+                <p className="font-display text-2xl text-ink">Ruslan</p>
+                <p className="mt-2 leading-relaxed text-muted">{t.footer.tagline}</p>
+                <p className="mt-6 inline-flex items-center gap-2.5 text-sm text-faint">
+                  <span
+                    aria-hidden="true"
+                    className="node-pulse h-2 w-2 rounded-full bg-accent"
+                  />
+                  {t.hero.availability}
+                </p>
+              </aside>
+            </Reveal>
           </div>
         </section>
 
         {/* Contact — the destination: warm invite, direct links, form in a panel. */}
         <section id="contact" aria-labelledby="contact-heading">
           <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:py-28 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
-            <div>
+            <Reveal>
               <h2
                 id="contact-heading"
                 className="font-display text-3xl leading-[1.1] text-ink sm:text-4xl"
@@ -286,10 +292,10 @@ export default async function Home({
                   </a>
                 ))}
               </div>
-            </div>
-            <div className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+            </Reveal>
+            <Reveal as="div" delay={90} className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
               <ContactForm lang={locale} copy={t.contact} />
-            </div>
+            </Reveal>
           </div>
         </section>
       </main>
