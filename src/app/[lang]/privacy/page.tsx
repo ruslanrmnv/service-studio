@@ -15,6 +15,10 @@ export async function generateMetadata({
   return {
     title,
     description: t.privacy.subtitle,
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
       canonical: `/${locale}/privacy`,
       languages: {

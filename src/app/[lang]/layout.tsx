@@ -30,6 +30,33 @@ import {
 
 const SITE_URL = getSiteUrl();
 
+const KEYWORDS_BY_LOCALE: Record<Locale, string[]> = {
+  ru: [
+    "создание сайтов",
+    "сайты для бизнеса",
+    "Telegram-боты",
+    "AI-автоматизация",
+    "автоматизация бизнеса",
+    "формы заявок",
+  ],
+  en: [
+    "business websites",
+    "service business website",
+    "Telegram bots",
+    "AI automation",
+    "business automation",
+    "lead forms",
+  ],
+  uk: [
+    "створення сайтів",
+    "сайти для бізнесу",
+    "Telegram-боти",
+    "ШІ-автоматизація",
+    "автоматизація бізнесу",
+    "форми заявок",
+  ],
+};
+
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
@@ -47,6 +74,23 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: metadata.title,
     description: metadata.description,
+    applicationName: SITE_NAME,
+    keywords: KEYWORDS_BY_LOCALE[locale],
+    authors: [{ name: "Ruslan", url: SITE_URL }],
+    creator: "Ruslan",
+    publisher: SITE_NAME,
+    category: "technology",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     alternates: {
       canonical: `/${locale}`,
       languages: {

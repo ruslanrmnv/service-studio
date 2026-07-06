@@ -2,8 +2,10 @@ import { Fragment } from "react";
 import {
   defaultLocale,
   getDictionary,
+  getSiteUrl,
   INSTAGRAM_URL,
   isLocale,
+  SITE_NAME,
   TELEGRAM_URL,
   WHATSAPP_URL,
   type Dictionary,
@@ -48,6 +50,108 @@ const DIRECT = [
   { label: "Instagram", href: INSTAGRAM_URL },
 ] as const;
 
+const JOB_TITLE_BY_LOCALE: Record<Locale, string> = {
+  ru: "Разработчик сайтов, Telegram-ботов и AI-автоматизаций",
+  en: "Website, Telegram bot, and AI automation developer",
+  uk: "Розробник сайтів, Telegram-ботів і ШІ-автоматизацій",
+};
+
+const SERVICE_TYPES_BY_LOCALE: Record<Locale, string[]> = {
+  ru: [
+    "сайты для бизнеса",
+    "Telegram-боты",
+    "AI-автоматизация",
+    "формы заявок",
+    "интеграции и уведомления",
+  ],
+  en: [
+    "business websites",
+    "Telegram bots",
+    "AI automation",
+    "lead forms",
+    "integrations and notifications",
+  ],
+  uk: [
+    "сайти для бізнесу",
+    "Telegram-боти",
+    "ШІ-автоматизація",
+    "форми заявок",
+    "інтеграції та сповіщення",
+  ],
+};
+
+const LANGUAGE_NAMES = ["Russian", "English", "Ukrainian"];
+
+function SeoJsonLd({
+  locale,
+  copy,
+}: {
+  locale: Locale;
+  copy: Dictionary;
+}) {
+  const base = getSiteUrl();
+  const url = `${base}/${locale}`;
+  const personId = `${base}/#person`;
+  const websiteId = `${base}/#website`;
+  const serviceId = `${url}#service`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: "Ruslan",
+        url: base,
+        jobTitle: JOB_TITLE_BY_LOCALE[locale],
+        sameAs: [TELEGRAM_URL, INSTAGRAM_URL],
+        knowsAbout: SERVICE_TYPES_BY_LOCALE[locale],
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+        url: base,
+        name: SITE_NAME,
+        inLanguage: ["ru", "en", "uk"],
+        publisher: { "@id": personId },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: copy.metadata.title,
+        description: copy.metadata.description,
+        inLanguage: locale,
+        isPartOf: { "@id": websiteId },
+        about: { "@id": serviceId },
+      },
+      {
+        "@type": "Service",
+        "@id": serviceId,
+        name: copy.metadata.ogTitle,
+        description: copy.metadata.description,
+        serviceType: SERVICE_TYPES_BY_LOCALE[locale],
+        areaServed: ["Azerbaijan", "Worldwide"],
+        provider: { "@id": personId },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: url,
+          availableLanguage: LANGUAGE_NAMES,
+        },
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
+
 /* Real work / proof. Renders nothing until `cases.items` has real projects —
    add them in the dictionaries (task → what was built → result). */
 function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
@@ -90,6 +194,7 @@ export default async function Home({
 
   return (
     <>
+      <SeoJsonLd locale={locale} copy={t} />
       <SiteHeader locale={locale} copy={t.header} demoLabel={t.demo.heading} />
 
       <main className="flex-1">

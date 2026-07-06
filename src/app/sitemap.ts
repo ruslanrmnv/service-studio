@@ -5,19 +5,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
   const lastModified = new Date();
 
-  const home = locales.map((locale) => ({
+  return locales.map((locale) => ({
     url: `${base}/${locale}`,
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 1,
+    alternates: {
+      languages: {
+        ru: `${base}/ru`,
+        en: `${base}/en`,
+        uk: `${base}/uk`,
+        "x-default": `${base}/en`,
+      },
+    },
   }));
-
-  const privacy = locales.map((locale) => ({
-    url: `${base}/${locale}/privacy`,
-    lastModified,
-    changeFrequency: "yearly" as const,
-    priority: 0.3,
-  }));
-
-  return [...home, ...privacy];
 }
