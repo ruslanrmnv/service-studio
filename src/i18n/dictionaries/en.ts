@@ -2,12 +2,12 @@ import type { Dictionary } from "./ru";
 
 export const en: Dictionary = {
   metadata: {
-    title: "Service Studio by Ruslan — AI, Telegram Bots, Forms, and Automations",
+    title: "Service Studio by Ruslan — Websites, Telegram Bots, and AI Automations",
     description:
-      "I build practical AI automations, Telegram bots, forms, integrations, and working setups for specific business, specialist, and team tasks.",
-    ogTitle: "Service Studio by Ruslan — AI, Telegram Bots, Forms, and Automations",
+      "I build websites for services and local businesses, Telegram bots, forms, broadcasts, and AI automations. A working example — before you pay.",
+    ogTitle: "Service Studio by Ruslan — Websites, Telegram Bots, and AI Automations",
     ogDescription:
-      "I build practical AI automations, Telegram bots, forms, integrations, and working setups for specific business, specialist, and team tasks.",
+      "I build websites for services and local businesses, Telegram bots, forms, broadcasts, and AI automations. A working example — before you pay.",
   },
 
   header: {
@@ -23,9 +23,9 @@ export const en: Dictionary = {
   hero: {
     brand: "Service Studio by Ruslan",
     // `backtick` segments render as the azure accent in the hero h1.
-    title: "I automate `anything` that slows your business down.",
+    title: "A website and `automation` for your business. See it first, then pay.",
     subtitle:
-      "Bots, forms, AI helpers, and integrations — built around your task. So you reply faster, lose nothing, and spend time on growth instead of routine.",
+      "A booking site, a form, a bot, a broadcast, or an AI helper — built around your task. You'll see a working version by tomorrow.",
     availability: "Available for new projects",
     ctaPrimary: "Send request",
   },
@@ -37,6 +37,12 @@ export const en: Dictionary = {
     buildLabel: "What I'll build",
     resultLabel: "Result",
     tasks: [
+      {
+        id: "site",
+        label: "Business website",
+        build: "A one-page site with prices, work samples, and booking — for your service.",
+        result: "Clients find you and book on their own.",
+      },
       {
         id: "leads",
         label: "Requests & leads",
@@ -52,8 +58,8 @@ export const en: Dictionary = {
       {
         id: "data",
         label: "Tidy data",
-        build: "Auto-collection from forms, chats, and sheets in one place — no manual merging.",
-        result: "Order instead of chaos and leaks.",
+        build: "Auto-collection from forms, chats, and sheets — no manual merging.",
+        result: "All your data in one place.",
       },
       {
         id: "reminders",
@@ -65,13 +71,13 @@ export const en: Dictionary = {
         id: "ai",
         label: "AI helper",
         build: "An AI that sorts requests and drafts replies in your tone.",
-        result: "Routine runs on autopilot.",
+        result: "Replies and drafts prepare themselves.",
       },
       {
         id: "custom",
         label: "Your own task",
         build: "Describe your process — I'll propose a scenario and build the system for it.",
-        result: "Built for your business, not a template.",
+        result: "A system built around your process.",
       },
     ],
   },
@@ -81,8 +87,8 @@ export const en: Dictionary = {
   demo: {
     heading: "See it work",
     intro:
-      "Not a description — the real thing. Pick a scenario and watch a request travel the whole path: from a message to a table row and a notification to you.",
-    liveLabel: "Live demo",
+      "Pick a scenario and watch a request travel the path: a message, a table row, a notification to you.",
+    liveLabel: "A live example",
     processing: "Processing",
     replay: "Replay",
     sendLabel: "Send",
@@ -142,7 +148,7 @@ export const en: Dictionary = {
   },
 
   trust: [
-    "Start with one clear setup",
+    "Start with one setup",
     "A working example before full build",
     "No unnecessary features",
     "Direct contact",
@@ -151,12 +157,17 @@ export const en: Dictionary = {
   services: {
     heading: "Services",
     subheading:
-      "You show me the task — I suggest a clear setup and build a working solution: a form, Telegram bot, notification, table, page, or AI helper.",
+      "You show me the task — I build a working solution: a website, form, Telegram bot, notifications, or an AI helper.",
     items: [
       {
-        title: "AI & chat automation",
+        title: "Websites for services & local business",
         description:
-          "I answer common questions for you in messengers, forms, and on your site — the client gets a reply now, not in an hour.",
+          "A site for your task — from a one-pager to a small website: prices, work samples, a map, booking via form or WhatsApp. A working example in a day.",
+      },
+      {
+        title: "Forms & data collection",
+        description:
+          "A link-based form drops requests, briefs, and bookings straight into a table — nothing gets lost.",
       },
       {
         title: "Telegram bots for your task",
@@ -164,9 +175,9 @@ export const en: Dictionary = {
           "A bot collects requests and surveys, sends reminders, and walks the client through the steps — with you out of the routine.",
       },
       {
-        title: "Forms & data collection",
+        title: "AI & chat automation",
         description:
-          "A link-based form drops requests, briefs, and bookings straight into a table — all in one place, nothing lost.",
+          "I answer common questions for you in messengers, forms, and on your site — the client gets a reply within the same minute.",
       },
       {
         title: "Integrations & notifications",
@@ -174,9 +185,9 @@ export const en: Dictionary = {
           "I connect forms, chats, and tables to email, Telegram, and your tools — with statuses, history, and a ping on every request.",
       },
       {
-        title: "Pages for a specific goal",
+        title: "Auto funnels & broadcasts",
         description:
-          "A one-page site for a service, product, or promo — to test an idea and start selling fast.",
+          "Automated broadcasts in messengers and email — reminders, warm-ups, news for clients. On a schedule or a trigger, without sending by hand.",
       },
       {
         title: "AI helpers for routine",
@@ -184,19 +195,14 @@ export const en: Dictionary = {
           "AI sorts requests, drafts replies, and prepares summaries — the repetitive processing runs itself.",
       },
       {
-        title: "Auto funnels & broadcasts",
+        title: "Mini-CRM & client portal",
         description:
-          "Scheduled or triggered messages, warm-ups, and reminders in messengers — so clients get the right nudge on time.",
+          "Clients, requests, and statuses tracked around your process — the whole history and next steps in one place.",
       },
       {
         title: "Dashboards & reports",
         description:
           "I pull data from forms, sheets, and chats into one screen — you see what's happening without manual reports.",
-      },
-      {
-        title: "Mini-CRM & client portal",
-        description:
-          "Clients, requests, and statuses tracked around your process — the whole history and next steps in one place.",
       },
     ],
   },
@@ -213,7 +219,7 @@ export const en: Dictionary = {
 
   formats: {
     heading: "How we can start",
-    note: "You do not need to build a large system right away. We can start with one clear setup and expand it when needed.",
+    note: "You don't need to build a large system right away. Start with one setup and expand it later.",
     ctaText: "Not sure where to start?",
     ctaLink: "Send request",
     items: [
@@ -237,7 +243,7 @@ export const en: Dictionary = {
 
   process: {
     heading: "How we work",
-    subheading: "A clear, predictable path — from review to a working version.",
+    subheading: "From reviewing the task to a working version — step by step.",
     steps: [
       {
         title: "We review the task or process",
@@ -245,14 +251,14 @@ export const en: Dictionary = {
           "We look at what takes time now, repeats manually, or needs automation.",
       },
       {
-        title: "We pick a clear scenario",
+        title: "We pick one scenario",
         description:
           "We take one specific task that can be tested quickly and brought to a result.",
       },
       {
         title: "I build a working example",
         description:
-          "I show a working example on your scenario instead of just explaining the idea.",
+          "I build an example on your scenario — you can open it and see it before paying.",
       },
       {
         title: "I build the working version",
@@ -265,16 +271,15 @@ export const en: Dictionary = {
   about: {
     heading: "About",
     paragraphs: [
-      "I'm Ruslan. I build practical AI, chat, form, and request automations for specific tasks: for businesses, specialists, teams, and personal use.",
-      "My focus is working solutions that remove manual routine, organize information into a clear structure, speed up replies, and connect the tools you actually use.",
-      "I review the task myself, suggest a clear setup, build a working example or first version, and help bring it to launch.",
+      "I'm Ruslan. I build websites and automations for small businesses: a booking page, a form, a Telegram bot, a broadcast, or an AI helper.",
+      "I work simply: I review the task, build an example in a day or two, and show it. If you like it, I take it to launch.",
     ],
   },
 
   contact: {
     heading: "Send request",
     subheading:
-      "Tell me which task or process you'd like to simplify. I'll get in touch, suggest a simple scenario, and show how it can work.",
+      "Tell me which task you want to solve. I'll reply, suggest an option, and show an example.",
     bullets: [
       "I reply within a business day",
       "No spam — straight to the point",
@@ -322,7 +327,7 @@ export const en: Dictionary = {
   footer: {
     brand: "Service Studio by Ruslan",
     tagline:
-      "AI, chatbots, forms, and working setups for specific tasks. You can start with one step.",
+      "Websites, bots, and automations for small businesses. You can start with one step.",
     contact: "Contact",
     privacy: "Privacy Policy",
   },
