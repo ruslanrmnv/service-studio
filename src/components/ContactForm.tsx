@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { Dictionary, Locale } from "@/i18n/config";
 
@@ -14,8 +15,7 @@ const MAX = {
   name: 100,
   businessType: 100,
   contactValue: 150,
-  automate: 500,
-  message: 2000,
+  automate: 2000,
 } as const;
 
 export default function ContactForm({
@@ -77,7 +77,7 @@ export default function ContactForm({
         aria-live="polite"
         className="rounded-2xl border border-accent-line bg-accent-soft p-8 text-center"
       >
-        <h3 className="text-xl text-ink">
+        <h3 className="font-display text-xl text-ink">
           {copy.success.title}
         </h3>
         <p className="mt-2 text-muted">{copy.success.text}</p>
@@ -151,22 +151,38 @@ export default function ContactForm({
           <label htmlFor="contactMethod" className={labelClass}>
             {copy.form.contactMethod} {req}
           </label>
-          <select
-            id="contactMethod"
-            name="contactMethod"
-            required
-            defaultValue=""
-            className={inputClass}
-          >
-            <option value="" disabled>
-              {copy.form.contactMethodPlaceholder}
-            </option>
-            {METHODS.map((method) => (
-              <option key={method} value={method}>
-                {copy.form.methods[method]}
+          {/* The native control keeps its OS dropdown, but the closed state is
+              ours — an unstyled select renders as a grey system box in the
+              middle of the panel. */}
+          <div className="relative">
+            <select
+              id="contactMethod"
+              name="contactMethod"
+              required
+              defaultValue=""
+              className={`${inputClass} cursor-pointer appearance-none pr-11`}
+            >
+              <option value="" disabled>
+                {copy.form.contactMethodPlaceholder}
               </option>
-            ))}
-          </select>
+              {METHODS.map((method) => (
+                <option key={method} value={method}>
+                  {copy.form.methods[method]}
+                </option>
+              ))}
+            </select>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 10 6"
+              className="pointer-events-none absolute right-4 top-1/2 h-1.5 w-2.5 -translate-y-1/2 text-faint"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            >
+              <path d="M1 1l4 4 4-4" />
+            </svg>
+          </div>
         </div>
         <div>
           <label htmlFor="contactValue" className={labelClass}>
@@ -184,38 +200,26 @@ export default function ContactForm({
         </div>
       </div>
 
+      {/* One free-text field, not two: a separate optional "message" box next to
+          this one just asked for the same thing twice. */}
       <div>
         <label htmlFor="automate" className={labelClass}>
           {copy.form.automate} {req}
         </label>
-        <input
+        <textarea
           id="automate"
           name="automate"
-          type="text"
           required
+          rows={4}
           maxLength={MAX.automate}
           placeholder={copy.form.automatePlaceholder}
-          className={inputClass}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="message" className={labelClass}>
-          {copy.form.message} {opt}
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={4}
-          maxLength={MAX.message}
-          placeholder={copy.form.messagePlaceholder}
           className={`${inputClass} resize-none`}
         />
       </div>
 
       <div aria-live="assertive">
         {status === "error" && (
-          <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          <p className="rounded-xl border border-danger-line bg-danger-soft px-4 py-3 text-sm text-danger">
             {errorMessage}
           </p>
         )}
@@ -224,10 +228,20 @@ export default function ContactForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-7 text-[15px] font-medium text-background transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="btn-lift inline-flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-7 text-[15px] font-medium text-background hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {status === "loading" ? copy.form.submitting : copy.form.submit}
       </button>
+
+      <p className="text-[13px] leading-relaxed text-faint">
+        {copy.form.privacyNote}{" "}
+        <Link
+          href={`/${lang}/privacy`}
+          className="underline underline-offset-2 transition hover:text-ink"
+        >
+          {copy.form.privacyLink}
+        </Link>
+      </p>
     </form>
   );
 }

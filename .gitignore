@@ -41,6 +41,7 @@ yarn-error.log*
 # local agent config & reference material (not part of the site)
 .claude/
 *.pdf
+.playwright-mcp/
 
 # typescript
 *.tsbuildinfo

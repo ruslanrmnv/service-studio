@@ -20,5 +20,8 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Skip API routes, Next internals, and any file with an extension.
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  // `apple-icon` is listed by name because it's the one asset Next serves from
+  // an extensionless path — without it the touch icon gets redirected to a
+  // locale page and Safari receives HTML where it asked for a PNG.
+  matcher: ["/((?!api|_next|apple-icon|.*\\..*).*)"],
 };

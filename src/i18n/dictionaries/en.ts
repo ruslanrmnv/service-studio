@@ -2,38 +2,45 @@ import type { Dictionary } from "./ru";
 
 export const en: Dictionary = {
   metadata: {
-    title: "Websites, Telegram Bots, and AI Automation for Business | Ruslan",
+    title: "Websites for small business, built in a week | Ruslan",
     description:
-      "I build websites for service businesses, lead forms, Telegram bots, and AI automation for small teams. Working example before payment, launch from 1 day.",
-    ogTitle: "Websites, Telegram Bots, and AI Automation | Service Studio by Ruslan",
+      "I build websites for small businesses: services, prices, work samples, and booking. The home-page mockup is free within a day, the site takes a week, and I name the price before the work starts.",
+    ogTitle: "Websites for small business | Service Studio by Ruslan",
     ogDescription:
-      "I build websites for service businesses, lead forms, Telegram bots, and AI automation for small teams. Working example before payment, launch from 1 day.",
+      "I build websites for small businesses: services, prices, work samples, and booking. The home-page mockup is free within a day, the site takes a week, and I name the price before the work starts.",
   },
 
   header: {
     nav: {
       services: "Services",
       formats: "How to start",
+      faq: "Questions",
       about: "About",
     },
     cta: "Send request",
     language: "Language",
+    theme: "Theme",
   },
 
   hero: {
     brand: "Service Studio by Ruslan",
-    // `backtick` segments render as the azure accent in the hero h1.
-    title: "A website and `automation` for your business. See it first, then pay.",
+    // `backtick` segments render in the accent colour in the hero h1.
+    // Non-breaking space before "pay" — see the note in ru.ts.
+    title: "A website for your business. See the `design` before you pay.",
+    // The offer itself — the hero's only call to action, rendered as a button.
+    offerCta: "See your website mockup for free",
+    // Second promise. Stands on its own line, away from the offer.
+    freeEdits: "A month of edits after launch — `free`",
     subtitle:
-      "A booking site, a form, a bot, a broadcast, or an AI helper — built around your task. You'll see a working version by tomorrow.",
+      "I'll draw how your home page will look: services, prices, work samples, and an easy way for clients to reach you. Like it — I'll build the site in a week.",
+    // Shown in the About card, not in the hero.
     availability: "Available for new projects",
-    ctaPrimary: "Send request",
   },
 
   // Interactive value block — visitor picks a business task and sees what I'd
   // build and the result. Extensible: add a task by adding an entry.
   explorer: {
-    prompt: "What can I help with?",
+    prompt: "What can I help you with?",
     buildLabel: "What I'll build",
     resultLabel: "Result",
     tasks: [
@@ -44,165 +51,59 @@ export const en: Dictionary = {
         result: "Clients find you and book on their own.",
       },
       {
+        id: "catalog",
+        label: "Catalogue or booking",
+        build: "Several pages with a catalogue of products or rooms, filters, and direct booking.",
+        result: "Guests choose and book on their own, with no messaging.",
+      },
+      {
         id: "leads",
-        label: "Requests & leads",
-        build: "A form or bot that collects requests into one table and pings you instantly.",
+        label: "Requests & booking",
+        build: "A booking form plus WhatsApp and Telegram buttons — the request lands in your messenger right away.",
         result: "No request ever slips through.",
       },
       {
-        id: "replies",
-        label: "Customer replies",
-        build: "A bot that answers common questions and hands the tricky ones to you.",
-        result: "Customers don't wait for hours.",
-      },
-      {
-        id: "data",
-        label: "Tidy data",
-        build: "Auto-collection from forms, chats, and sheets — no manual merging.",
-        result: "All your data in one place.",
-      },
-      {
-        id: "reminders",
-        label: "Reminders",
-        build: "A system that nudges clients and you about the right steps on time.",
-        result: "Nothing forgotten or overdue.",
-      },
-      {
-        id: "ai",
-        label: "AI helper",
-        build: "An AI that sorts requests and drafts replies in your tone.",
-        result: "Replies and drafts prepare themselves.",
+        id: "content",
+        label: "No copy or photos",
+        build: "I'll write the copy from what you tell me, and say what to shoot on your phone.",
+        result: "The site launches with real content, not placeholders.",
       },
       {
         id: "custom",
         label: "Your own task",
-        build: "Describe your process — I'll propose a scenario and build the system for it.",
-        result: "A system built around your process.",
+        build: "Tell me what the business is and what's getting in the way — I'll propose how a page solves it.",
+        result: "An answer to your case, not a template.",
       },
     ],
   },
-
-  // Live demo — the interactive centerpiece: a request travels from an
-  // incoming message to a table row and a notification, played out on screen.
-  demo: {
-    heading: "See it work",
-    intro:
-      "Pick a scenario and watch a request travel the path: a message, a table row, a notification to you.",
-    liveLabel: "A live example",
-    processing: "Processing",
-    replay: "Replay",
-    sendLabel: "Send",
-    tryHint: "Type your own name and send — watch your request land in the table.",
-    newRequest: "New request",
-    // Quiet ambient feed — sample requests keep arriving while idle.
-    ambient: [
-      { from: "Igor", request: "Bot for requests" },
-      { from: "Maria", request: "Booking form" },
-      { from: "Oleg", request: "Client reminders" },
-      { from: "Dana", request: "AI replies" },
-      { from: "Peter", request: "Report from sheets" },
-    ],
-    tableTitle: "Requests",
-    columns: ["Time", "From", "Request", "Status"],
-    scenarios: [
-      {
-        id: "form",
-        label: "Form",
-        source: "Website form",
-        kind: "form",
-        lines: [
-          { role: "field", label: "Name", text: "Anna" },
-          { role: "field", label: "Service", text: "Book a consultation" },
-          { role: "field", label: "Contact", text: "@anna" },
-        ],
-        row: { time: "10:42", from: "Anna", request: "Book a consultation", status: "New" },
-        notification: "New request from Anna",
-      },
-      {
-        id: "bot",
-        label: "Telegram bot",
-        source: "@studio_bot",
-        kind: "chat",
-        lines: [
-          { role: "bot", label: "", text: "Hi! What's your name?" },
-          { role: "user", label: "", text: "Igor" },
-          { role: "bot", label: "", text: "What would you like to automate?" },
-          { role: "user", label: "", text: "I need a bot for requests" },
-        ],
-        row: { time: "10:45", from: "Igor", request: "Bot for requests", status: "New" },
-        notification: "Igor sent a request through the bot",
-      },
-      {
-        id: "ai",
-        label: "AI helper",
-        source: "AI helper",
-        kind: "chat",
-        lines: [
-          { role: "user", label: "", text: "A client sent an email with five questions." },
-          { role: "bot", label: "", text: "Reply ready: 5 points, polite tone, ready to send." },
-        ],
-        row: { time: "10:51", from: "Client email", request: "Reply prepared", status: "Done" },
-        notification: "AI prepared a reply — please review",
-      },
-    ],
-  },
-
-  trust: [
-    "Start with one setup",
-    "A working example before full build",
-    "No unnecessary features",
-    "Direct contact",
-  ],
 
   services: {
     heading: "Services",
     subheading:
-      "You show me the task — I build a working solution: a website, form, Telegram bot, notifications, or an AI helper.",
+      "One thing, done end to end: a website for a small business — from the first page to launch and the edits after.",
+    // Four cards, a clean 2×2 — the parts of one job, not four separate
+    // products. Prices live in "How to start" only, so the page has a
+    // single price list.
     items: [
       {
-        title: "Websites for services & local business",
+        title: "Business website",
         description:
-          "A site for your task — from a one-pager to a small website: prices, work samples, a map, booking via form or WhatsApp. A working example in a day.",
+          "From a one-pager to a small website: services, prices, work samples, a catalogue, a map. Everything a client needs to know before they message you.",
       },
       {
-        title: "Forms & data collection",
+        title: "Requests and booking",
         description:
-          "A link-based form drops requests, briefs, and bookings straight into a table — nothing gets lost.",
+          "A form, WhatsApp, a call, or online booking — whatever suits you and your clients. The request lands in Telegram straight away, so nothing gets lost.",
       },
       {
-        title: "Telegram bots for your task",
+        title: "Copy and photos",
         description:
-          "A bot collects requests and surveys, sends reminders, and walks the client through the steps — with you out of the routine.",
+          "Describe your services in a message or a voice note — I'll write the copy myself. For photos I'll tell you what to shoot on your phone, and where it fits I'll pick suitable stock.",
       },
       {
-        title: "AI & chat automation",
+        title: "Domain, launch, and edits",
         description:
-          "I answer common questions for you in messengers, forms, and on your site — the client gets a reply within the same minute.",
-      },
-      {
-        title: "Integrations & notifications",
-        description:
-          "I connect forms, chats, and tables to email, Telegram, and your tools — with statuses, history, and a ping on every request.",
-      },
-      {
-        title: "Auto funnels & broadcasts",
-        description:
-          "Automated broadcasts in messengers and email — reminders, warm-ups, news for clients. On a schedule or a trigger, without sending by hand.",
-      },
-      {
-        title: "AI helpers for routine",
-        description:
-          "AI sorts requests, drafts replies, and prepares summaries — the repetitive processing runs itself.",
-      },
-      {
-        title: "Mini-CRM & client portal",
-        description:
-          "Clients, requests, and statuses tracked around your process — the whole history and next steps in one place.",
-      },
-      {
-        title: "Dashboards & reports",
-        description:
-          "I pull data from forms, sheets, and chats into one screen — you see what's happening without manual reports.",
+          "I buy the domain in your name, connect the hosting and the form, and help you launch. Small edits are free for the first month after launch.",
       },
     ],
   },
@@ -210,86 +111,162 @@ export const en: Dictionary = {
   // Real work / proof. Renders only when `items` has entries — no fake cases.
   cases: {
     heading: "Selected work",
-    intro: "Short breakdowns: the client's task, what I built, and what it changed.",
+    intro: "Live websites: open them and see how everything works.",
     taskLabel: "Task",
     builtLabel: "What I built",
     resultLabel: "Result",
-    items: [],
-  },
-
-  formats: {
-    heading: "How we can start",
-    note: "You don't need to build a large system right away. Start with one setup and expand it later.",
-    ctaText: "Not sure where to start?",
-    ctaLink: "Send request",
+    openLabel: "Open the example",
     items: [
       {
-        title: "One setup",
-        description:
-          "A form, request flow, notification, Telegram bot, or one automated step.",
+        task: "Beauty salon",
+        image: "/cases/beauty-salon.webp",
+        built:
+          "Services with exact prices and durations, a before-and-after slider, client reviews, booking in one tap.",
+        result:
+          "People see the price and how long it takes before booking — fewer questions in the chat.",
+        link: "https://mmaison-studio.netlify.app/",
       },
       {
-        title: "Working process",
-        description:
-          "A sequence of steps: data collection, table, notifications, statuses, or AI processing.",
+        task: "Dental clinic",
+        image: "/cases/dental.webp",
+        built:
+          "Five services with prices, calm copy for people who dread the dentist, a booking form with no phone call.",
+        result: "The patient knows what the appointment involves and books it themselves.",
+        link: "https://bbrightsmiledental.netlify.app/",
       },
       {
-        title: "Custom build",
-        description:
-          "For tasks that need to be reviewed, designed, and built around a specific process.",
+        task: "Guest house",
+        image: "/cases/guest-house.webp",
+        built:
+          "Nine rooms with honest descriptions and prices, filters by floor and view, house rules on the page itself, direct booking with no middlemen.",
+        result:
+          "Guests pick a room and check dates themselves — no messaging, no platform fees.",
+        link: "https://north-house-demo.netlify.app/",
       },
     ],
   },
 
+  formats: {
+    heading: "How to start",
+    note: "I set the price before the work starts and don't change it along the way. Small edits are free for the first month after launch, then it's a pack of 5 edits for $60.",
+    ctaText: "Not sure what you need?",
+    ctaLink: "Send request",
+    // Two tiers, both websites. Design work is an add-on to a site, not a
+    // separate practice — it gets one line under the grid, not a card.
+    items: [
+      {
+        title: "Business website",
+        price: "$450",
+        description:
+          "One page with services, prices, work samples, and contact. I draw the home-page mockup free within a day, then it's a 30% deposit and a week of work.",
+      },
+      {
+        title: "Website with a catalogue",
+        price: "$850",
+        description:
+          "Several pages, a catalogue of products or rooms, filters, booking. For when one page isn't enough.",
+      },
+    ],
+    addon: "A logo, business card, or menu — $150 when we do it together with the site.",
+  },
+
   process: {
     heading: "How we work",
-    subheading: "From reviewing the task to a working version — step by step.",
+    subheading: "From the first conversation to launch — four steps, no surprises on price.",
     steps: [
       {
-        title: "We review the task or process",
+        title: "You tell me what you need",
         description:
-          "We look at what takes time now, repeats manually, or needs automation.",
+          "Write through the form or a messenger: what your business is, what the site should do. A link to your profile or your price list is enough — I'll ask the rest.",
       },
       {
-        title: "We pick one scenario",
+        title: "I draw the home-page mockup — free, within a day",
         description:
-          "We take one specific task that can be tested quickly and brought to a result.",
+          "I show how your page will look: blocks, copy, colours. Look at it on your phone and tell me what to change. You owe nothing if it isn't right.",
       },
       {
-        title: "I build a working example",
+        title: "30% deposit and build",
         description:
-          "I build an example on your scenario — you can open it and see it before paying.",
+          "If you like it — in a week I build the working site, connect the form and the domain, and help you launch.",
       },
       {
-        title: "I build the working version",
+        title: "Launch and a month of edits",
         description:
-          "After approval, I refine the solution, connect the needed parts, and help you launch.",
+          "I hand over the finished site, the rest of the payment is due on delivery. Small edits are free for the first month.",
       },
     ],
   },
 
   about: {
     heading: "About",
+    name: "Ruslan",
     paragraphs: [
-      "I'm Ruslan. I build websites and automations for small businesses: a booking page, a form, a Telegram bot, a broadcast, or an AI helper.",
-      "I work simply: I review the task, build an example in a day or two, and show it. If you like it, I take it to launch.",
+      "I'm Ruslan. I build websites for small businesses — salons, clinics, guest houses, and independent professionals who work with clients directly.",
+      "You talk to me personally: no managers, no middlemen. I dig into the task, sketch your home page for free within a day — and only if you like it do we agree on the build.",
+      "I draw it, build it, and connect the domain and the form myself — that's why the timelines are short and edits don't sit in a queue. I don't take on large online stores or mobile apps: that's different work and different money.",
+    ],
+    location: "Barcelona, Spain",
+    photoAlt: "Ruslan, the person behind Service Studio",
+    // Concrete, checkable facts for the side card — no invented numbers.
+    facts: [
+      "You talk to me directly, no managers",
+      "Mockup in a day, website in a week",
+      "I work in Russian, English, and Ukrainian",
+    ],
+  },
+
+  // Objection handling, right before the form. Only answers I can actually
+  // stand behind — no invented policy.
+  faq: {
+    heading: "Common questions",
+    intro:
+      "The things people usually ask before we start. If your question isn't here, write to me and I'll answer personally.",
+    items: [
+      {
+        q: "What if I don't like the mockup?",
+        a: "Then we part ways: you pay nothing and owe nothing. I draw the home-page mockup for free and show it before money comes up at all — that's why the deposit comes after the mockup, not before it.",
+      },
+      {
+        q: "How long does it all take?",
+        a: "The home-page mockup takes a day. The finished site takes a week from the deposit. A logo, business card, or menu takes two or three days. If you're in a hurry, say so up front and I'll see what's possible.",
+      },
+      {
+        q: "How does payment work?",
+        a: "I name the price before the work starts and don't change it along the way. Once the mockup is approved — a 30% deposit, the rest on delivery of the finished site. We settle on whichever payment method suits you.",
+      },
+      {
+        q: "Who owns the site and the domain?",
+        a: "You do. The domain is bought in your name — that's roughly $10–15 a year, and it stays yours no matter what. Hosting for sites like these is free. Buying, configuring, and connecting it is on me.",
+      },
+      {
+        q: "Will I be able to change the text and photos myself?",
+        a: "By default I make the edits: small ones are free for the first month after launch, then it's a pack of 5 edits for $60. If you'd rather change the content yourself, I'll build a simple admin panel — tell me before we start, it affects how the site is built.",
+      },
+      {
+        q: "You're in Barcelona and I'm in another country — is that a problem?",
+        a: "No, I work remotely with any country. We talk over Telegram, WhatsApp, or email — in Russian, English, or Ukrainian, whichever suits you.",
+      },
+      {
+        q: "What if I have no copy and no good photos?",
+        a: "That's not a blocker. I write the copy myself — it's enough for you to describe your services and prices in a message or a voice note. For photos I'll tell you what to shoot on your phone, and where it fits I'll pick suitable stock images.",
+      },
     ],
   },
 
   contact: {
     heading: "Send request",
     subheading:
-      "Tell me which task you want to solve. I'll reply, suggest an option, and show an example.",
+      "Tell me what the business is and how you picture the site. I'll reply, name the price, and draw your home-page mockup for free.",
     bullets: [
       "I reply within a business day",
       "No spam — straight to the point",
-      "We start with a clear example, not a long spec",
+      "I name the price before the work starts",
     ],
     form: {
       name: "Name",
       namePlaceholder: "How should I address you",
       businessType: "Area / task",
-      businessTypePlaceholder: "Project, team, process...",
+      businessTypePlaceholder: "For example: a coffee shop",
       contactMethod: "Contact method",
       contactMethodPlaceholder: "Choose a contact method",
       methods: {
@@ -300,13 +277,14 @@ export const en: Dictionary = {
       },
       contactValue: "Contact",
       contactValuePlaceholder: "Phone or @username",
-      automate: "What do you want to automate?",
-      automatePlaceholder: "Bot, form, table, notifications...",
-      message: "Message / comment",
-      messagePlaceholder: "Tell me more about the task",
+      automate: "What do you need?",
+      automatePlaceholder:
+        "For example: a website for a barbershop — services, prices, and booking. Right now there's only Instagram.",
       optional: "optional",
       submit: "Send request",
       submitting: "Sending...",
+      privacyNote: "By sending this form you agree to your data being processed.",
+      privacyLink: "Privacy policy",
     },
     validation: {
       required: "Please fill in the required fields.",
@@ -326,9 +304,7 @@ export const en: Dictionary = {
 
   footer: {
     brand: "Service Studio by Ruslan",
-    tagline:
-      "Websites, bots, and automations for small businesses. You can start with one step.",
-    contact: "Contact",
+    tagline: "Websites for small business. You can start small.",
     privacy: "Privacy Policy",
   },
 
@@ -395,7 +371,7 @@ export const en: Dictionary = {
       {
         heading: "Contact",
         paragraphs: [
-          "For privacy-related questions, you can contact me through the contact links in the website footer.",
+          "For privacy-related questions, message me on Telegram or WhatsApp — the links are in the request section on the home page.",
         ],
         items: [],
       },

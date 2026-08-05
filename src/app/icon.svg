@@ -1,6 +1,10 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="7" fill="#000000"/>
-  <rect x="0.6" y="0.6" width="30.8" height="30.8" rx="6.4" fill="none" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="1.2"/>
-  <text x="16" y="22" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="500" fill="#FFFFFF">S</text>
-  <circle cx="24.5" cy="8" r="2.2" fill="#198CFF"/>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- The tile is not decoration: a favicon is composited on whatever colour the
+       browser's tab strip happens to be, and a bare #F2F4ED mark disappears on a
+       light tab and in search results. Carrying the dark background with it keeps
+       the mark readable everywhere and keeps it the same mark the header shows. -->
+  <rect width="64" height="64" rx="14" fill="#12140F"/>
+  <path d="M21 48 V18 H33.5 A8.5 8.5 0 0 1 33.5 33 H21" stroke="#F2F4ED" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M31 33 C36 40 41 43.5 45 48" stroke="#8AA875" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M45 48 C45 41 47 36 51 32" stroke="#8AA875" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
 </svg>

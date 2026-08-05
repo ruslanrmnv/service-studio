@@ -1,23 +1,29 @@
 import type { Metadata } from "next";
-import { Onest, Unbounded } from "next/font/google";
+import { Golos_Text, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
-/* Variable fonts, self-hosted by next/font. Onest carries body and UI; Unbounded
-   is the display face for headings and brand moments, used with restraint. Both
-   ship full Cyrillic (Ukrainian і/ї/є/ґ included). */
-const onest = Onest({
+/* Self-hosted by next/font. Both faces carry Latin and Cyrillic in one file, so
+   a Russian sentence with "Telegram" in it is set from a single family — no
+   per-glyph substitution, no visible seam. Golos Text (body) is drawn Cyrillic-
+   first, which is the right priority for a RU/UK-led site; its humanist
+   proportions also give Montserrat's geometry something to sit against. Both
+   are variable fonts: one file each covers every weight the site uses. */
+const golos = Golos_Text({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-onest",
+  variable: "--font-golos",
   display: "swap",
 });
 
-const unbounded = Unbounded({
+const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
-  weight: ["500", "600", "700"],
-  variable: "--font-unbounded",
+  variable: "--font-montserrat",
   display: "swap",
 });
+
+/* Runs before first paint: applies the stored theme (or the system preference)
+   to <html>, so a light-theme visitor never sees a dark flash. */
+const THEME_INIT = `(function(){try{var t=localStorage.theme;if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})()`;
 import {
   defaultLocale,
   getDictionary,
@@ -34,25 +40,25 @@ const KEYWORDS_BY_LOCALE: Record<Locale, string[]> = {
   ru: [
     "создание сайтов",
     "сайты для бизнеса",
-    "Telegram-боты",
-    "AI-автоматизация",
-    "автоматизация бизнеса",
+    "сайт под ключ",
+    "сайт для салона красоты",
+    "сайт для гостевого дома",
     "формы заявок",
   ],
   en: [
     "business websites",
     "service business website",
-    "Telegram bots",
-    "AI automation",
-    "business automation",
+    "small business website",
+    "website for a beauty salon",
+    "website for a guest house",
     "lead forms",
   ],
   uk: [
     "створення сайтів",
     "сайти для бізнесу",
-    "Telegram-боти",
-    "ШІ-автоматизація",
-    "автоматизація бізнесу",
+    "сайт під ключ",
+    "сайт для салону краси",
+    "сайт для гостьового будинку",
     "форми заявок",
   ],
 };
@@ -108,6 +114,13 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "ru" ? "ru_RU" : locale === "uk" ? "uk_UA" : "en_US",
     },
+    /* Without this, X/Twitter falls back to a small thumbnail even though the
+       opengraph-image route provides a large one. */
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.ogTitle,
+      description: metadata.ogDescription,
+    },
   };
 }
 
@@ -124,9 +137,12 @@ export default async function LangLayout({
   return (
     <html
       lang={lang}
-      className={`${onest.variable} ${unbounded.variable} h-full antialiased`}
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+      className={`${golos.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-ink">
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         {children}
       </body>
     </html>

@@ -14,7 +14,10 @@ const MAX_LENGTHS = {
   name: 100,
   businessType: 100,
   contactValue: 150,
-  automate: 500,
+  // `automate` is the form's only free-text field now, so it carries what the
+  // old optional message box used to. `message` stays accepted (and capped) in
+  // case an older cached page still posts it.
+  automate: 2000,
   message: 2000,
 } as const;
 
@@ -179,7 +182,7 @@ export async function POST(request: Request) {
       businessType: "Сфера / задача",
       method: "Способ связи",
       contactValue: "Контакт",
-      automate: "Что автоматизировать",
+      automate: "Что нужно сделать",
       message: "Сообщение",
       locale: "Язык",
       source: "Страница",
@@ -191,7 +194,7 @@ export async function POST(request: Request) {
       businessType: "Сфера / задача",
       method: "Спосіб зв’язку",
       contactValue: "Контакт",
-      automate: "Що потрібно автоматизувати",
+      automate: "Що потрібно зробити",
       message: "Повідомлення",
       locale: "Мова",
       source: "Сторінка",
@@ -203,7 +206,7 @@ export async function POST(request: Request) {
       businessType: "Area / task",
       method: "Contact method",
       contactValue: "Contact",
-      automate: "What to automate",
+      automate: "What you need",
       message: "Message",
       locale: "Locale",
       source: "Page",

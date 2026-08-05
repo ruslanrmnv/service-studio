@@ -34,6 +34,12 @@ export default function Reveal({
       timers.push(setTimeout(() => setVisible(true), 0));
     }
 
+    /* The huge top margin extends the observer's root upwards without limit, so
+       anything that ends up above the viewport counts as intersecting. Without
+       it, a fast flick or a reload part-way down the page can carry an element
+       past the viewport between two observer samples — no intersection change
+       is ever reported and the content stays at opacity 0 for good. The bottom
+       margin keeps the original timing: reveal 6% before the lower edge. */
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -41,7 +47,7 @@ export default function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0, rootMargin: "0px 0px -6% 0px" }
+      { threshold: 0, rootMargin: "100000px 0px -6% 0px" }
     );
     io.observe(el);
     return () => {
