@@ -46,6 +46,25 @@ function SectionHeader({
   );
 }
 
+/* Marker for the price-card checklists. A drawn tick, not a bullet: the list
+   is a promise about where the fixed price stops, and should read as one. */
+function CheckMark() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="mt-[7px] h-3 w-3 shrink-0 text-accent"
+    >
+      <path d="M3 8.5 6.5 12 13 4.5" />
+    </svg>
+  );
+}
+
 /* `backtick` segments render in the accent colour — hero headline and promise. */
 function Accented({ text, className }: { text: string; className: string }) {
   return (
@@ -403,6 +422,28 @@ export default async function Home({
                     </p>
                     <p className="mt-5 border-t border-line pt-5 text-[15px] leading-relaxed text-muted">
                       {format.description}
+                    </p>
+                    {/* The checklist is the point of publishing a price at all:
+                        it says what the number buys and where it stops. */}
+                    <p className="mt-6 text-xs text-faint">
+                      {t.formats.includesLabel}
+                    </p>
+                    <ul className="mt-3 space-y-2.5">
+                      {format.includes.map((line) => (
+                        <li
+                          key={line}
+                          className="flex gap-2.5 text-[15px] leading-relaxed text-muted"
+                        >
+                          <CheckMark />
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {/* mt-auto pins the term to the card's foot, so the two
+                        tiers line up despite different checklist lengths. */}
+                    <p className="mt-auto pt-7 text-[15px] text-muted">
+                      {t.formats.termLabel} —{" "}
+                      <span className="text-ink">{format.term}</span>
                     </p>
                   </div>
                 </Reveal>

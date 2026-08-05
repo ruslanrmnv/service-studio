@@ -11,7 +11,7 @@ export function generateStaticParams() {
 }
 
 export const alt =
-  "Service Studio by Ruslan — websites for small business: a free home-page mockup in a day, the site in a week";
+  "Service Studio by Ruslan — websites for small business: a free home-page mockup in a day, the site in three days";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -112,7 +112,7 @@ export default async function OpengraphImage() {
           }}
         >
           <span style={{ display: "flex", color: "rgba(255,255,255,0.62)" }}>
-            Mockup free in a day · site in a week
+            Mockup free in a day · site in 3 days
           </span>
           <span style={{ display: "flex", color: "rgba(255,255,255,0.5)" }}>
             servicestudiobyruslan.com

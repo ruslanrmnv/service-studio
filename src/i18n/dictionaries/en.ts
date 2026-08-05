@@ -2,12 +2,12 @@ import type { Dictionary } from "./ru";
 
 export const en: Dictionary = {
   metadata: {
-    title: "Websites for small business, built in a week | Ruslan",
+    title: "Websites for small business, built in 3 days | Ruslan",
     description:
-      "I build websites for small businesses: services, prices, work samples, and booking. The home-page mockup is free within a day, the site takes a week, and I name the price before the work starts.",
+      "I build websites for small businesses: services, prices, work samples, and booking. The home-page mockup is free within a day, the site takes three days, and I name the price before the work starts.",
     ogTitle: "Websites for small business | Service Studio by Ruslan",
     ogDescription:
-      "I build websites for small businesses: services, prices, work samples, and booking. The home-page mockup is free within a day, the site takes a week, and I name the price before the work starts.",
+      "I build websites for small businesses: services, prices, work samples, and booking. The home-page mockup is free within a day, the site takes three days, and I name the price before the work starts.",
   },
 
   header: {
@@ -32,7 +32,7 @@ export const en: Dictionary = {
     // Second promise. Stands on its own line, away from the offer.
     freeEdits: "A month of edits after launch — `free`",
     subtitle:
-      "I'll draw how your home page will look: services, prices, work samples, and an easy way for clients to reach you. Like it — I'll build the site in a week.",
+      "I'll draw how your home page will look: services, prices, work samples, and an easy way for clients to reach you. Like it — I'll build the site in three days.",
     // Shown in the About card, not in the hero.
     availability: "Available for new projects",
   },
@@ -148,9 +148,13 @@ export const en: Dictionary = {
 
   formats: {
     heading: "How to start",
-    note: "I set the price before the work starts and don't change it along the way. Small edits are free for the first month after launch, then it's a pack of 5 edits for $60.",
+    note: "I set the price before the work starts and don't change it along the way. Anything outside the list is priced separately, also before we start. Small edits are free for the first month after launch, then it's a pack of 5 edits for $60.",
     ctaText: "Not sure what you need?",
     ctaLink: "Send request",
+    // The checklist is what makes a fixed price honest: it says where the
+    // price stops. `term` sits at the card's foot so both tiers line up.
+    includesLabel: "What's included",
+    termLabel: "Turnaround",
     // Two tiers, both websites. Design work is an add-on to a site, not a
     // separate practice — it gets one line under the grid, not a card.
     items: [
@@ -158,13 +162,30 @@ export const en: Dictionary = {
         title: "Business website",
         price: "$450",
         description:
-          "One page with services, prices, work samples, and contact. I draw the home-page mockup free within a day, then it's a 30% deposit and a week of work.",
+          "A first website for a solo pro, salon, or studio: so people find you and write to you directly.",
+        includes: [
+          "One page: services, prices, work samples, contact",
+          "I write the copy; I'll advise you on photos",
+          "Request form — messages land in your inbox",
+          "Domain in your name, hosting and setup",
+          "Just as tidy on a phone as on a desktop",
+          "A month of small edits after launch",
+        ],
+        term: "3 days from the deposit",
       },
       {
         title: "Website with a catalogue",
         price: "$850",
         description:
-          "Several pages, a catalogue of products or rooms, filters, booking. For when one page isn't enough.",
+          "For when one page isn't enough: a guest house, a shop, a clinic with a schedule.",
+        includes: [
+          "Everything in the business website",
+          "Several pages instead of one",
+          "A catalogue of products or rooms",
+          "Filters and search across the catalogue",
+          "Booking or a request for a specific item",
+        ],
+        term: "7 days from the deposit",
       },
     ],
     addon: "A logo, business card, or menu — $150 when we do it together with the site.",
@@ -187,7 +208,7 @@ export const en: Dictionary = {
       {
         title: "30% deposit and build",
         description:
-          "If you like it — in a week I build the working site, connect the form and the domain, and help you launch.",
+          "If you like it — I build the working site, connect the form and the domain, and help you launch: three days for one page, seven with a catalogue.",
       },
       {
         title: "Launch and a month of edits",
@@ -210,7 +231,7 @@ export const en: Dictionary = {
     // Concrete, checkable facts for the side card — no invented numbers.
     facts: [
       "You talk to me directly, no managers",
-      "Mockup in a day, website in a week",
+      "Mockup in a day, website in 3–7 days",
       "I work in Russian, English, and Ukrainian",
     ],
   },
@@ -228,7 +249,7 @@ export const en: Dictionary = {
       },
       {
         q: "How long does it all take?",
-        a: "The home-page mockup takes a day. The finished site takes a week from the deposit. A logo, business card, or menu takes two or three days. If you're in a hurry, say so up front and I'll see what's possible.",
+        a: "The home-page mockup takes a day. A one-page site takes three days from the deposit, a site with a catalogue takes seven. A logo, business card, or menu takes two or three days. If you're in a hurry, say so up front and I'll see what's possible.",
       },
       {
         q: "How does payment work?",

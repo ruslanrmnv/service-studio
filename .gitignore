@@ -43,15 +43,10 @@ yarn-error.log*
 *.pdf
 .playwright-mcp/
 
-# working notes and source material: briefs, copy drafts, uncropped photos,
-# retired components kept for reference. Named one by one rather than by
-# pattern so a doc that should ship (CLAUDE.md, a README) can't be swallowed.
+# working notes and source material. Named one by one rather than by pattern
+# so a doc that should ship (CLAUDE.md, a README) can't be swallowed.
+# CONTEXT.md is a session checkpoint that gets rewritten, not a document.
 /CONTEXT.md
-/design-spec.md
-/humanizer-fixes.md
-/offer-update.md
-/repositioning-draft.md
-/portfolio-dev-screenshot.png
 /design-assets/
 
 # typescript
