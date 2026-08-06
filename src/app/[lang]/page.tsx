@@ -351,47 +351,28 @@ export default async function Home({
           </div>
         </section>
 
-        {/* Interactive value explorer — pick a task, see what I'd build. Its
-            own tonal band: it follows the hero, and the run of sections after
-            it all sit on the base background. */}
+        {/* This is the services section — it carries the #services anchor the
+            header links to. A static grid of service cards stood here as well
+            until the price checklists started listing the same four things
+            line by line; between a list that repeats the prices and a block
+            the visitor drives, the visitor wins. Its own tonal band, since it
+            follows the hero. */}
         <section
+          id="services"
           aria-labelledby="explorer-heading"
           className="bg-surface"
         >
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
             <Reveal>
-              <SectionHeader id="explorer-heading" title={t.explorer.prompt} />
+              <SectionHeader
+                id="explorer-heading"
+                title={t.explorer.prompt}
+                intro={t.explorer.intro}
+              />
             </Reveal>
             <Reveal className="mt-12" delay={80}>
               <TaskExplorer copy={t.explorer} />
             </Reveal>
-          </div>
-        </section>
-
-        {/* Services — tonal cards, not ruled rows. */}
-        <section id="services" aria-labelledby="services-heading">
-          <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <Reveal>
-              <SectionHeader
-                id="services-heading"
-                title={t.services.heading}
-                intro={t.services.subheading}
-              />
-            </Reveal>
-            <div className="mt-12 grid gap-4 sm:grid-cols-2">
-              {t.services.items.map((service, i) => (
-                <Reveal key={service.title} delay={i * 60}>
-                  <div className="h-full rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-accent-line hover:bg-surface-2">
-                    <h3 className="font-display text-lg leading-snug text-ink">
-                      {service.title}
-                    </h3>
-                    <p className="mt-3 text-[15px] leading-relaxed text-muted">
-                      {service.description}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
           </div>
         </section>
 

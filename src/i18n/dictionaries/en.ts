@@ -41,6 +41,8 @@ export const en: Dictionary = {
   // build and the result. Extensible: add a task by adding an entry.
   explorer: {
     prompt: "What can I help you with?",
+    intro:
+      "One thing, done end to end: a website for a small business — from the first page to launch and the edits after.",
     buildLabel: "What I'll build",
     resultLabel: "Result",
     tasks: [
@@ -73,37 +75,6 @@ export const en: Dictionary = {
         label: "Your own task",
         build: "Tell me what the business is and what's getting in the way — I'll propose how a page solves it.",
         result: "An answer to your case, not a template.",
-      },
-    ],
-  },
-
-  services: {
-    heading: "Services",
-    subheading:
-      "One thing, done end to end: a website for a small business — from the first page to launch and the edits after.",
-    // Four cards, a clean 2×2 — the parts of one job, not four separate
-    // products. Prices live in "How to start" only, so the page has a
-    // single price list.
-    items: [
-      {
-        title: "Business website",
-        description:
-          "From a one-pager to a small website: services, prices, work samples, a catalogue, a map. Everything a client needs to know before they message you.",
-      },
-      {
-        title: "Requests and booking",
-        description:
-          "A form, WhatsApp, a call, or online booking — whatever suits you and your clients. The request lands in Telegram straight away, so nothing gets lost.",
-      },
-      {
-        title: "Copy and photos",
-        description:
-          "Describe your services in a message or a voice note — I'll write the copy myself. For photos I'll tell you what to shoot on your phone, and where it fits I'll pick suitable stock.",
-      },
-      {
-        title: "Domain, launch, and edits",
-        description:
-          "I buy the domain in your name, connect the hosting and the form, and help you launch. Small edits are free for the first month after launch.",
       },
     ],
   },

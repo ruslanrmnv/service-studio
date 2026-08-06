@@ -42,6 +42,11 @@ export const ru = {
   // build and the result. Extensible: add a task by adding an entry.
   explorer: {
     prompt: "Чем я могу вам быть полезен?",
+    // Inherited from the "Услуги" section this block replaced: it was the one
+    // line there that said something the price checklist doesn't — that the
+    // narrow offer is a choice, and that it runs to the end of the job.
+    intro:
+      "Делаю одно и делаю целиком: сайт для небольшого бизнеса — от первой страницы до запуска и правок после.",
     buildLabel: "Что соберу",
     resultLabel: "Результат",
     tasks: [
@@ -74,37 +79,6 @@ export const ru = {
         label: "Своя задача",
         build: "Опишите, что за бизнес и что сейчас мешает — предложу, как это решить страницей.",
         result: "Решение под ваш случай, а не шаблон.",
-      },
-    ],
-  },
-
-  services: {
-    heading: "Услуги",
-    subheading:
-      "Делаю одно и делаю целиком: сайт для небольшого бизнеса — от первой страницы до запуска и правок после.",
-    // Four cards, a clean 2×2 — the parts of one job, not four separate
-    // products. Prices live in "С чего начать" only, so the page has a
-    // single price list.
-    items: [
-      {
-        title: "Сайт для бизнеса",
-        description:
-          "От одностраничника до небольшого сайта: услуги, цены, примеры работ, каталог, карта. Всё, что клиент должен узнать до того, как напишет вам.",
-      },
-      {
-        title: "Заявки и запись",
-        description:
-          "Форма, WhatsApp, звонок или онлайн-запись — как удобно вам и вашим клиентам. Заявка сразу приходит в Telegram, чтобы ничего не потерялось.",
-      },
-      {
-        title: "Тексты и фотографии",
-        description:
-          "Расскажите про услуги сообщением или голосовым — тексты напишу сам. По фото подскажу, что снять на телефон, а где уместно — подберу подходящие из стоков.",
-      },
-      {
-        title: "Домен, запуск и правки",
-        description:
-          "Куплю домен на ваше имя, подключу хостинг и форму, помогу запустить. Первый месяц после запуска мелкие правки — бесплатно.",
       },
     ],
   },
