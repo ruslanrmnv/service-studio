@@ -449,6 +449,11 @@ export default async function Home({
                 </Reveal>
               ))}
             </div>
+            {/* Sits with the grid, not with the CTA: it answers the price, so
+                it gets ink weight against the muted copy inside the cards. */}
+            <Reveal className="mt-8 max-w-2xl text-[15px] leading-relaxed text-ink">
+              {t.formats.mockupFirst}
+            </Reveal>
             <Reveal className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <span className="text-muted">{t.formats.ctaText}</span>
               <a

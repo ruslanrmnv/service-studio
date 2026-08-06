@@ -34,7 +34,7 @@ export const en: Dictionary = {
     subtitle:
       "I'll draw how your home page will look: services, prices, work samples, and an easy way for clients to reach you. Like it — I'll build the site in three days.",
     // Shown in the About card, not in the hero.
-    availability: "Available for new projects",
+    availability: "I can start this week",
   },
 
   // Interactive value block — visitor picks a business task and sees what I'd
@@ -149,6 +149,8 @@ export const en: Dictionary = {
   formats: {
     heading: "How to start",
     note: "I set the price before the work starts and don't change it along the way. Anything outside the list is priced separately, also before we start. Small edits are free for the first month after launch, then it's a pack of 5 edits for $60.",
+    mockupFirst:
+      "Mockup first, money after: I only take the 30% deposit once you've seen your home page and liked it.",
     ctaText: "Not sure what you need?",
     ctaLink: "Send request",
     // The checklist is what makes a fixed price honest: it says where the

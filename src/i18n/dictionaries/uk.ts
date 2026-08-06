@@ -34,7 +34,7 @@ export const uk: Dictionary = {
     subtitle:
       "Намалюю, як виглядатиме ваша головна: послуги, ціни, приклади робіт і зручний зв’язок із клієнтом. Сподобається — зберу сайт за три дні.",
     // Shown in the About card, not in the hero.
-    availability: "Відкритий для нових проєктів",
+    availability: "Можу почати цього тижня",
   },
 
   // Interactive value block — visitor picks a business task and sees what I'd
@@ -149,6 +149,8 @@ export const uk: Dictionary = {
   formats: {
     heading: "З чого почати",
     note: "Ціну називаю до початку роботи й не змінюю по ходу. Що поза списком — рахуємо окремо і теж до початку. Перший місяць після запуску дрібні правки безкоштовно, далі — пакет із 5 правок за $60.",
+    mockupFirst:
+      "Спочатку макет, потім гроші: передоплату 30% беру лише після того, як ви побачили головну і вона вам сподобалася.",
     ctaText: "Не знаєте, що вам потрібно?",
     ctaLink: "Залишити заявку",
     // The checklist is what makes a fixed price honest: it says where the

@@ -32,8 +32,10 @@ export const ru = {
     freeEdits: "Месяц правок после запуска — `бесплатно`",
     subtitle:
       "Нарисую, как будет выглядеть ваша главная: услуги, цены, примеры работ и удобная связь с клиентом. Понравится — соберу сайт за три дня.",
-    // Shown in the About card, not in the hero.
-    availability: "Открыт для новых проектов",
+    // Shown in the About card, not in the hero. Deliberately concrete: "open
+    // for new projects" is what every freelancer writes, so it reads as filler.
+    // A date the visitor can act on does the work instead.
+    availability: "Могу начать на этой неделе",
   },
 
   // Interactive value block — visitor picks a business task and sees what I'd
@@ -155,6 +157,11 @@ export const ru = {
   formats: {
     heading: "С чего начать",
     note: "Цену называю до начала работы и не меняю по ходу. Что за пределами списка — считаем отдельно и тоже до начала. Первый месяц после запуска мелкие правки бесплатно, дальше — пакет из 5 правок за $60.",
+    // A published price raises exactly one objection — why would I hand $450 to
+    // someone I've never met? It gets answered next to the number rather than
+    // three screens down in the FAQ, where nobody hesitating has scrolled yet.
+    mockupFirst:
+      "Сначала макет, потом деньги: предоплату 30% беру только после того, как вы увидели главную и она вам понравилась.",
     ctaText: "Не знаете, что вам нужно?",
     ctaLink: "Оставить заявку",
     // The checklist is what makes a fixed price honest: it says where the
