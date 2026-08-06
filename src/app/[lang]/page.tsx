@@ -347,6 +347,20 @@ export default async function Home({
                 →
               </span>
             </a>
+            {/* Below md the header nav is gone, so this is the only way to the
+                price without scrolling the whole page. Muted and small: it is
+                the second thing to do here, not a competing button. The
+                negative margin trims the hero's 2rem row-gap to something a
+                secondary link deserves, and keeps it above the fold on a
+                812px screen — the sketch is already at its floor and has no
+                more height to give back. */}
+            <a
+              href="#formats"
+              className="-mt-5 inline-flex min-h-11 items-center gap-2 self-start text-[15px] text-muted transition hover:text-ink md:hidden"
+            >
+              {t.hero.pricesLink}
+              <span aria-hidden="true">↓</span>
+            </a>
             </div>
           </div>
         </section>

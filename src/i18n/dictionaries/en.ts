@@ -31,6 +31,7 @@ export const en: Dictionary = {
     offerCta: "See your website mockup for free",
     // Second promise. Stands on its own line, away from the offer.
     freeEdits: "A month of edits after launch — `free`",
+    pricesLink: "How much it costs",
     subtitle:
       "I'll draw how your home page will look: services, prices, work samples, and an easy way for clients to reach you. Like it — I'll build the site in three days.",
     // Shown in the About card, not in the hero.
@@ -225,6 +226,10 @@ export const en: Dictionary = {
         a: "The home-page mockup takes a day. A one-page site takes three days from the deposit, a site with a catalogue takes seven. A logo, business card, or menu takes two or three days. If you're in a hurry, say so up front and I'll see what's possible.",
       },
       {
+        q: "What if I need an online shop or an app?",
+        a: "Then I'm the wrong person for it. A shop with payments, stock and customer accounts, or a mobile app, is different work on a different timeline for different money, and I won't take it on just to keep the order. A catalogue with booking or a request for a specific item I do make — that's part of the $850 site.",
+      },
+      {
         q: "How does payment work?",
         a: "I name the price before the work starts and don't change it along the way. Once the mockup is approved — a 30% deposit, the rest on delivery of the finished site. We settle on whichever payment method suits you.",
       },
@@ -286,7 +291,7 @@ export const en: Dictionary = {
     },
     success: {
       title: "Request sent!",
-      text: "Thank you. I'll get in touch shortly.",
+      text: "Thank you. I'll reply within a business day.",
       again: "Send another request",
     },
     error: {

@@ -226,10 +226,13 @@ body {
 
   /* flex-basis 0, so the sketch claims the space the copy and the CTA leave
      rather than adding its own height on top of them — the CTA stays on the
-     first screen and the drawing grows with the phone. */
+     first screen and the drawing grows with the phone. The floor is 96px
+     rather than 120: at 375×812 the copy, the CTA and the price link fill the
+     screen exactly in the longest locale, and the drawing is the one element
+     here that reads fine with less of it. */
   .hero-first .hero-sketch {
     flex: 1 1 0%;
-    min-height: 120px;
+    min-height: 96px;
     max-height: 300px;
   }
 }

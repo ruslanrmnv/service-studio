@@ -30,6 +30,11 @@ export const ru = {
     offerCta: "Посмотреть макет сайта бесплатно",
     // Second promise. Stands on its own line, away from the offer.
     freeEdits: "Месяц правок после запуска — `бесплатно`",
+    // Phones only. The header nav is hidden below 768 and there is no room to
+    // put it back — 21px of slack once the logo, language, theme and CTA are
+    // measured. So the one question a visitor arrives with gets its own way
+    // down, rather than four screens of scrolling to find the number.
+    pricesLink: "Сколько это стоит",
     subtitle:
       "Нарисую, как будет выглядеть ваша главная: услуги, цены, примеры работ и удобная связь с клиентом. Понравится — соберу сайт за три дня.",
     // Shown in the About card, not in the hero. Deliberately concrete: "open
@@ -238,6 +243,13 @@ export const ru = {
         q: "Сколько времени всё занимает?",
         a: "Макет главной — сутки. Одностраничный сайт — три дня с момента предоплаты, сайт с каталогом — семь. Логотип, визитка или меню — два-три дня. Если у вас горит, скажите сразу: посмотрю, что можно сделать.",
       },
+      // Placed third, right after scope and timing: the sooner someone who
+      // needs a shop learns it isn't me, the less of their time I take. Saying
+      // no costs money, which is exactly why it reads as true.
+      {
+        q: "А если мне нужен интернет-магазин или приложение?",
+        a: "Тогда вам не ко мне. Магазин с оплатой, складом и личными кабинетами или мобильное приложение — другая работа, другие сроки и другие деньги; браться за них, чтобы не упустить заказ, я не стану. А вот каталог с бронированием или заявкой на конкретную позицию делаю — он входит в сайт за $850.",
+      },
       {
         q: "Как происходит оплата?",
         a: "Цену называю до начала работы и не меняю по ходу. После того как макет утверждён — предоплата 30%, остаток при сдаче готового сайта. Способ оплаты подбираем тот, который удобен вам.",
@@ -300,7 +312,10 @@ export const ru = {
     },
     success: {
       title: "Заявка отправлена!",
-      text: "Спасибо. Я свяжусь с вами в ближайшее время.",
+      // Repeats the bullet above the form word for word. A promise that turns
+      // vague at the moment it comes due is the one place a visitor is most
+      // likely to notice it.
+      text: "Спасибо. Отвечу в течение рабочего дня.",
       again: "Отправить ещё одну заявку",
     },
     error: {
