@@ -161,8 +161,9 @@ export const ru = {
     // price stops. `term` sits at the card's foot so both tiers line up.
     includesLabel: "Что входит",
     termLabel: "Срок",
-    // Two tiers, both websites. Design work is an add-on to a site, not a
-    // separate practice — it gets one line under the grid, not a card.
+    // Two tiers, both websites. Design work is deliberately absent here: a
+    // third, cheaper number pulls the eye away from the choice this section
+    // exists to make. It lives in the FAQ answer about missing materials.
     items: [
       {
         title: "Сайт для бизнеса",
@@ -194,7 +195,6 @@ export const ru = {
         term: "7 дней с момента предоплаты",
       },
     ],
-    addon: "Логотип, визитка или меню — $150, если делаем вместе с сайтом.",
   },
 
   process: {
@@ -275,7 +275,7 @@ export const ru = {
       },
       {
         q: "А если у меня нет ни текстов, ни хороших фотографий?",
-        a: "Это не блокер. Тексты пишу сам — достаточно, чтобы вы рассказали про услуги и цены сообщением или голосовым. По фотографиям подскажу, что снять на телефон, а где уместно — подберу подходящие из стоков.",
+        a: "Это не блокер. Тексты пишу сам — достаточно, чтобы вы рассказали про услуги и цены сообщением или голосовым. По фотографиям подскажу, что снять на телефон, а где уместно — подберу подходящие из стоков. Логотипа тоже может не быть: сделаю вместе с сайтом за $150.",
       },
     ],
   },

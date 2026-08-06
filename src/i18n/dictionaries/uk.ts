@@ -155,8 +155,9 @@ export const uk: Dictionary = {
     // price stops. `term` sits at the card's foot so both tiers line up.
     includesLabel: "Що входить",
     termLabel: "Термін",
-    // Two tiers, both websites. Design work is an add-on to a site, not a
-    // separate practice — it gets one line under the grid, not a card.
+    // Two tiers, both websites. Design work is deliberately absent here: a
+    // third, cheaper number pulls the eye away from the choice this section
+    // exists to make. It lives in the FAQ answer about missing materials.
     items: [
       {
         title: "Сайт для бізнесу",
@@ -188,7 +189,6 @@ export const uk: Dictionary = {
         term: "7 днів з моменту передоплати",
       },
     ],
-    addon: "Логотип, візитка або меню — $150, якщо робимо разом із сайтом.",
   },
 
   process: {
@@ -269,7 +269,7 @@ export const uk: Dictionary = {
       },
       {
         q: "А якщо в мене немає ні текстів, ні хороших фотографій?",
-        a: "Це не блокер. Тексти пишу сам — досить, щоб ви розповіли про послуги й ціни повідомленням або голосовим. Щодо фотографій підкажу, що зняти на телефон, а де доречно — підберу відповідні зі стоків.",
+        a: "Це не блокер. Тексти пишу сам — досить, щоб ви розповіли про послуги й ціни повідомленням або голосовим. Щодо фотографій підкажу, що зняти на телефон, а де доречно — підберу відповідні зі стоків. Логотипа теж може не бути: зроблю разом із сайтом за $150.",
       },
     ],
   },

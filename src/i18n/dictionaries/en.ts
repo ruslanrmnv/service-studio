@@ -155,8 +155,9 @@ export const en: Dictionary = {
     // price stops. `term` sits at the card's foot so both tiers line up.
     includesLabel: "What's included",
     termLabel: "Turnaround",
-    // Two tiers, both websites. Design work is an add-on to a site, not a
-    // separate practice — it gets one line under the grid, not a card.
+    // Two tiers, both websites. Design work is deliberately absent here: a
+    // third, cheaper number pulls the eye away from the choice this section
+    // exists to make. It lives in the FAQ answer about missing materials.
     items: [
       {
         title: "Business website",
@@ -188,7 +189,6 @@ export const en: Dictionary = {
         term: "7 days from the deposit",
       },
     ],
-    addon: "A logo, business card, or menu — $150 when we do it together with the site.",
   },
 
   process: {
@@ -269,7 +269,7 @@ export const en: Dictionary = {
       },
       {
         q: "What if I have no copy and no good photos?",
-        a: "That's not a blocker. I write the copy myself — it's enough for you to describe your services and prices in a message or a voice note. For photos I'll tell you what to shoot on your phone, and where it fits I'll pick suitable stock images.",
+        a: "That's not a blocker. I write the copy myself — it's enough for you to describe your services and prices in a message or a voice note. For photos I'll tell you what to shoot on your phone, and where it fits I'll pick suitable stock images. You may have no logo either: I'll make one alongside the site for $150.",
       },
     ],
   },

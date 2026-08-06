@@ -449,12 +449,6 @@ export default async function Home({
                 </Reveal>
               ))}
             </div>
-            {/* Design work is an add-on to a site, not a third tier. Given a
-                border it became an empty full-width card sitting where a third
-                price would go; as a plain line it reads as the footnote it is. */}
-            <Reveal className="mt-5 text-[15px] leading-relaxed text-muted">
-              {t.formats.addon}
-            </Reveal>
             <Reveal className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <span className="text-muted">{t.formats.ctaText}</span>
               <a
