@@ -21,7 +21,12 @@ export function proxy(request: NextRequest) {
     const locale = detectLocale(request.headers.get("accept-language"));
     const url = request.nextUrl.clone();
     url.pathname = bare === "/" ? `/${locale}` : `/${locale}${bare}`;
-    return NextResponse.redirect(url);
+    const response = NextResponse.redirect(url);
+    // Where this redirect points depends on the request's Accept-Language, so
+    // say so: a cache that stores it without this would hand the next visitor
+    // whichever language the previous one happened to read.
+    response.headers.set("Vary", "Accept-Language");
+    return response;
   }
 
   // Everything else is a path that doesn't exist. Let it fall through to the

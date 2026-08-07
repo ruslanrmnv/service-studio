@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Golos_Text, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import SmoothScroll from "@/components/SmoothScroll";
 import "../globals.css";
 
@@ -67,6 +69,13 @@ const KEYWORDS_BY_LOCALE: Record<Locale, string[]> = {
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
+
+/* Three locales exist and no more. Without this, [lang] matches any first
+   segment, so /blog rendered the home page under lang="blog" and Next cached
+   the result at that address — a second home page for every word anyone
+   mistypes. The layout's notFound() below is the belt to this brace: it fires
+   for a request that reaches the layout, this stops the request reaching it. */
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -149,6 +158,13 @@ export default async function LangLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         <SmoothScroll />
         {children}
+        {/* Both are cookieless and store no identifier, so the site needs no
+            consent banner to run them — which matters, selling from Spain.
+            Analytics answers whether anyone reaches the form; Speed Insights
+            reports the field numbers from real phones instead of the lab. Data
+            only flows once each is switched on for the project in Vercel. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

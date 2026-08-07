@@ -52,29 +52,28 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
-  const url = `${getSiteUrl()}/${locale}/upwork`;
+
+  /* This page is written for Upwork clients and exists only in English. It used
+     to be generated at all three locales with hreflang claiming a Russian and a
+     Ukrainian version, which was three indexable copies of one English text and
+     a Russian visitor landing on English. The route stays — shared links to it
+     should keep working — but only /en/upwork is canonical and indexable. */
+  const isCanonicalLocale = locale === defaultLocale;
 
   return {
     title: "Booking Website Case Study for Upwork Clients | Ruslan",
     description:
       "A focused Upwork portfolio case: a Next.js booking website and request flow for local service businesses.",
-    alternates: {
-      canonical: `/${locale}/upwork`,
-      languages: {
-        ru: "/ru/upwork",
-        en: "/en/upwork",
-        uk: "/uk/upwork",
-        "x-default": "/en/upwork",
-      },
-    },
+    robots: { index: isCanonicalLocale, follow: true },
+    alternates: { canonical: `/${defaultLocale}/upwork` },
     openGraph: {
       title: "Booking Website Case Study | Ruslan",
       description:
         "A Next.js booking website and request flow for local service businesses.",
-      url,
+      url: `${getSiteUrl()}/${defaultLocale}/upwork`,
       siteName: SITE_NAME,
       type: "website",
-      locale: locale === "ru" ? "ru_RU" : locale === "uk" ? "uk_UA" : "en_US",
+      locale: "en_US",
     },
   };
 }
