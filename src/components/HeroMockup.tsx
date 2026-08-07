@@ -71,6 +71,10 @@ export default function HeroMockup({
           alt=""
           width={1440}
           height={900}
+          /* The widths .hero-stack actually reaches: 70% of the column on a
+             phone, 58% from sm, and the right six of twelve columns from lg,
+             capped by max-w-6xl at 1152. */
+          sizes="(min-width: 1152px) 532px, (min-width: 1024px) 48vw, (min-width: 640px) 58vw, 70vw"
           priority
           className="h-full w-full object-cover object-top"
         />

@@ -59,6 +59,7 @@ const PHONE_SIZES = {
 
 export function PhoneWindow({
   src,
+  sizes,
   alt = "",
   size = "md",
   aspectClass = "aspect-[9/17]",
@@ -66,6 +67,11 @@ export function PhoneWindow({
   priority = false,
 }: {
   src: string;
+  /* Required, not defaulted: the phone is sized as a percentage of whatever
+     pins it, so only the caller knows how wide it lands. Without this the
+     browser assumes the full viewport and downloads a 1080px screenshot to
+     paint it 78px across. */
+  sizes: string;
   alt?: string;
   size?: keyof typeof PHONE_SIZES;
   /* The screenshots run the phone's whole page; the bezel shows the top of it. */
@@ -91,6 +97,7 @@ export function PhoneWindow({
           alt={alt}
           width={480}
           height={1039}
+          sizes={sizes}
           priority={priority}
           className="h-full w-full object-cover object-top"
         />

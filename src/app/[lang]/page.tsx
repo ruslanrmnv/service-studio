@@ -226,6 +226,16 @@ function SeoJsonLd({
    add them in the dictionaries (task → what was built → result). */
 function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
   if (copy.items.length === 0) return null;
+  /* How wide a card actually lands, so the browser stops fetching a 3840px
+     cover to paint it a third of a screen. Tracks the column count chosen
+     below; the phone pinned on the cover is 24% of the same width. */
+  const thirds = copy.items.length === 3;
+  const coverSizes = thirds
+    ? "(min-width: 1152px) 357px, (min-width: 1024px) 33vw, (min-width: 768px) 46vw, 100vw"
+    : "(min-width: 1152px) 544px, (min-width: 768px) 46vw, 100vw";
+  const phoneSizes = thirds
+    ? "(min-width: 1152px) 86px, (min-width: 1024px) 8vw, (min-width: 768px) 11vw, 24vw"
+    : "(min-width: 1152px) 131px, (min-width: 768px) 11vw, 24vw";
   return (
     /* On the tonal band: it follows the hero directly now, and two sections
        on the same tone read as one endless document. */
@@ -236,7 +246,7 @@ function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
             fourth card in a three-column grid is one orphan on its own row. */}
         <div
           className={`mt-12 grid gap-4 md:grid-cols-2${
-            copy.items.length === 3 ? " lg:grid-cols-3" : ""
+            thirds ? " lg:grid-cols-3" : ""
           }`}
         >
           {copy.items.map((c, i) => {
@@ -252,6 +262,7 @@ function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
                         alt={c.task}
                         width={1440}
                         height={1000}
+                        sizes={coverSizes}
                         className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                       />
                     </div>
@@ -262,6 +273,7 @@ function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
                     {c.phone && (
                       <PhoneWindow
                         src={c.phone}
+                        sizes={phoneSizes}
                         size="sm"
                         aspectClass="aspect-[9/16]"
                         className="absolute bottom-3 right-3 w-[24%] shadow-[0_12px_28px_rgba(0,0,0,0.25)]"
@@ -426,6 +438,9 @@ export default async function Home({
               >
                 <PhoneWindow
                   src="/cases/maison-phone.webp"
+                  /* Three tenths of .hero-stack — see HeroMockup for the
+                     widths that column reaches. */
+                  sizes="(min-width: 1152px) 160px, (min-width: 1024px) 15vw, (min-width: 640px) 18vw, 21vw"
                   priority
                   className="rotate-2 shadow-[0_14px_32px_rgba(0,0,0,0.25)]"
                 />
@@ -659,6 +674,8 @@ export default async function Home({
                         alt={t.about.photoAlt}
                         width={900}
                         height={1125}
+                        /* The narrow half of the 1.5fr / 1fr about grid. */
+                        sizes="(min-width: 1152px) 416px, (min-width: 1024px) 40vw, 100vw"
                         className="h-full w-full object-cover"
                       />
                     </div>
