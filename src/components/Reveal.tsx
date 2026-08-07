@@ -17,7 +17,7 @@ export default function Reveal({
   className?: string;
   /** Stagger, in ms. */
   delay?: number;
-  as?: "div" | "section" | "li";
+  as?: "div" | "section" | "li" | "p";
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);

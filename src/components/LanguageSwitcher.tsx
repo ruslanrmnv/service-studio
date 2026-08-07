@@ -50,7 +50,10 @@ export default function LanguageSwitcher({
     <div ref={rootRef} className="relative">
       <button
         type="button"
-        aria-label={label}
+        /* The code is on the button, so it has to be in the name as well:
+           voice control matches what the user can read ("RU"), and a name of
+           just "Язык" leaves the spoken command with nothing to hit. */
+        aria-label={`${label}: ${current.toUpperCase()}`}
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}

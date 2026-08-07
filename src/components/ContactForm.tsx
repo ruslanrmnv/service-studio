@@ -225,10 +225,12 @@ export default function ContactForm({
         )}
       </div>
 
+      {/* Accent-filled, like the hero's button: the same colour means the
+          same thing from the first screen to the last one. */}
       <button
         type="submit"
         disabled={status === "loading"}
-        className="btn-lift inline-flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-7 text-[15px] font-medium text-background hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="btn-lift inline-flex min-h-12 w-full items-center justify-center rounded-full bg-accent px-7 text-[15px] font-medium text-background hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {status === "loading" ? copy.form.submitting : copy.form.submit}
       </button>

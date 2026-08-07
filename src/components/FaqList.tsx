@@ -11,8 +11,13 @@ import type { Dictionary } from "@/i18n/config";
 export default function FaqList({ items }: { items: Dictionary["faq"]["items"] }) {
   return (
     <ul className="border-t border-line">
-      {items.map((item) => (
-        <li key={item.q} className="border-b border-line">
+      {items.map((item, row) => (
+        <li
+          key={item.q}
+          /* --row-d cascades the rows in on reveal (.faq-row). */
+          style={{ "--row-d": `${row * 70}ms` } as React.CSSProperties}
+          className="faq-row border-b border-line"
+        >
           <details className="group">
             <summary className="faq-summary flex cursor-pointer items-start justify-between gap-6 py-5 font-display text-lg leading-snug text-ink transition hover:text-accent">
               {item.q}

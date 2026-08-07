@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Golos_Text, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
+import SmoothScroll from "@/components/SmoothScroll";
 import "../globals.css";
 
 /* Self-hosted by next/font. Both faces carry Latin and Cyrillic in one file, so
@@ -141,8 +142,12 @@ export default async function LangLayout({
       data-scroll-behavior="smooth"
       className={`${golos.variable} ${montserrat.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-ink">
+      {/* min-h-dvh, not min-h-full: Lenis sets html { height: auto }, and a
+          percentage min-height resolves to nothing against an auto parent,
+          which would drop the footer off the bottom of a short page. */}
+      <body className="min-h-dvh flex flex-col bg-background text-ink">
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
+        <SmoothScroll />
         {children}
       </body>
     </html>

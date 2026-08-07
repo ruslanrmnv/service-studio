@@ -14,14 +14,22 @@ import {
 } from "@/i18n/config";
 import ContactForm from "@/components/ContactForm";
 import FaqList from "@/components/FaqList";
-import HeroSketch from "@/components/HeroSketch";
+import HeroMockup from "@/components/HeroMockup";
+import MaskedHeading from "@/components/MaskedHeading";
+import PrintedHeading from "@/components/PrintedHeading";
+import ProcessArtifact from "@/components/ProcessArtifact";
 import Reveal from "@/components/Reveal";
+import { PhoneWindow } from "@/components/Window";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import TaskExplorer from "@/components/TaskExplorer";
 
 /* Section header — one display title (+ optional intro), left-aligned. Structure
-   comes from tonal bands and spacing, not hairline rules. */
+   comes from tonal bands and spacing, not hairline rules.
+
+   It carries its own entrance rather than sitting inside a <Reveal>: the title
+   rises out of its slot at full strength, and a block-level fade over the top
+   of that would only blur the moment it exists to make. The intro follows a
+   beat later, on the ordinary reveal. */
 function SectionHeader({
   id,
   title,
@@ -33,14 +41,15 @@ function SectionHeader({
 }) {
   return (
     <div className="max-w-2xl">
-      <h2
+      <MaskedHeading
         id={id}
+        text={title}
         className="font-display text-3xl leading-[1.1] text-ink sm:text-4xl"
-      >
-        {title}
-      </h2>
+      />
       {intro && (
-        <p className="mt-5 text-lg leading-relaxed text-muted">{intro}</p>
+        <Reveal as="p" delay={180} className="mt-5 text-lg leading-relaxed text-muted">
+          {intro}
+        </Reveal>
       )}
     </div>
   );
@@ -58,9 +67,9 @@ function CheckMark() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="mt-[7px] h-3 w-3 shrink-0 text-accent"
+      className="check-draw mt-[7px] h-3 w-3 shrink-0 text-accent"
     >
-      <path d="M3 8.5 6.5 12 13 4.5" />
+      <path d="M3 8.5 6.5 12 13 4.5" pathLength={1} />
     </svg>
   );
 }
@@ -218,29 +227,46 @@ function SeoJsonLd({
 function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
   if (copy.items.length === 0) return null;
   return (
-    <section id="cases" aria-labelledby="cases-heading">
+    /* On the tonal band: it follows the hero directly now, and two sections
+       on the same tone read as one endless document. */
+    <section id="cases" aria-labelledby="cases-heading" className="bg-surface">
       <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-        <Reveal>
-          <SectionHeader id="cases-heading" title={copy.heading} intro={copy.intro} />
-        </Reveal>
-        {/* Two cases fill a two-column grid; a third column only once there are 3+. */}
+        <SectionHeader id="cases-heading" title={copy.heading} intro={copy.intro} />
+        {/* Three cases take a third column. Two or four stay two across — a
+            fourth card in a three-column grid is one orphan on its own row. */}
         <div
           className={`mt-12 grid gap-4 md:grid-cols-2${
-            copy.items.length > 2 ? " lg:grid-cols-3" : ""
+            copy.items.length === 3 ? " lg:grid-cols-3" : ""
           }`}
         >
           {copy.items.map((c, i) => {
             const body = (
               <>
                 {c.image && (
-                  <div className="overflow-hidden border-b border-line">
-                    <Image
-                      src={c.image}
-                      alt={c.task}
-                      width={1440}
-                      height={1000}
-                      className="aspect-[3/2] w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                    />
+                  <div className="relative aspect-[3/2] overflow-hidden border-b border-line">
+                    {/* Taller than the frame and started high, so the drift has
+                        room to travel without ever showing an edge. */}
+                    <div className="media-parallax absolute inset-x-0 top-[-6%] h-[112%]">
+                      <Image
+                        src={c.image}
+                        alt={c.task}
+                        width={1440}
+                        height={1000}
+                        className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    {/* The same page on a phone, pinned over the cover. It
+                        holds still while the desktop drifts behind it — two
+                        planes — and answers "will it look right on my phone"
+                        without a word of copy. */}
+                    {c.phone && (
+                      <PhoneWindow
+                        src={c.phone}
+                        size="sm"
+                        aspectClass="aspect-[9/16]"
+                        className="absolute bottom-3 right-3 w-[24%] shadow-[0_12px_28px_rgba(0,0,0,0.25)]"
+                      />
+                    )}
                   </div>
                 )}
                 <div className="flex flex-1 flex-col p-6">
@@ -271,7 +297,9 @@ function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
             const cardClass =
               "flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface-2";
             return (
-              <Reveal key={i} delay={i * 60}>
+              /* media-frame: the card is clipped, so the drift inside it reads
+                 its timeline from here, where the page still scrolls. */
+              <Reveal key={i} delay={i * 60} className="media-frame">
                 {c.link ? (
                   <a
                     href={c.link}
@@ -312,34 +340,115 @@ export default async function Home({
             headline left and the detail in a side column. On phones the copy
             stacks from the top and the button drops to the foot of the screen,
             where the thumb already rests. */}
-        <section className="relative flex items-stretch overflow-hidden lg:min-h-[calc(100svh-4.8rem)] lg:items-center">
+        <section className="hero-recede relative flex items-stretch overflow-hidden lg:min-h-[calc(100svh-4.8rem)] lg:items-center">
           <div className="hero-rise relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-y-9 px-6 pb-16 pt-16 sm:pb-14 lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-10 lg:gap-y-10 lg:py-20">
             <div className="hero-first">
-            <h1 className="font-display text-[2rem] leading-[1.14] text-ink sm:text-5xl lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:text-[3.25rem]">
-              <Accented text={t.hero.title} className="text-accent" />
-            </h1>
-            <p className="text-lg text-ink lg:col-span-7 lg:col-start-1 lg:row-start-2">
-              <Accented text={t.hero.freeEdits} className="text-accent" />
-            </p>
-            <p className="text-base leading-relaxed text-muted lg:col-span-4 lg:col-start-8 lg:row-start-3">
-              {t.hero.subtitle}
-            </p>
-            {/* The sketch fills the air between the copy and the CTA on
-                phones, scaling to whatever height the screen leaves; on lg
-                it's the hero's right column (grid ignores DOM order). */}
-            <HeroSketch className="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1" />
-            {/* The one thing to click: pinned to the foot of the first
-                screen on phones, under the thumb; an inline pill on the
-                grid. */}
+            {/* The headline is the whole picture now, so it takes the width the
+                wireframe used to occupy and the size that width can carry. The
+                accent no longer tints a word — it arrives as the second
+                impression and stays as the stroke underneath it. */}
+            <PrintedHeading
+              as="h1"
+              text={t.hero.title}
+              style={
+                {
+                  /* The ink comes up first; the mark goes down once the words
+                     are legible, and the light follows it out. */
+                  "--mark-d": "1.35s",
+                  "--glint-d": "1.6s",
+                } as React.CSSProperties
+              }
+              className="font-display text-[2.1rem] leading-[1.14] text-ink sm:text-[3.25rem] lg:col-span-10 lg:col-start-1 lg:row-start-1 lg:text-[4rem]"
+            />
+            {/* Everything under the headline, as one cell spanning the whole
+                page grid — the promises, the picture and the button together.
+                The window is much taller than the words beside it, and as
+                separate grid rows its excess was shared out between them and
+                opened half a screen of air; inside this cell the rows are
+                sized `auto 1fr` (globals.css), so the window's surplus falls
+                into one row and the button stays under the line it belongs
+                to. DOM order is the phone's order: promise, picture, button
+                at the foot of the screen. */}
+            <div className="hero-copy lg:col-span-12 lg:col-start-1 lg:row-start-2">
+            {/* What the visitor risks, answered before they scroll. A
+                paragraph explaining the offer stood here until 2026-08-07:
+                the same three facts, in prose, on a screen nobody reads
+                prose on. Ticked lines, in the device the price cards already
+                use — a tick is the page's mark for "this is included, in
+                writing". */}
+            <ul className="hero-promises flex flex-col gap-3">
+              {t.hero.promises.map((promise) => (
+                <li
+                  key={promise}
+                  className="flex items-start gap-3 text-base leading-snug text-ink sm:text-[17px]"
+                >
+                  <CheckMark />
+                  <span>
+                    <Accented text={promise} className="text-accent" />
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {/* The argument, made in pictures: the window loads, the free
+                mockup is drawn into it, the mockup lifts and a built site is
+                underneath — the offer acted out rather than explained. It
+                sits between the promise and the button, so a phone shows it
+                on the first screen without the button leaving the thumb; on
+                the grid it moves to the right half. Decorative (the cases
+                section is where this work is named and linked), hence
+                aria-hidden. */}
+            <div
+              aria-hidden="true"
+              className="hero-stack relative ml-auto w-[70%] pb-5 sm:w-[58%] lg:ml-0 lg:w-auto lg:pb-7"
+            >
+              {/* The window starts loading as the hero settles. Everything
+                  after it — the drawing, the lift — is measured from here. */}
+              <div
+                className="window-drift"
+                style={{ "--load-s": "0.4s" } as React.CSSProperties}
+              >
+                <HeroMockup
+                  src="/cases/strop-barbershop.webp"
+                  url="barbershop.servicestudiobyruslan.com"
+                  className="rotate-[1.2deg]"
+                />
+              </div>
+              {/* The one soft shadow in the hero: the phone floats over the
+                  browser window, and without it they read as one flat card.
+                  Pinned right, over the cover's photo half — on the left it
+                  sat on the barbershop's own headline and truncated it.
+
+                  Its screen comes on as the mockup lifts: the desk shows a
+                  drawing, then both screens show the site. */}
+              <div
+                className="window-drift window-drift-alt absolute -right-2 bottom-0 w-[30%]"
+                style={{ "--load-s": "2.6s" } as React.CSSProperties}
+              >
+                <PhoneWindow
+                  src="/cases/maison-phone.webp"
+                  priority
+                  className="rotate-2 shadow-[0_14px_32px_rgba(0,0,0,0.25)]"
+                />
+              </div>
+            </div>
+            {/* The button and the way to the price. One block, so the phone
+                can push the pair to the foot of the screen in a single move.
+
+                Filled in the accent, not in ink. The green is the only colour
+                the site has, and until now it decorated prose while every
+                button was neutral — the most visible colour meant nothing and
+                the most important element wore none. Now it means one thing,
+                "this is the next step", and a visitor learns that on the
+                first screen. Text is the page background: 7.0:1 in the dark
+                theme, 5.2:1 in the light one. */}
+            <div className="hero-act flex flex-col">
             <a
               href="#contact"
-              className="btn-lift group flex min-h-14 w-full items-center justify-between gap-4 rounded-[28px] bg-ink px-6 py-4 font-display text-lg leading-snug text-background hover:bg-muted sm:w-auto sm:self-start sm:justify-start sm:rounded-full sm:px-9 sm:text-xl lg:col-span-7 lg:col-start-1 lg:row-start-3 lg:justify-self-start"
+              className="btn-lift group flex min-h-14 w-full items-center justify-between gap-4 rounded-[28px] bg-accent px-6 py-4 font-display text-lg leading-snug text-background hover:bg-accent-strong sm:w-auto sm:self-start sm:justify-start sm:rounded-full sm:px-9 sm:text-xl"
             >
               {t.hero.offerCta}
-              {/* The accent is tuned against the page background; on the
-                  inverted pill it lands at ~2.3:1 and all but disappears,
-                  taking the hover nudge with it. The arrow follows the label
-                  instead, held back by opacity rather than hue. */}
+              {/* Held back by opacity rather than hue: a second colour inside
+                  a coloured button would be one accent too many. */}
               <span
                 aria-hidden="true"
                 className="opacity-70 transition-transform group-hover:translate-x-1"
@@ -349,60 +458,37 @@ export default async function Home({
             </a>
             {/* Below md the header nav is gone, so this is the only way to the
                 price without scrolling the whole page. Muted and small: it is
-                the second thing to do here, not a competing button. The
-                negative margin trims the hero's 2rem row-gap to something a
-                secondary link deserves, and keeps it above the fold on a
-                812px screen — the sketch is already at its floor and has no
-                more height to give back. */}
+                the second thing to do here, not a competing button. */}
             <a
               href="#formats"
-              className="-mt-5 inline-flex min-h-11 items-center gap-2 self-start text-[15px] text-muted transition hover:text-ink md:hidden"
+              className="mt-4 inline-flex min-h-11 items-center gap-2 self-start text-[15px] text-muted transition hover:text-ink md:hidden"
             >
               {t.hero.pricesLink}
               <span aria-hidden="true">↓</span>
             </a>
             </div>
+            </div>
+            </div>
           </div>
         </section>
 
-        {/* This is the services section — it carries the #services anchor the
-            header links to. A static grid of service cards stood here as well
-            until the price checklists started listing the same four things
-            line by line; between a list that repeats the prices and a block
-            the visitor drives, the visitor wins. Its own tonal band, since it
-            follows the hero. */}
-        <section
-          id="services"
-          aria-labelledby="explorer-heading"
-          className="bg-surface"
-        >
-          <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <Reveal>
-              <SectionHeader
-                id="explorer-heading"
-                title={t.explorer.prompt}
-                intro={t.explorer.intro}
-              />
-            </Reveal>
-            <Reveal className="mt-12" delay={80}>
-              <TaskExplorer copy={t.explorer} />
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Selected work — appears once real cases are added to the dictionary. */}
+        {/* Selected work — the first section after the hero. A task-explorer
+            block («Чем я могу вам быть полезен?») stood between them until
+            2026-08-07: its five answers restated what the cases show and the
+            price checklists itemize, and the page said everything twice. The
+            live sites are the answer to "what can you do for me". */}
         <CasesSection copy={t.cases} />
 
-        {/* How to start — three entry points as raised cards. */}
+        {/* How to start — three entry points as raised cards. On the band with
+            the cases above it: the price cards are surface-2, which is white in
+            the light theme and all but invisible on the page tone. */}
         <section id="formats" aria-labelledby="formats-heading" className="bg-surface">
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <Reveal>
-              <SectionHeader
-                id="formats-heading"
-                title={t.formats.heading}
-                intro={t.formats.note}
-              />
-            </Reveal>
+            <SectionHeader
+              id="formats-heading"
+              title={t.formats.heading}
+              intro={t.formats.note}
+            />
             {/* Price is what people scroll here for, so it gets its own line at
                 display size instead of trailing the title in body weight. */}
             <div className="mt-12 grid gap-4 md:grid-cols-2">
@@ -412,9 +498,27 @@ export default async function Home({
                     <h3 className="font-display text-lg leading-snug text-ink">
                       {format.title}
                     </h3>
-                    <p className="mt-3 font-display text-4xl leading-none text-ink">
-                      {format.price}
-                    </p>
+                    {/* The number gets the same two-colour pass as the
+                        headline — it is the other thing on the page set large
+                        enough for the register to read. A wider slip than the
+                        headline's: at 36px the proportional one is three
+                        pixels, which reads as a blurry render rather than as
+                        two passes of ink. */}
+                    <PrintedHeading
+                      as="p"
+                      text={format.price}
+                      style={
+                        {
+                          "--impress-x": "0.14em",
+                          "--impress-y": "0.08em",
+                          /* The light follows the plate in: the card is
+                             revealed on scroll, so the whole pass has to sit
+                             inside the couple of seconds it is being read. */
+                          "--glint-d": "1.25s",
+                        } as React.CSSProperties
+                      }
+                      className="mt-3 font-display text-4xl leading-none text-ink"
+                    />
                     <p className="mt-5 border-t border-line pt-5 text-[15px] leading-relaxed text-muted">
                       {format.description}
                     </p>
@@ -424,9 +528,11 @@ export default async function Home({
                       {t.formats.includesLabel}
                     </p>
                     <ul className="mt-3 space-y-2.5">
-                      {format.includes.map((line) => (
+                      {format.includes.map((line, tick) => (
                         <li
                           key={line}
+                          /* --tick-d cascades the tick drawing (.check-draw). */
+                          style={{ "--tick-d": `${tick * 70}ms` } as React.CSSProperties}
                           className="flex gap-2.5 text-[15px] leading-relaxed text-muted"
                         >
                           <CheckMark />
@@ -464,14 +570,16 @@ export default async function Home({
         {/* Process — the one true sequence, so the one vertical connector. */}
         <section aria-labelledby="process-heading">
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <Reveal>
-              <SectionHeader
-                id="process-heading"
-                title={t.process.heading}
-                intro={t.process.subheading}
-              />
-            </Reveal>
-            <ol className="mt-12 max-w-3xl">
+            <SectionHeader
+              id="process-heading"
+              title={t.process.heading}
+              intro={t.process.subheading}
+            />
+            {/* Wider than the old text-only 3xl: the fourth column carries a
+                small window per step — what that step actually produces (the
+                first message → the wireframe → the page inked in → the live
+                site). Below lg the window tucks under the step's text. */}
+            <ol className="mt-12 max-w-3xl lg:max-w-[64rem]">
               {t.process.steps.map((step, index) => {
                 const last = index === t.process.steps.length - 1;
                 return (
@@ -479,7 +587,7 @@ export default async function Home({
                     as="li"
                     key={step.title}
                     delay={index * 70}
-                    className="grid grid-cols-[auto_1fr] gap-x-5 sm:gap-x-7"
+                    className="grid grid-cols-[auto_1fr] gap-x-5 sm:gap-x-7 lg:grid-cols-[auto_1fr_15rem] lg:gap-x-9"
                   >
                     <div className="flex flex-col items-center">
                       {/* Medium, not the 400 the rest of the display type
@@ -488,7 +596,7 @@ export default async function Home({
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent font-display text-sm font-medium text-background">
                         {index + 1}
                       </span>
-                      {!last && <span aria-hidden="true" className="my-1 w-px flex-1 bg-line-strong" />}
+                      {!last && <span aria-hidden="true" className="process-line my-1 w-px flex-1 bg-line-strong" />}
                     </div>
                     <div className={last ? "pb-0" : "pb-9"}>
                       <h3 className="font-display text-lg leading-snug text-ink">
@@ -497,6 +605,15 @@ export default async function Home({
                       <p className="mt-2 leading-relaxed text-muted">
                         {step.description}
                       </p>
+                      <div aria-hidden="true" className="mt-5 max-w-[230px] lg:hidden">
+                        <ProcessArtifact step={index} />
+                      </div>
+                    </div>
+                    <div
+                      aria-hidden="true"
+                      className={`hidden lg:block lg:self-start ${last ? "" : "lg:pb-9"}`}
+                    >
+                      <ProcessArtifact step={index} />
                     </div>
                   </Reveal>
                 );
@@ -511,35 +628,41 @@ export default async function Home({
             {/* The facts sit under the prose, not inside the photo card: they
                 read with the text, and the two columns end within a line of
                 each other instead of leaving half a screen of dead space. */}
-            <Reveal>
+            <div>
               <SectionHeader id="about-heading" title={t.about.heading} />
-              <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted">
-                {t.about.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-              <ul className="mt-8 space-y-3 border-t border-line pt-8 text-[15px] leading-relaxed text-muted">
-                {t.about.facts.map((fact) => (
-                  <li key={fact} className="flex items-start gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                    />
-                    {fact}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal as="div" delay={90} className="self-start">
+              <Reveal delay={180}>
+                <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted">
+                  {t.about.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+                <ul className="mt-8 space-y-3 border-t border-line pt-8 text-[15px] leading-relaxed text-muted">
+                  {t.about.facts.map((fact) => (
+                    <li key={fact} className="flex items-start gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                      />
+                      {fact}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+            <Reveal as="div" delay={90} className="media-frame self-start">
               <aside className="overflow-hidden rounded-2xl border border-line bg-surface-2">
                 {ABOUT_PHOTO && (
-                  <Image
-                    src={ABOUT_PHOTO}
-                    alt={t.about.photoAlt}
-                    width={900}
-                    height={1125}
-                    className="aspect-[4/5] w-full border-b border-line object-cover"
-                  />
+                  <div className="relative aspect-[4/5] overflow-hidden border-b border-line">
+                    <div className="media-parallax absolute inset-x-0 top-[-6%] h-[112%]">
+                      <Image
+                        src={ABOUT_PHOTO}
+                        alt={t.about.photoAlt}
+                        width={900}
+                        height={1125}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
                 )}
                 <div className="p-8">
                   <p className="font-display text-2xl text-ink">{t.about.name}</p>
@@ -561,13 +684,11 @@ export default async function Home({
             form so nobody has to ask them in a message first. */}
         <section id="faq" aria-labelledby="faq-heading">
           <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 sm:py-28 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-            <Reveal>
-              <SectionHeader
-                id="faq-heading"
-                title={t.faq.heading}
-                intro={t.faq.intro}
-              />
-            </Reveal>
+            <SectionHeader
+              id="faq-heading"
+              title={t.faq.heading}
+              intro={t.faq.intro}
+            />
             <Reveal as="div" delay={90}>
               <FaqList items={t.faq.items} />
             </Reveal>
@@ -577,43 +698,44 @@ export default async function Home({
         {/* Contact — the destination: warm invite, direct links, form in a panel. */}
         <section id="contact" aria-labelledby="contact-heading">
           <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:py-28 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
-            <Reveal>
-              <h2
+            <div>
+              <MaskedHeading
                 id="contact-heading"
+                text={t.contact.heading}
                 className="font-display text-3xl leading-[1.1] text-ink sm:text-4xl"
-              >
-                {t.contact.heading}
-              </h2>
-              <p className="mt-5 text-lg leading-relaxed text-muted">
-                {t.contact.subheading}
-              </p>
-              <ul className="mt-8 space-y-3.5 text-muted">
-                {t.contact.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-start gap-3">
-                    <span aria-hidden="true" className="mt-1 text-accent">
-                      →
-                    </span>
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 flex flex-wrap gap-2.5">
-                {DIRECT.map((c) => (
-                  <a
-                    key={c.label}
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-lift inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line bg-surface px-5 text-sm text-muted hover:border-accent-line hover:text-ink"
-                  >
-                    {c.label}
-                    <span aria-hidden="true" className="text-[10px]">
-                      ↗
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </Reveal>
+              />
+              <Reveal delay={180}>
+                <p className="mt-5 text-lg leading-relaxed text-muted">
+                  {t.contact.subheading}
+                </p>
+                <ul className="mt-8 space-y-3.5 text-muted">
+                  {t.contact.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-3">
+                      <span aria-hidden="true" className="mt-1 text-accent">
+                        →
+                      </span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8 flex flex-wrap gap-2.5">
+                  {DIRECT.map((c) => (
+                    <a
+                      key={c.label}
+                      href={c.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-lift inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line bg-surface px-5 text-sm text-muted hover:border-accent-line hover:text-ink"
+                    >
+                      {c.label}
+                      <span aria-hidden="true" className="text-[10px]">
+                        ↗
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
             <Reveal as="div" delay={90} className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
               <ContactForm lang={locale} copy={t.contact} />
             </Reveal>

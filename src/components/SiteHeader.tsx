@@ -27,6 +27,10 @@ export default function SiteHeader({
           className="flex min-h-11 min-w-11 shrink-0 items-center gap-2.5 whitespace-nowrap font-display text-[15px] text-ink"
         >
           <Logo size={22} />
+          {/* Below sm the wordmark is gone and the mark itself is aria-hidden,
+              which would leave a link with no accessible name at all. Dropped
+              rather than hidden from sm up, so the name isn't said twice. */}
+          <span className="sr-only sm:hidden">Service Studio</span>
           {/* Phones get the monogram alone — the width goes to the CTA, and
               "by Ruslan" waits until the nav has room to sit beside it. */}
           <span className="hidden sm:inline">
@@ -38,17 +42,15 @@ export default function SiteHeader({
           {/* Tablets have the room for the section links; phones don't, and on a
               single-page site the always-visible CTA covers them there. */}
           <nav className="hidden items-center gap-5 whitespace-nowrap text-sm text-muted md:flex lg:gap-6">
-            <a href={anchor("services")} className="transition hover:text-ink">
-              {copy.nav.services}
-            </a>
             <a href={anchor("formats")} className="transition hover:text-ink">
               {copy.nav.formats}
             </a>
             <a href={anchor("faq")} className="transition hover:text-ink">
               {copy.nav.faq}
             </a>
-            {/* Three links is what a tablet fits once the longest locale
-                (Ukrainian) is measured; the fourth waits for desktop. */}
+            {/* Tablets got two links once «Услуги» went with its section;
+                the third still waits for desktop, measured against the
+                longest locale (Ukrainian). */}
             <a
               href={anchor("about")}
               className="hidden transition hover:text-ink lg:inline"
@@ -58,9 +60,20 @@ export default function SiteHeader({
           </nav>
           <LanguageSwitcher current={locale} label={copy.language} />
           <ThemeToggle label={copy.theme} />
+          {/* Outlined, not filled. The hero's own button says the same thing
+              one screen below, and two solid buttons of the same colour on
+              one screen split the visitor's attention instead of directing
+              it — the filled one belongs to the offer, this one is only the
+              way back to it from further down the page.
+
+              The outline is drawn in faint rather than the line-strong the
+              price cards use: at this size the border is the only thing that
+              says "button", and line-strong lands at 1.8:1 against the header
+              — visible on a good screen, gone on a phone in daylight. Faint
+              clears 3:1 and still reads as secondary next to a filled pill. */}
           <a
             href={anchor("contact")}
-            className="btn-lift inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full bg-ink px-4 text-sm font-medium text-background hover:bg-muted sm:px-5"
+            className="btn-lift inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-faint px-4 text-sm font-medium text-ink hover:border-ink sm:px-5"
           >
             {copy.cta}
           </a>

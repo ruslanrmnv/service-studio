@@ -12,7 +12,6 @@ export const en: Dictionary = {
 
   header: {
     nav: {
-      services: "Services",
       formats: "How to start",
       faq: "Questions",
       about: "About",
@@ -29,55 +28,15 @@ export const en: Dictionary = {
     title: "A website for your business. See the `design` before you pay.",
     // The offer itself — the hero's only call to action, rendered as a button.
     offerCta: "See your website mockup for free",
-    // Second promise. Stands on its own line, away from the offer.
-    freeEdits: "A month of edits after launch — `free`",
+    // The guarantee, in the order the deal happens — see the note in ru.ts.
+    promises: [
+      "Your home page, drawn `free` — in a day",
+      "Not right for you — you owe nothing",
+      "You like it — the site in 3 days, then a month of edits",
+    ],
     pricesLink: "How much it costs",
-    subtitle:
-      "I'll draw how your home page will look: services, prices, work samples, and an easy way for clients to reach you. Like it — I'll build the site in three days.",
     // Shown in the About card, not in the hero.
     availability: "I can start this week",
-  },
-
-  // Interactive value block — visitor picks a business task and sees what I'd
-  // build and the result. Extensible: add a task by adding an entry.
-  explorer: {
-    prompt: "What can I help you with?",
-    intro:
-      "One thing, done end to end: a website for a small business — from the first page to launch and the edits after.",
-    buildLabel: "What I'll build",
-    resultLabel: "Result",
-    tasks: [
-      {
-        id: "site",
-        label: "Business website",
-        build: "A one-page site with prices, work samples, and booking — for your service.",
-        result: "Clients find you and book on their own.",
-      },
-      {
-        id: "catalog",
-        label: "Catalogue or booking",
-        build: "Several pages with a catalogue of products or rooms, filters, and direct booking.",
-        result: "Guests choose and book on their own, with no messaging.",
-      },
-      {
-        id: "leads",
-        label: "Requests & booking",
-        build: "A booking form plus WhatsApp and Telegram buttons — the request lands in your messenger right away.",
-        result: "No request ever slips through.",
-      },
-      {
-        id: "content",
-        label: "No copy or photos",
-        build: "I'll write the copy from what you tell me, and say what to shoot on your phone.",
-        result: "The site launches with real content, not placeholders.",
-      },
-      {
-        id: "custom",
-        label: "Your own task",
-        build: "Tell me what the business is and what's getting in the way — I'll propose how a page solves it.",
-        result: "An answer to your case, not a template.",
-      },
-    ],
   },
 
   // Real work / proof. Renders only when `items` has entries — no fake cases.
@@ -91,29 +50,42 @@ export const en: Dictionary = {
     items: [
       {
         task: "Beauty salon",
-        image: "/cases/beauty-salon.webp",
+        image: "/cases/maison-salon.webp",
+        phone: "/cases/maison-phone.webp",
         built:
           "Services with exact prices and durations, a before-and-after slider, client reviews, booking in one tap.",
         result:
           "People see the price and how long it takes before booking — fewer questions in the chat.",
-        link: "https://mmaison-studio.netlify.app/",
+        link: "https://maison.servicestudiobyruslan.com/",
+      },
+      {
+        task: "Barbershop",
+        image: "/cases/strop-barbershop.webp",
+        phone: "/cases/strop-phone.webp",
+        built:
+          "The next free chairs sit in the first screen — time, barber, one tap. A price list with the length of every service, the four barbers, a gallery of cuts, and how to find the door in the second courtyard.",
+        result:
+          "You can see when you'd be in the chair before you have opened the price list.",
+        link: "https://barbershop.servicestudiobyruslan.com/",
       },
       {
         task: "Dental clinic",
-        image: "/cases/dental.webp",
+        image: "/cases/brightsmile-dental.webp",
+        phone: "/cases/brightsmile-phone.webp",
         built:
           "Five services with prices, calm copy for people who dread the dentist, a booking form with no phone call.",
         result: "The patient knows what the appointment involves and books it themselves.",
-        link: "https://bbrightsmiledental.netlify.app/",
+        link: "https://brightsmile.servicestudiobyruslan.com/",
       },
       {
         task: "Guest house",
-        image: "/cases/guest-house.webp",
+        image: "/cases/north-house.webp",
+        phone: "/cases/north-house-phone.webp",
         built:
           "Nine rooms with honest descriptions and prices, filters by floor and view, house rules on the page itself, direct booking with no middlemen.",
         result:
           "Guests pick a room and check dates themselves — no messaging, no platform fees.",
-        link: "https://north-house-demo.netlify.app/",
+        link: "https://boutiquehotel.servicestudiobyruslan.com/",
       },
     ],
   },
@@ -267,7 +239,8 @@ export const en: Dictionary = {
       businessType: "Area / task",
       businessTypePlaceholder: "For example: a coffee shop",
       contactMethod: "Contact method",
-      contactMethodPlaceholder: "Choose a contact method",
+      // Short on purpose — see the note in ru.ts.
+      contactMethodPlaceholder: "Choose one",
       methods: {
         whatsapp: "WhatsApp",
         telegram: "Telegram",

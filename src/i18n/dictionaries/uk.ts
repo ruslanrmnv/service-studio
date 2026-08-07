@@ -12,7 +12,6 @@ export const uk: Dictionary = {
 
   header: {
     nav: {
-      services: "Послуги",
       formats: "Як почати",
       faq: "Питання",
       about: "Про мене",
@@ -29,55 +28,15 @@ export const uk: Dictionary = {
     title: "Сайт під ваш бізнес. `Дизайн` побачите до оплати.",
     // The offer itself — the hero's only call to action, rendered as a button.
     offerCta: "Подивитися макет сайту безкоштовно",
-    // Second promise. Stands on its own line, away from the offer.
-    freeEdits: "Місяць правок після запуску — `безкоштовно`",
+    // The guarantee, in the order the deal happens — see the note in ru.ts.
+    promises: [
+      "Макет головної — `безкоштовно`, за добу",
+      "Не підійде — ви нічого не винні",
+      "Сподобається — сайт за 3 дні та місяць правок",
+    ],
     pricesLink: "Скільки це коштує",
-    subtitle:
-      "Намалюю, як виглядатиме ваша головна: послуги, ціни, приклади робіт і зручний зв’язок із клієнтом. Сподобається — зберу сайт за три дні.",
     // Shown in the About card, not in the hero.
     availability: "Можу почати цього тижня",
-  },
-
-  // Interactive value block — visitor picks a business task and sees what I'd
-  // build and the result. Extensible: add a task by adding an entry.
-  explorer: {
-    prompt: "Чим я можу вам бути корисним?",
-    intro:
-      "Роблю одне й роблю повністю: сайт для невеликого бізнесу — від першої сторінки до запуску й правок після.",
-    buildLabel: "Що зберу",
-    resultLabel: "Результат",
-    tasks: [
-      {
-        id: "site",
-        label: "Сайт для бізнесу",
-        build: "Односторінковий сайт із цінами, роботами й записом — під вашу послугу.",
-        result: "Клієнти знаходять вас і записуються самі.",
-      },
-      {
-        id: "catalog",
-        label: "Каталог або бронювання",
-        build: "Кілька сторінок із каталогом товарів або номерів, фільтрами й бронюванням напряму.",
-        result: "Гість обирає й бронює сам, без листування.",
-      },
-      {
-        id: "leads",
-        label: "Заявки та запис",
-        build: "Форму запису й кнопки WhatsApp і Telegram — заявка одразу падає вам у месенджер.",
-        result: "Жодна заявка не загубиться.",
-      },
-      {
-        id: "content",
-        label: "Немає текстів і фото",
-        build: "Тексти напишу з вашої розповіді, щодо фотографій підкажу, що зняти на телефон.",
-        result: "Сайт виходить зі справжнім вмістом, а не із заглушками.",
-      },
-      {
-        id: "custom",
-        label: "Своя задача",
-        build: "Опишіть, що за бізнес і що зараз заважає — запропоную, як це вирішити сторінкою.",
-        result: "Рішення під ваш випадок, а не шаблон.",
-      },
-    ],
   },
 
   // Real work / proof. Renders only when `items` has entries — no fake cases.
@@ -91,29 +50,42 @@ export const uk: Dictionary = {
     items: [
       {
         task: "Салон краси",
-        image: "/cases/beauty-salon.webp",
+        image: "/cases/maison-salon.webp",
+        phone: "/cases/maison-phone.webp",
         built:
           "Послуги з точною ціною та тривалістю, слайдер «до і після», відгуки клієнтів, запис в один клік.",
         result:
           "Людина бачить ціну й скільки це займе ще до запису — менше питань у листуванні.",
-        link: "https://mmaison-studio.netlify.app/",
+        link: "https://maison.servicestudiobyruslan.com/",
+      },
+      {
+        task: "Барбершоп",
+        image: "/cases/strop-barbershop.webp",
+        phone: "/cases/strop-phone.webp",
+        built:
+          "Найближчі вільні вікна просто в першому екрані — час, майстер, один дотик. Прайс із тривалістю кожної послуги, четверо майстрів, галерея робіт і як знайти вхід у другому дворі.",
+        result:
+          "Людина бачить, коли її посадять у крісло, ще до того, як відкрила прайс.",
+        link: "https://barbershop.servicestudiobyruslan.com/",
       },
       {
         task: "Стоматологія",
-        image: "/cases/dental.webp",
+        image: "/cases/brightsmile-dental.webp",
+        phone: "/cases/brightsmile-phone.webp",
         built:
           "П’ять послуг із цінами, спокійний текст для тих, хто боїться лікуватися, форма запису без дзвінка.",
         result: "Пацієнт розуміє, що буде на прийомі, і записується сам.",
-        link: "https://bbrightsmiledental.netlify.app/",
+        link: "https://brightsmile.servicestudiobyruslan.com/",
       },
       {
         task: "Гостьовий будинок",
-        image: "/cases/guest-house.webp",
+        image: "/cases/north-house.webp",
+        phone: "/cases/north-house-phone.webp",
         built:
           "Дев’ять номерів із чесними описами та цінами, фільтр за поверхом і видом, правила заселення на самій сторінці, бронювання напряму без посередників.",
         result:
           "Гість обирає номер і перевіряє дати сам — без листування й комісій майданчиків.",
-        link: "https://north-house-demo.netlify.app/",
+        link: "https://boutiquehotel.servicestudiobyruslan.com/",
       },
     ],
   },
@@ -267,7 +239,8 @@ export const uk: Dictionary = {
       businessType: "Сфера / задача",
       businessTypePlaceholder: "Наприклад: кав’ярня",
       contactMethod: "Спосіб зв’язку",
-      contactMethodPlaceholder: "Оберіть спосіб зв’язку",
+      // Short on purpose — see the note in ru.ts.
+      contactMethodPlaceholder: "Оберіть",
       methods: {
         whatsapp: "WhatsApp",
         telegram: "Telegram",

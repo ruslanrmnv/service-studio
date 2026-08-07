@@ -10,7 +10,6 @@ export const ru = {
 
   header: {
     nav: {
-      services: "Услуги",
       formats: "Как начать",
       faq: "Вопросы",
       about: "Обо мне",
@@ -28,64 +27,25 @@ export const ru = {
     title: "Сайт под ваш бизнес. `Дизайн` увидите до оплаты.",
     // The offer itself — the hero's only call to action, rendered as a button.
     offerCta: "Посмотреть макет сайта бесплатно",
-    // Second promise. Stands on its own line, away from the offer.
-    freeEdits: "Месяц правок после запуска — `бесплатно`",
+    // What the visitor is actually guaranteed, in the order the deal happens:
+    // what is free, what they owe if it misses, what they get if it lands.
+    // Three ticked lines, not a paragraph — a first screen is scanned, not
+    // read, and prose there only postpones the one question ("what do I risk
+    // if I write to him"). `backtick` renders in the accent colour.
+    promises: [
+      "Макет главной — `бесплатно`, за сутки",
+      "Не подойдёт — вы ничего не должны",
+      "Понравится — сайт за 3 дня и месяц правок",
+    ],
     // Phones only. The header nav is hidden below 768 and there is no room to
     // put it back — 21px of slack once the logo, language, theme and CTA are
     // measured. So the one question a visitor arrives with gets its own way
     // down, rather than four screens of scrolling to find the number.
     pricesLink: "Сколько это стоит",
-    subtitle:
-      "Нарисую, как будет выглядеть ваша главная: услуги, цены, примеры работ и удобная связь с клиентом. Понравится — соберу сайт за три дня.",
     // Shown in the About card, not in the hero. Deliberately concrete: "open
     // for new projects" is what every freelancer writes, so it reads as filler.
     // A date the visitor can act on does the work instead.
     availability: "Могу начать на этой неделе",
-  },
-
-  // Interactive value block — visitor picks a business task and sees what I'd
-  // build and the result. Extensible: add a task by adding an entry.
-  explorer: {
-    prompt: "Чем я могу вам быть полезен?",
-    // Inherited from the "Услуги" section this block replaced: it was the one
-    // line there that said something the price checklist doesn't — that the
-    // narrow offer is a choice, and that it runs to the end of the job.
-    intro:
-      "Делаю одно и делаю целиком: сайт для небольшого бизнеса — от первой страницы до запуска и правок после.",
-    buildLabel: "Что соберу",
-    resultLabel: "Результат",
-    tasks: [
-      {
-        id: "site",
-        label: "Сайт для бизнеса",
-        build: "Одностраничный сайт с ценами, работами и записью — под вашу услугу.",
-        result: "Клиенты находят вас и записываются сами.",
-      },
-      {
-        id: "catalog",
-        label: "Каталог или бронирование",
-        build: "Несколько страниц с каталогом товаров или номеров, фильтрами и бронированием напрямую.",
-        result: "Гость выбирает и бронирует сам, без переписки.",
-      },
-      {
-        id: "leads",
-        label: "Заявки и запись",
-        build: "Форму записи и кнопки WhatsApp и Telegram — заявка сразу падает вам в мессенджер.",
-        result: "Ни одна заявка не потеряется.",
-      },
-      {
-        id: "content",
-        label: "Нет текстов и фото",
-        build: "Тексты напишу по вашему рассказу, по фотографиям подскажу, что снять на телефон.",
-        result: "Сайт выходит с настоящим содержимым, а не с заглушками.",
-      },
-      {
-        id: "custom",
-        label: "Своя задача",
-        build: "Опишите, что за бизнес и что сейчас мешает — предложу, как это решить страницей.",
-        result: "Решение под ваш случай, а не шаблон.",
-      },
-    ],
   },
 
   // Real work / proof. The section renders only when `items` has entries —
@@ -100,29 +60,42 @@ export const ru = {
     items: [
       {
         task: "Салон красоты",
-        image: "/cases/beauty-salon.webp",
+        image: "/cases/maison-salon.webp",
+        phone: "/cases/maison-phone.webp",
         built:
           "Услуги с точной ценой и длительностью, слайдер «до и после», отзывы клиентов, запись в один клик.",
         result:
           "Человек видит цену и сколько это займёт ещё до записи — меньше вопросов в переписке.",
-        link: "https://mmaison-studio.netlify.app/",
+        link: "https://maison.servicestudiobyruslan.com/",
+      },
+      {
+        task: "Барбершоп",
+        image: "/cases/strop-barbershop.webp",
+        phone: "/cases/strop-phone.webp",
+        built:
+          "Ближайшие свободные окна прямо в первом экране — время, мастер, одно касание. Прайс с длительностью каждой услуги, четверо мастеров, галерея работ и как найти вход во втором дворе.",
+        result:
+          "Человек видит, когда его посадят в кресло, ещё до того, как открыл прайс.",
+        link: "https://barbershop.servicestudiobyruslan.com/",
       },
       {
         task: "Стоматология",
-        image: "/cases/dental.webp",
+        image: "/cases/brightsmile-dental.webp",
+        phone: "/cases/brightsmile-phone.webp",
         built:
           "Пять услуг с ценами, спокойный текст для тех, кто боится лечиться, форма записи без звонка.",
         result: "Пациент понимает, что будет на приёме, и записывается сам.",
-        link: "https://bbrightsmiledental.netlify.app/",
+        link: "https://brightsmile.servicestudiobyruslan.com/",
       },
       {
         task: "Гостевой дом",
-        image: "/cases/guest-house.webp",
+        image: "/cases/north-house.webp",
+        phone: "/cases/north-house-phone.webp",
         built:
           "Девять номеров с честными описаниями и ценами, фильтр по этажу и виду, правила заселения на самой странице, бронирование напрямую без посредников.",
         result:
           "Гость выбирает номер и проверяет даты сам — без переписки и комиссий площадок.",
-        link: "https://north-house-demo.netlify.app/",
+        link: "https://boutiquehotel.servicestudiobyruslan.com/",
       },
     ] as {
       task: string;
@@ -130,6 +103,8 @@ export const ru = {
       result: string;
       link?: string;
       image?: string;
+      /* The same page at phone width, pinned over the cover. */
+      phone?: string;
     }[],
   },
 
@@ -288,7 +263,11 @@ export const ru = {
       businessType: "Сфера / задача",
       businessTypePlaceholder: "Например: кофейня",
       contactMethod: "Способ связи",
-      contactMethodPlaceholder: "Выберите способ связи",
+      // Not "Выберите способ связи": the label right above already says what
+      // the field is, and repeating it made the option 187px wide in a 186px
+      // field — the browser clipped the last letter. The placeholder's one job
+      // is "nothing is chosen yet".
+      contactMethodPlaceholder: "Выберите",
       methods: {
         whatsapp: "WhatsApp",
         telegram: "Telegram",
