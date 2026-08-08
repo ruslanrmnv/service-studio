@@ -95,10 +95,20 @@ export default function MaskedHeading({
 
     build();
 
-    /* Deferred by a tick so the masked state gets a paint of its own: adding
-       the class in the same frame as the split gives the lines no starting
-       position to move from, and they arrive already up. */
-    const armed = setTimeout(() => el.classList.add("is-visible"), 0);
+    /* Fast path for a heading that is already on screen when it mounts, and
+       only for that heading — the same guard <Reveal> uses. Without the
+       condition this fired for every heading on the page a tick after mount,
+       including ones several screens down, so each section's title was already
+       standing in its slot long before the section arrived and the observer
+       below spent its life setting a class that was always set.
+
+       Deferred by a tick either way, so the masked state gets a paint of its
+       own: adding the class in the same frame as the split gives the lines no
+       starting position to move from, and they arrive already up. */
+    const onScreen = el.getBoundingClientRect().top < window.innerHeight;
+    const armed = onScreen
+      ? setTimeout(() => el.classList.add("is-visible"), 0)
+      : undefined;
 
     /* Same guard as <Reveal>: the unbounded top margin means anything that ends
        up above the viewport counts as intersecting, so a fast flick or a reload
