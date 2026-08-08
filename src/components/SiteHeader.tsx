@@ -18,7 +18,11 @@ export default function SiteHeader({
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-4 sm:px-6">
+      {/* py-2.5 below sm, py-4 above. The header is sticky, so on a phone its
+          height is subtracted from every screen, not just the first; the row's
+          own children are min-h-11 and keep their 44px tap targets whatever
+          this padding does. */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-2.5 sm:px-6 sm:py-4">
         {/* min-h/min-w-11: on phones the wordmark is hidden and the link
             collapses to the 22px monogram, which is half a tap target. The
             header row is already 44px tall, so this costs no layout. */}

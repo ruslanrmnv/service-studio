@@ -268,8 +268,8 @@ body {
   row-gap: 2.25rem;
 }
 
-/* The promise, the picture and the button, as one block. In source order, and
-   therefore in phone order: what you get, what it looks like, what to press. */
+/* The promise, the button and the picture, as one block. In source order, and
+   therefore in phone order: what you get, what to press, what it looks like. */
 .hero-copy {
   display: flex;
   flex-direction: column;
@@ -277,30 +277,36 @@ body {
 }
 
 @media (max-width: 639px) {
+  /* Tall enough to reach the fold: the header is 4.06rem and .hero-rise adds
+     1.5rem above this, so 5.6rem is everything between the top of the screen
+     and the top of this block. The section's own bottom padding is left out
+     of the sum deliberately — it falls below the fold, where it costs the
+     first screen nothing. */
   .hero-first {
-    min-height: calc(100svh - 10.8rem);
-    row-gap: 1.5rem;
+    min-height: calc(100svh - 5.6rem);
+    row-gap: 1.25rem;
   }
 
   /* Takes the slack under the headline, so the button's margin-top: auto
      still has somewhere to push from. */
   .hero-copy {
     flex: 1;
-    row-gap: 1.5rem;
+    row-gap: 1.25rem;
   }
 
-  /* 2rem, not the 4rem the wider layouts get: on a phone the first screen has
-     to hold the promise, the picture and the button between the header and
-     the thumb, and every pixel of top air is a pixel one of them loses. The
-     gaps above are tightened for the same reason. */
+  /* 1.5rem, not the 4rem the wider layouts get: on a phone the first screen
+     has to hold the promise, the button and as much of the picture as will
+     fit between the header and the thumb, and every pixel of top air is a
+     pixel one of them loses. The gaps above are tightened for the same
+     reason. */
   .hero-rise {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
   }
 
-
-  /* The button and the price link ride to the foot of the screen together,
-     under the thumb; whatever height the first screen has left over falls
-     between them and the picture above. */
+  /* On a screen with room to spare the slack falls here, above the button,
+     which carries the button down into the thumb's reach and takes the
+     picture with it. On a screen without room it does nothing, and the order
+     alone keeps the button on the first screen. */
   .hero-act {
     margin-top: auto;
   }

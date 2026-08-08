@@ -401,14 +401,76 @@ export default async function Home({
                 </li>
               ))}
             </ul>
+            {/* The button and the way to the price, above the picture rather
+                than below it.
+
+                Below it until 2026-08-08, on the reasoning that a phone would
+                then show the picture and the button together. Measured on a
+                real phone, it didn't: at 390×659 — an iPhone 13 in Safari with
+                the address bar showing — the button started 8px above the fold
+                and 73px of it were cut off. The picture is the tallest and the
+                most variable block in the hero (its height is its width times
+                10/16, plus the phone hanging off the bottom), so with the
+                button underneath, the narrower the screen the further the
+                button fell off it. Above the picture, the button's position
+                depends only on the headline and three ticked lines, and the
+                picture absorbs the difference by being cropped at the fold —
+                which is what a fold is for. A cropped picture invites the
+                scroll; a cropped button loses the enquiry.
+
+                Filled in the accent, not in ink. The green is the only colour
+                the site has, and until now it decorated prose while every
+                button was neutral — the most visible colour meant nothing and
+                the most important element wore none. Now it means one thing,
+                "this is the next step", and a visitor learns that on the
+                first screen. Text is the page background: 7.0:1 in the dark
+                theme, 5.2:1 in the light one. */}
+            <div className="hero-act flex flex-col">
+            <a
+              href="#contact"
+              /* No vertical padding: min-h-14 is the height, and padding on top
+                 of it only inflates the button. On a phone the label wraps to
+                 two lines — at 18px the longest of the three locales is 366px
+                 against a 312px column, so one line is not on offer without
+                 giving up the verb, and a button should say what happens rather
+                 than name a thing. leading-tight puts those two lines at 45px,
+                 which sits inside the 56px tap target with room to spare; at
+                 leading-snug plus py-3.5 the same two lines made a 78px slab. */
+              className="btn-lift group flex min-h-14 w-full items-center justify-between gap-4 rounded-[28px] bg-accent px-5 font-display text-lg leading-tight text-background hover:bg-accent-strong sm:w-auto sm:self-start sm:justify-start sm:rounded-full sm:px-9 sm:text-xl"
+            >
+              {t.hero.offerCta}
+              {/* Held back by opacity rather than hue: a second colour inside
+                  a coloured button would be one accent too many. */}
+              <span
+                aria-hidden="true"
+                className="opacity-70 transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </a>
+            {/* Below md the header nav is gone, so this is the only way to the
+                price without scrolling the whole page. Muted and small: it is
+                the second thing to do here, not a competing button — and it
+                stays tucked under the button rather than floating away from
+                it, so the pair reads as one block and the picture below keeps
+                the pixels. min-h-11 is the tap target and is not negotiable;
+                the margin above it is. */}
+            <a
+              href="#formats"
+              className="-mb-1.5 mt-2 inline-flex min-h-11 items-center gap-2 self-start text-[15px] text-muted transition hover:text-ink md:hidden"
+            >
+              {t.hero.pricesLink}
+              <span aria-hidden="true">↓</span>
+            </a>
+            </div>
             {/* The argument, made in pictures: the window loads, the free
                 mockup is drawn into it, the mockup lifts and a built site is
-                underneath — the offer acted out rather than explained. It
-                sits between the promise and the button, so a phone shows it
-                on the first screen without the button leaving the thumb; on
-                the grid it moves to the right half. Decorative (the cases
-                section is where this work is named and linked), hence
-                aria-hidden. */}
+                underneath — the offer acted out rather than explained. Last in
+                the phone's order, where the fold crops it (see .hero-act
+                above); on the grid it moves to the right half, and the
+                explicit placements in globals.css mean this move costs the
+                desktop layout nothing. Decorative — the cases section is where
+                this work is named and linked — hence aria-hidden. */}
             <div
               aria-hidden="true"
               className="hero-stack relative ml-auto w-[70%] pb-5 sm:w-[58%] lg:ml-0 lg:w-auto lg:pb-7"
@@ -445,42 +507,6 @@ export default async function Home({
                   className="rotate-2 shadow-[0_14px_32px_rgba(0,0,0,0.25)]"
                 />
               </div>
-            </div>
-            {/* The button and the way to the price. One block, so the phone
-                can push the pair to the foot of the screen in a single move.
-
-                Filled in the accent, not in ink. The green is the only colour
-                the site has, and until now it decorated prose while every
-                button was neutral — the most visible colour meant nothing and
-                the most important element wore none. Now it means one thing,
-                "this is the next step", and a visitor learns that on the
-                first screen. Text is the page background: 7.0:1 in the dark
-                theme, 5.2:1 in the light one. */}
-            <div className="hero-act flex flex-col">
-            <a
-              href="#contact"
-              className="btn-lift group flex min-h-14 w-full items-center justify-between gap-4 rounded-[28px] bg-accent px-6 py-4 font-display text-lg leading-snug text-background hover:bg-accent-strong sm:w-auto sm:self-start sm:justify-start sm:rounded-full sm:px-9 sm:text-xl"
-            >
-              {t.hero.offerCta}
-              {/* Held back by opacity rather than hue: a second colour inside
-                  a coloured button would be one accent too many. */}
-              <span
-                aria-hidden="true"
-                className="opacity-70 transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
-            </a>
-            {/* Below md the header nav is gone, so this is the only way to the
-                price without scrolling the whole page. Muted and small: it is
-                the second thing to do here, not a competing button. */}
-            <a
-              href="#formats"
-              className="mt-4 inline-flex min-h-11 items-center gap-2 self-start text-[15px] text-muted transition hover:text-ink md:hidden"
-            >
-              {t.hero.pricesLink}
-              <span aria-hidden="true">↓</span>
-            </a>
             </div>
             </div>
             </div>
