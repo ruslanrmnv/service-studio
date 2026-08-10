@@ -167,13 +167,20 @@ export async function POST(request: Request) {
     );
   }
 
-  // Meta info for the email (not user-controlled form fields).
+  // Meta info for the email (not user-controlled form fields). Both are
+  // truncated rather than rejected: a request is worth more than a tidy
+  // provenance line, so an odd one shortens the row instead of losing the lead.
   const source = (
     str(body.source) ||
     request.headers.get("referer") ||
     process.env.NEXT_PUBLIC_SITE_URL ||
     ""
   ).slice(0, 300);
+  /* Where the visit started, which is not where it ended: `source` is the page
+     the form was sent from, and by then the query string that named the
+     campaign is usually gone. The client reads this off the first page of the
+     session. Empty for a direct visit, and then the row is left out. */
+  const campaign = str(body.campaign).slice(0, 300);
   const timestamp = new Date().toISOString();
 
   const labelsByLocale: Record<Locale, Record<string, string>> = {
@@ -186,6 +193,7 @@ export async function POST(request: Request) {
       message: "Сообщение",
       locale: "Язык",
       source: "Страница",
+      campaign: "Кампания",
       time: "Время",
       heading: "Новая заявка с сайта Service Studio",
     },
@@ -198,6 +206,7 @@ export async function POST(request: Request) {
       message: "Повідомлення",
       locale: "Мова",
       source: "Сторінка",
+      campaign: "Кампанія",
       time: "Час відправлення",
       heading: "Нова заявка з сайту Service Studio",
     },
@@ -210,6 +219,7 @@ export async function POST(request: Request) {
       message: "Message",
       locale: "Locale",
       source: "Page",
+      campaign: "Campaign",
       time: "Time",
       heading: "New request from the Service Studio site",
     },
@@ -222,6 +232,7 @@ export async function POST(request: Request) {
       message: "Mensaje",
       locale: "Idioma",
       source: "Página",
+      campaign: "Campaña",
       time: "Hora",
       heading: "Nueva solicitud desde la web de Service Studio",
     },
@@ -236,7 +247,9 @@ export async function POST(request: Request) {
     [labels.automate, data.automate]
   );
   if (data.message) fields.push([labels.message, data.message]);
-  // Meta rows.
+  // Meta rows. Campaign leads them: it is the one line here you act on, and a
+  // direct visit drops it rather than printing an empty row every time.
+  if (campaign) fields.push([labels.campaign, campaign]);
   fields.push([labels.locale, locale]);
   if (source) fields.push([labels.source, source]);
   fields.push([labels.time, timestamp]);
