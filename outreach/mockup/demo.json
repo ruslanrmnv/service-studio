@@ -1,0 +1,41 @@
+{
+  "_": "Готовый пример: так выглядит макет, когда все поля заполнены. Барбершоп выдуманный — это образец формы, а не реальный бизнес. Рендер: node outreach/scripts/make-mockup.mjs --config outreach/mockup/demo.json --shot",
+  "slug": "demo",
+  "name": "Barbería Ejemplo",
+  "district": "Sant Antoni",
+  "since": "2014",
+  "lede": "Cortes clásicos y fades, en una silla que casi siempre tiene hueco antes de comer.",
+  "address": "Carrer del Parlament 42, 08015 Barcelona",
+  "phone": "+34 930 00 00 00",
+  "whatsapp": "+34930000000",
+  "instagram": "barberiaejemplo",
+  "mapUrl": "https://www.google.com/maps/search/?api=1&query=Carrer+del+Parlament+42+Barcelona",
+  "theme": "brass",
+  "pricesAreDraft": false,
+  "slots": [
+    { "time": "12:30", "barber": "Nico" },
+    { "time": "13:15", "barber": "Dani" },
+    { "time": "17:00", "barber": "Nico" },
+    { "time": "18:45", "barber": "Marc" }
+  ],
+  "services": [
+    { "name": "Corte de pelo", "minutes": 30, "price": 18 },
+    { "name": "Corte + barba", "minutes": 45, "price": 27 },
+    { "name": "Arreglo de barba", "minutes": 20, "price": 12 },
+    { "name": "Afeitado clásico a navaja", "minutes": 30, "price": 20 },
+    { "name": "Corte infantil (hasta 12 años)", "minutes": 30, "price": 15 },
+    { "name": "Rapado a máquina", "minutes": 15, "price": 12 }
+  ],
+  "team": [
+    { "name": "Nico Ferrer", "role": "Clásico y tijera" },
+    { "name": "Dani Ruiz", "role": "Fades y degradados" },
+    { "name": "Marc Puig", "role": "Barba y navaja" }
+  ],
+  "gallery": [],
+  "hours": [
+    { "days": "Lunes a viernes", "time": "10:00 – 20:30" },
+    { "days": "Sábado", "time": "10:00 – 15:00" },
+    { "days": "Domingo", "time": "Cerrado" }
+  ],
+  "doorNote": "Estamos en el segundo patio, la puerta de madera a la izquierda del bar."
+}

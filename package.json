@@ -9,7 +9,9 @@
     "lint": "eslint",
     "outreach": "node outreach/cli.mjs",
     "outreach:harvest": "node outreach/scripts/harvest-places.mjs",
-    "outreach:audit": "node outreach/scripts/audit-sites.mjs"
+    "outreach:audit": "node outreach/scripts/audit-sites.mjs",
+    "outreach:mockup": "node outreach/scripts/make-mockup.mjs",
+    "outreach:fonts": "node outreach/scripts/fetch-fonts.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

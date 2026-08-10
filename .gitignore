@@ -59,6 +59,13 @@ dev-server.log
 !/outreach/data/leads.example.json
 !/outreach/data/seed-barcelona.json
 /outreach/BOARD.md
+# Generated mockups: one folder per prospect, named after them, holding their
+# address and phone. Same reason as the lead file.
+/outreach/mockups/
+# Cached webfonts. `node outreach/scripts/fetch-fonts.mjs` fetches them on any
+# machine in two seconds; without them a mockup falls back to the Google Fonts
+# link and still renders.
+/outreach/mockup/fonts/
 
 # typescript
 *.tsbuildinfo
