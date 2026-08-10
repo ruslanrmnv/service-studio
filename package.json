@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "outreach": "node outreach/cli.mjs",
+    "outreach:osm": "node outreach/scripts/harvest-osm.mjs",
     "outreach:harvest": "node outreach/scripts/harvest-places.mjs",
     "outreach:audit": "node outreach/scripts/audit-sites.mjs",
     "outreach:mockup": "node outreach/scripts/make-mockup.mjs",

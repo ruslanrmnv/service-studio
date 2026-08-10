@@ -4,7 +4,7 @@
    for the only one that matters most mornings. */
 
 import { execFileSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   load, save, today, addDays, slugify, uniqueId, findLead, loadJson, OUTREACH_DIR,
@@ -46,7 +46,7 @@ const say = (...a) => console.log(...a);
    script. The `--` separator is what hands the rest over. The README shows the
    shell alias that makes this shorter for daily use. */
 const CMD = "npm run outreach --";
-const HARVEST = "npm run outreach:harvest";
+const HARVEST = "npm run outreach:osm  (бесплатно, без ключей)";
 
 function lineFor(l) {
   const stale = daysSinceLastTouch(l);
@@ -75,6 +75,56 @@ function touchLead(lead) {
   lead.updatedAt = today();
 }
 
+/* Pull the machine-readable bits out of a hand-typed line, then treat whatever
+   is left as the name and the district. Order-independent on purpose: the line
+   is typed one-handed with the other hand scrolling Instagram, and demanding a
+   column order is how a free lead source becomes a chore nobody does. */
+function parseLine(line, defaultDistrict = "") {
+  let rest = line;
+
+  const urls = [...rest.matchAll(/(?:https?:\/\/)?(?:www\.)?([a-z0-9-]+\.[a-z]{2,}(?:\.[a-z]{2,})?)(\/[^\s|,;—–]*)?/gi)]
+    .map((m) => m[0])
+    .filter((u) => !/^\d+[.,]\d+$/.test(u));
+  for (const u of urls) rest = rest.replace(u, " ");
+
+  const igUrl = urls.find((u) => /instagram\.com/i.test(u));
+  const website = urls.find((u) => !/instagram\.com/i.test(u)) ?? "";
+
+  const at = rest.match(/@([A-Za-z0-9._]{2,30})/);
+  if (at) rest = rest.replace(at[0], " ");
+
+  const phoneMatch = rest.match(/\+?\d[\d\s().-]{7,}\d/);
+  const phone = phoneMatch ? phoneMatch[0].trim() : "";
+  if (phoneMatch) rest = rest.replace(phoneMatch[0], " ");
+
+  const instagram = (at?.[1] ?? igUrl?.split("instagram.com/")[1]?.split(/[/?]/)[0] ?? "").replace(/^@/, "");
+
+  const parts = rest
+    .split(/[|—–,;]+/)
+    .map((s) => s.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+
+  /* A line that opens with the handle has no shop name in it — what follows is
+     the district. Without this "@fadeshopbcn — Gràcia" filed Gràcia as the
+     name of a barbershop. */
+  const handleFirst =
+    Boolean(instagram) &&
+    /^\s*(@[A-Za-z0-9._]+|(https?:\/\/)?(www\.)?instagram\.com\/)/i.test(line);
+
+  return {
+    name: (handleFirst ? instagram : parts[0]) ?? "",
+    district: (handleFirst ? parts[0] : parts[1]) ?? defaultDistrict,
+    instagram,
+    website: website ? (website.startsWith("http") ? website : `https://${website}`) : "",
+    phone,
+    whatsapp: phone.replace(/[^\d+]/g, ""),
+    email: "",
+    address: "",
+    lang: "es",
+    notes: "",
+  };
+}
+
 /* -------------------------------------------------------------- commands -- */
 
 const commands = {
@@ -87,8 +137,9 @@ ${c.b("Аутрич-трекер")} — ниша, список, статусы, 
   ${c.b("show")} <id>                 всё про одного лида
   ${c.b("stats")}                     воронка и скидочные места
 
+  ${c.b("paste")} <file.txt>         залить список, скопированный руками из Instagram или Maps
   ${c.b("add")} --name "X" [--district] [--instagram] [--phone] [--website] [--signals a,b]
-  ${c.b("import")} <file.json>        залить лидов из harvest-places / вручную (дедуп по id и Instagram)
+  ${c.b("import")} <file.json>        залить лидов из outreach:osm / outreach:harvest (дедуп)
   ${c.b("seed")}                      залить стартовый список кандидатов по Барселоне
 
   ${c.b("qualify")} <id> [--angle a] [--hook "..."] [--priority 1..3]   → статус queued
@@ -249,6 +300,73 @@ ${l.touches.map((t) => `  · ${t.date}  ${t.channel.padEnd(9)} касание ${
     }
     save(db);
     say(c.ok(`Добавлено ${added}, пропущено дублей ${skipped}. Всего ${db.leads.length}.`));
+  },
+
+  /* Instagram has no list to download, and the useful judgement — is this
+     account alive, is it a chain, who answers the messages — happens while
+     looking at the profile anyway. So the cheapest source of leads is a person
+     with the app open and a text file, and this parses whatever shape that
+     file ends up in: a handle, a link, a phone, a name, in any order.
+
+       Barbería BK, Sant Antoni @barberiabk_bcn
+       @fadeshopbcn — Gràcia — linktr.ee/fadeshop
+       Minore Barber | Eixample | minorebarber.com | +34 930 11 22 33
+  */
+  paste() {
+    const db = load();
+    const file = positional[0];
+    if (!file) {
+      return say(c.warn(`Укажи файл: ${CMD} paste leads.txt [--district Gràcia] [--dry]
+
+Одна строка — один барбершоп. Порядок любой, разделители любые:
+  Barbería BK, Sant Antoni @barberiabk_bcn
+  @fadeshopbcn — Gràcia — linktr.ee/fadeshop
+  Minore Barber | Eixample | minorebarber.com | +34 930 11 22 33
+
+Строки, начинающиеся с #, пропускаются.`));
+    }
+
+    const lines = readFileSync(resolve(file), "utf8")
+      .split("\n")
+      .map((l) => l.trim())
+      .filter((l) => l && !l.startsWith("#"));
+
+    const parsed = lines.map((line) => parseLine(line, flags.district ? String(flags.district) : ""));
+
+    say("");
+    for (const p of parsed) {
+      say(`${c.b((p.name || "???").padEnd(26).slice(0, 26))} ${(p.district || "—").padEnd(14).slice(0, 14)} ${(p.instagram ? `@${p.instagram}` : "—").padEnd(20).slice(0, 20)} ${p.website || c.ok("сайта нет")}`);
+    }
+
+    const noName = parsed.filter((p) => !p.name).length;
+    if (noName) say(c.warn(`\nБез названия: ${noName} — проверь эти строки.`));
+
+    if (flags.dry) return say(c.dim(`\nСтрок: ${parsed.length}. Это предпросмотр — запусти без --dry, чтобы залить.`));
+
+    let added = 0, skipped = 0;
+    for (const p of parsed) {
+      if (!p.name && !p.instagram) { skipped++; continue; }
+      const ig = p.instagram.toLowerCase();
+      if (ig && db.leads.some((l) => l.instagram.toLowerCase() === ig)) { skipped++; continue; }
+      if (!ig && db.leads.some((l) => l.name.toLowerCase() === p.name.toLowerCase())) { skipped++; continue; }
+
+      const id = uniqueId(db, slugify(p.name || p.instagram, p.district));
+      db.leads.push({
+        ...p,
+        id,
+        niche: db.niche,
+        maps: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${p.name} ${p.district} Barcelona`)}`,
+        signals: p.website ? ["has_website"] : ["no_website"],
+        status: "new",
+        touches: [],
+        createdAt: today(),
+        updatedAt: today(),
+      });
+      added++;
+    }
+    save(db);
+    say(c.ok(`\nДобавлено ${added}, пропущено ${skipped}. Всего ${db.leads.length}.`));
+    say(c.dim(`Дальше: ${CMD} qualify <id> --hook "..."`));
   },
 
   seed() {
