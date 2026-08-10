@@ -6,6 +6,7 @@ import {
   getSiteUrl,
   INSTAGRAM_URL,
   isLocale,
+  LINKEDIN_URL,
   locales,
   SITE_NAME,
   TELEGRAM_URL,
@@ -96,6 +97,7 @@ const DIRECT = [
   { label: "Telegram", href: TELEGRAM_URL },
   { label: "WhatsApp", href: WHATSAPP_URL },
   { label: "Instagram", href: INSTAGRAM_URL },
+  { label: "LinkedIn", href: LINKEDIN_URL },
 ] as const;
 
 const JOB_TITLE_BY_LOCALE: Record<Locale, string> = {
@@ -167,7 +169,9 @@ function SeoJsonLd({
         name: "Ruslan",
         url: base,
         jobTitle: JOB_TITLE_BY_LOCALE[locale],
-        sameAs: [TELEGRAM_URL, INSTAGRAM_URL],
+        /* Profiles only. wa.me is a way to open a chat, not a page about the
+           person, and search engines treat sameAs as identity evidence. */
+        sameAs: [TELEGRAM_URL, INSTAGRAM_URL, LINKEDIN_URL],
         knowsAbout: SERVICE_TYPES_BY_LOCALE[locale],
         homeLocation: {
           "@type": "Place",

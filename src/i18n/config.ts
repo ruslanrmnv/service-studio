@@ -86,9 +86,14 @@ export async function getDictionary(locale: Locale): Promise<Dictionary> {
  * Direct contact links (single source of truth).
  */
 export const CONTACT_EMAIL = "contact@servicestudiobyruslan.com";
-export const TELEGRAM_URL = "https://t.me/rslnrr";
-export const WHATSAPP_URL = "https://wa.me/994503412715";
+export const TELEGRAM_URL = "https://t.me/ruslnrmnv";
+export const WHATSAPP_URL = "https://wa.me/34675460804";
 export const INSTAGRAM_URL = "https://instagram.com/ruslnrmnv";
+/* Without the ?locale=en the profile was given with: that parameter forces
+   LinkedIn's interface into English for whoever follows the link, which is the
+   wrong default on a site that just learned to speak four languages. The
+   profile resolves the same without it. */
+export const LINKEDIN_URL = "https://www.linkedin.com/in/ruslanrmnv/";
 
 export const SITE_NAME = "Service Studio by Ruslan";
 export const CANONICAL_HOST = "www.servicestudiobyruslan.com";

@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   CONTACT_EMAIL,
   INSTAGRAM_URL,
+  LINKEDIN_URL,
   locales,
   TELEGRAM_URL,
   WHATSAPP_URL,
@@ -16,6 +17,7 @@ const DIRECT = [
   { label: "Telegram", href: TELEGRAM_URL },
   { label: "WhatsApp", href: WHATSAPP_URL },
   { label: "Instagram", href: INSTAGRAM_URL },
+  { label: "LinkedIn", href: LINKEDIN_URL },
 ] as const;
 
 export default function SiteFooter({
