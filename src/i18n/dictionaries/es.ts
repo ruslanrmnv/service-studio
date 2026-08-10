@@ -126,7 +126,7 @@ export const es: Dictionary = {
         title: "Web de negocio",
         price: "450 €",
         description:
-          "Una primera web para un profesional por su cuenta, un salón o un estudio: para que te encuentren y te escriban directamente.",
+          "Una web para un profesional por su cuenta, un salón o un estudio: para que te encuentren y te escriban directamente.",
         includes: [
           "Una página: servicios, precios, ejemplos, contacto",
           "Escribo los textos; te asesoro con las fotos",
@@ -216,6 +216,10 @@ export const es: Dictionary = {
       {
         q: "¿Cuánto se tarda en total?",
         a: "La maqueta de la portada, 24 horas. Una web de una página, tres días desde el anticipo; una web con catálogo, siete. Un logotipo, una tarjeta o una carta, dos o tres días. Si tienes prisa, dímelo desde el principio y miro qué se puede hacer.",
+      },
+      {
+        q: "Ya tengo web, ¿me la puedes rehacer?",
+        a: "Sí, es el mismo trabajo y el mismo precio. El dominio sigue siendo tuyo y con la misma dirección; la web antigua sigue en pie hasta que la nueva esté lista, así que no desapareces de internet ni un día. Y si la antigua sale en Google, mantengo sus direcciones funcionando para que quien te buscaba no acabe en una página vacía.",
       },
       {
         q: "¿Y si necesito una tienda online o una aplicación?",
