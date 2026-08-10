@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  CONTACT_EMAIL,
   INSTAGRAM_URL,
   locales,
   TELEGRAM_URL,
@@ -49,6 +50,17 @@ export default function SiteFooter({
                 </a>
               ))}
             </div>
+            {/* On a line of its own rather than in the row above: the address is
+                four times longer than the labels beside it and would break that
+                row's rhythm on a phone. It is also a different kind of channel —
+                the one that takes an attachment and leaves a paper trail — so
+                the arrow the others carry would be wrong on it. */}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex min-h-11 items-center text-sm text-muted transition hover:text-ink"
+            >
+              {CONTACT_EMAIL}
+            </a>
           </div>
           <div className="flex items-end md:justify-end">
             <p className="font-display text-4xl leading-none text-ink sm:text-5xl">

@@ -85,6 +85,7 @@ export async function getDictionary(locale: Locale): Promise<Dictionary> {
 /**
  * Direct contact links (single source of truth).
  */
+export const CONTACT_EMAIL = "contact@servicestudiobyruslan.com";
 export const TELEGRAM_URL = "https://t.me/rslnrr";
 export const WHATSAPP_URL = "https://wa.me/994503412715";
 export const INSTAGRAM_URL = "https://instagram.com/ruslnrmnv";
