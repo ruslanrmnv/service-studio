@@ -4,8 +4,8 @@ A one-page, multilingual (RU / EN / UK) portfolio + lead-capture site for AI,
 chat, and form automations. Built with **Next.js (App Router)**, **TypeScript**,
 and **Tailwind CSS**, in a warm dark style.
 
-- Locales: **RU / EN / UK** (the root `/` redirects by browser language)
-- Routes: `/ru`, `/en`, `/uk` and `/ru/privacy`, `/en/privacy`, `/uk/privacy`
+- Locales: **RU / EN / UK / ES** (the root `/` redirects by browser language)
+- Routes: `/ru`, `/en`, `/uk`, `/es` and `/<locale>/privacy` for each
 - Dark-first, mobile-friendly design
 - Contact form that emails submissions via [Resend](https://resend.com)
 
@@ -17,7 +17,7 @@ cp .env.local.example .env.local   # then fill in real values
 npm run dev
 ```
 
-Open http://localhost:3000 — you'll be redirected to `/ru`, `/en`, or `/uk`.
+Open http://localhost:3000 — you'll be redirected to the locale your browser asks for.
 
 > **Never commit `.env.local`.** It holds real secrets and is git-ignored.
 > Only `.env.local.example` (placeholders only) is committed.
@@ -46,7 +46,7 @@ The form submits a `fetch` POST to `src/app/api/contact/route.ts`, which sends
 the email using the official **Resend Node.js SDK** (`resend` package,
 `await resend.emails.send()`). The API key is read only on the server from
 `RESEND_API_KEY` and is never sent to the browser. Email field labels are
-localized (RU / EN / UK) to match the submitting locale.
+localized (RU / EN / UK / ES) to match the submitting locale.
 
 ## Email setup (Resend) & deploy to Vercel
 
@@ -86,5 +86,8 @@ npx tsc --noEmit # type check
 - `src/app/[lang]/privacy/` — localized Privacy Policy pages
 - `src/app/api/contact/route.ts` — contact form handler (Resend SDK)
 - `src/components/` — `ContactForm`, `LanguageSwitcher`, `SiteFooter`
-- `src/i18n/` — locale config + `ru` / `en` / `uk` dictionaries
+- `src/i18n/` — locale config + `ru` / `en` / `uk` / `es` dictionaries
+  (adding a language: add it to `locales`, write the dictionary, add a case to
+  `getDictionary`; the `Record<Locale, …>` maps will fail the typecheck until
+  they have their entry)
 - `src/proxy.ts` — root locale detection / redirect

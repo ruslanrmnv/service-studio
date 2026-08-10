@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { defaultLocale, getDictionary, isLocale, type Locale } from "@/i18n/config";
+import {
+  defaultLocale,
+  getDictionary,
+  isLocale,
+  languageAlternates,
+  OG_LOCALE,
+  type Locale,
+} from "@/i18n/config";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -21,18 +28,13 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `/${locale}/privacy`,
-      languages: {
-        ru: "/ru/privacy",
-        en: "/en/privacy",
-        uk: "/uk/privacy",
-        "x-default": "/en/privacy",
-      },
+      languages: languageAlternates("/privacy"),
     },
     openGraph: {
       title,
       description: t.privacy.subtitle,
       type: "website",
-      locale: locale === "ru" ? "ru_RU" : locale === "uk" ? "uk_UA" : "en_US",
+      locale: OG_LOCALE[locale],
     },
   };
 }

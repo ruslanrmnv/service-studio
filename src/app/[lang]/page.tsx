@@ -6,6 +6,7 @@ import {
   getSiteUrl,
   INSTAGRAM_URL,
   isLocale,
+  locales,
   SITE_NAME,
   TELEGRAM_URL,
   WHATSAPP_URL,
@@ -101,6 +102,7 @@ const JOB_TITLE_BY_LOCALE: Record<Locale, string> = {
   ru: "Разработчик сайтов для малого бизнеса",
   en: "Website developer for small business",
   uk: "Розробник сайтів для малого бізнесу",
+  es: "Desarrollador de webs para pequeños negocios",
 };
 
 const SERVICE_TYPES_BY_LOCALE: Record<Locale, string[]> = {
@@ -125,9 +127,19 @@ const SERVICE_TYPES_BY_LOCALE: Record<Locale, string[]> = {
     "форми заявок та онлайн-запис",
     "домен, хостинг і запуск",
   ],
+  es: [
+    "webs para negocios",
+    "webs de una página",
+    "webs con catálogo",
+    "formularios de solicitud y reserva online",
+    "dominio, alojamiento y lanzamiento",
+  ],
 };
 
-const LANGUAGE_NAMES = ["Russian", "English", "Ukrainian"];
+/* Languages of the service channel, which is the form and the messengers — all
+   of them written. Spanish belongs on that list and would not belong on a
+   spoken one; the FAQ answer about remote work draws the same line in prose. */
+const LANGUAGE_NAMES = ["Russian", "English", "Ukrainian", "Spanish"];
 
 /* Portrait for the About card. A monochrome variant sits beside it in /public
    as ruslan-portrait-mono.jpg — swap the path to switch. */
@@ -171,7 +183,7 @@ function SeoJsonLd({
         "@id": websiteId,
         url: base,
         name: SITE_NAME,
-        inLanguage: ["ru", "en", "uk"],
+        inLanguage: [...locales],
         publisher: { "@id": personId },
       },
       {

@@ -32,7 +32,9 @@ import {
   getDictionary,
   getSiteUrl,
   isLocale,
+  languageAlternates,
   locales,
+  OG_LOCALE,
   SITE_NAME,
   type Locale,
 } from "@/i18n/config";
@@ -64,13 +66,21 @@ const KEYWORDS_BY_LOCALE: Record<Locale, string[]> = {
     "сайт для гостьового будинку",
     "форми заявок",
   ],
+  es: [
+    "diseño de páginas web",
+    "web para pequeños negocios",
+    "página web para autónomos",
+    "web para salón de belleza",
+    "web para casa de huéspedes",
+    "formularios de solicitud",
+  ],
 };
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-/* Three locales exist and no more. Without this, [lang] matches any first
+/* The locales in `locales` exist and no more. Without this, [lang] matches any first
    segment, so /blog rendered the home page under lang="blog" and Next cached
    the result at that address — a second home page for every word anyone
    mistypes. The layout's notFound() below is the belt to this brace: it fires
@@ -109,12 +119,7 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `/${locale}`,
-      languages: {
-        ru: "/ru",
-        en: "/en",
-        uk: "/uk",
-        "x-default": "/en",
-      },
+      languages: languageAlternates(),
     },
     openGraph: {
       title: metadata.ogTitle,
@@ -122,7 +127,7 @@ export async function generateMetadata({
       url: `/${locale}`,
       siteName: SITE_NAME,
       type: "website",
-      locale: locale === "ru" ? "ru_RU" : locale === "uk" ? "uk_UA" : "en_US",
+      locale: OG_LOCALE[locale],
     },
     /* Without this, X/Twitter falls back to a small thumbnail even though the
        opengraph-image route provides a large one. */

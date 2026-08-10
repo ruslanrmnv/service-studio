@@ -97,7 +97,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  // Validate locale: ru, en, or uk (fall back to en).
+  // Validate against the published locales (fall back to en).
   const locale: Locale = isLocale(body.locale as string) ? (body.locale as Locale) : "en";
   const t = await getDictionary(locale);
 
@@ -212,6 +212,18 @@ export async function POST(request: Request) {
       source: "Page",
       time: "Time",
       heading: "New request from the Service Studio site",
+    },
+    es: {
+      name: "Nombre",
+      businessType: "Sector / encargo",
+      method: "Forma de contacto",
+      contactValue: "Contacto",
+      automate: "Qué hay que hacer",
+      message: "Mensaje",
+      locale: "Idioma",
+      source: "Página",
+      time: "Hora",
+      heading: "Nueva solicitud desde la web de Service Studio",
     },
   };
   const labels = labelsByLocale[locale];

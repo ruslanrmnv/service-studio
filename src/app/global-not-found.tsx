@@ -41,12 +41,13 @@ const DOORS: Record<(typeof locales)[number], { name: string; to: string }> = {
   ru: { name: "Русский", to: "На главную" },
   en: { name: "English", to: "Home page" },
   uk: { name: "Українська", to: "На головну" },
+  es: { name: "Español", to: "Página principal" },
 };
 
 export default function GlobalNotFound() {
   return (
-    /* lang="ru": the page carries all three, and this is the one most of its
-       visitors read. The three links each land on a properly localized page. */
+    /* lang="ru": the page carries every locale, and this is the one most of its
+       visitors read. Each link lands on a properly localized page. */
     <html
       lang="ru"
       suppressHydrationWarning

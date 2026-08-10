@@ -1,16 +1,14 @@
 import type { MetadataRoute } from "next";
-import { defaultLocale, getSiteUrl, locales } from "@/i18n/config";
+import {
+  defaultLocale,
+  getSiteUrl,
+  languageAlternates,
+  locales,
+} from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
   const lastModified = new Date();
-
-  const languagesFor = (path: string) => ({
-    ru: `${base}/ru${path}`,
-    en: `${base}/en${path}`,
-    uk: `${base}/uk${path}`,
-    "x-default": `${base}/en${path}`,
-  });
 
   const localized = (path: string, priority: number) =>
     locales.map((locale) => ({
@@ -18,7 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly" as const,
       priority,
-      alternates: { languages: languagesFor(path) },
+      // Absolute here: a sitemap has no metadataBase to resolve against.
+      alternates: { languages: languageAlternates(path, base) },
     }));
 
   return [

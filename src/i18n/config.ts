@@ -1,18 +1,24 @@
 import type { Dictionary } from "./dictionaries/ru";
 
-export const locales = ["ru", "en", "uk"] as const;
+export const locales = ["ru", "en", "uk", "es"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
 
 export type { Dictionary };
 
+/* Derived from `locales` rather than hand-listed. Spanish arrived as a fourth
+   language and found the old spelling — three chained comparisons here, three
+   more in detectLocale, and a hand-written hreflang map in each of three
+   files — every one of which would still typecheck while quietly leaving the
+   new language out. Adding a language is now one edit to the array above. */
 export function isLocale(value: string | undefined | null): value is Locale {
-  return value === "ru" || value === "en" || value === "uk";
+  return locales.includes(value as Locale);
 }
 
 /**
  * Decide a locale from an Accept-Language header (by preference order).
- * Ukrainian -> "uk", Russian -> "ru", everything else -> "en".
+ * A tag the site doesn't publish falls through to the next preference, and an
+ * empty list of matches ends at English.
  */
 export function detectLocale(
   acceptLanguage: string | null | undefined
@@ -31,13 +37,34 @@ export function detectLocale(
     .sort((a, b) => b.q - a.q);
 
   for (const { tag } of prefs) {
-    if (tag === "uk") return "uk";
-    if (tag === "ru") return "ru";
-    if (tag === "en") return "en";
+    if (isLocale(tag)) return tag;
   }
 
   return defaultLocale;
 }
+
+/**
+ * The hreflang map for one path, built from `locales` so a new language reaches
+ * every page's alternates by being added to the array and nowhere else.
+ * `origin` is empty for Next metadata (resolved against metadataBase) and an
+ * absolute origin for the sitemap, which has no base to resolve against.
+ */
+export function languageAlternates(path = "", origin = ""): Record<string, string> {
+  const map: Record<string, string> = {};
+  for (const locale of locales) {
+    map[locale] = `${origin}/${locale}${path}`;
+  }
+  map["x-default"] = `${origin}/${defaultLocale}${path}`;
+  return map;
+}
+
+/** BCP 47 tags for Open Graph, which wants ru_RU where the URL says ru. */
+export const OG_LOCALE: Record<Locale, string> = {
+  ru: "ru_RU",
+  en: "en_US",
+  uk: "uk_UA",
+  es: "es_ES",
+};
 
 /** Load a typed dictionary. Dynamic import keeps locales split and edge bundle small. */
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
@@ -46,6 +73,8 @@ export async function getDictionary(locale: Locale): Promise<Dictionary> {
       return (await import("./dictionaries/ru")).ru;
     case "uk":
       return (await import("./dictionaries/uk")).uk;
+    case "es":
+      return (await import("./dictionaries/es")).es;
     case "en":
       return (await import("./dictionaries/en")).en;
     default:

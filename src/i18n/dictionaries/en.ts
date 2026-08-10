@@ -51,7 +51,7 @@ export const en: Dictionary = {
       // First, and therefore the wide card at the top of the grid.
       {
         task: "Bakery",
-        image: "/cases/halfpastsix-bakery.webp",
+        image: "/cases/halfpastsix-bakery.webp",
         built:
           "A stock board in the first screen: how many of each loaf are on the shelf this minute, what went and at what time, what leaves the oven at eleven. Pickup reserved without an account, paid at the counter.",
         result:
@@ -188,7 +188,7 @@ export const en: Dictionary = {
     facts: [
       "You talk to me directly, no managers",
       "Mockup in a day, website in 3–7 days",
-      "I work in Russian, English, and Ukrainian",
+      "Russian, English, Ukrainian — Spanish in writing",
     ],
   },
 
@@ -225,7 +225,7 @@ export const en: Dictionary = {
       },
       {
         q: "You're in Barcelona and I'm in another country — is that a problem?",
-        a: "No, I work remotely with any country. We talk over Telegram, WhatsApp, or email — in Russian, English, or Ukrainian, whichever suits you.",
+        a: "No, I work remotely with any country. We talk over Telegram, WhatsApp, or email — in Russian, English, or Ukrainian, whichever suits you. Spanish works in writing; if you'd rather talk out loud, that will be in Russian or English.",
       },
       {
         q: "What if I have no copy and no good photos?",

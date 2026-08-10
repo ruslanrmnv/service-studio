@@ -9,6 +9,7 @@ const NATIVE_NAMES: Record<Locale, string> = {
   ru: "Русский",
   en: "English",
   uk: "Українська",
+  es: "Español",
 };
 
 export default function LanguageSwitcher({
