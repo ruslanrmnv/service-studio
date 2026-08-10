@@ -119,7 +119,7 @@ export const en: Dictionary = {
         title: "Business website",
         price: "€450",
         description:
-          "A first website for a solo pro, salon, or studio: so people find you and write to you directly.",
+          "A website for a solo pro, salon, or studio: so people find you and write to you directly.",
         includes: [
           "One page: services, prices, work samples, contact",
           "I write the copy; I'll advise you on photos",
@@ -206,6 +206,10 @@ export const en: Dictionary = {
       {
         q: "How long does it all take?",
         a: "The home-page mockup takes a day. A one-page site takes three days from the deposit, a site with a catalogue takes seven. A logo, business card, or menu takes two or three days. If you're in a hurry, say so up front and I'll see what's possible.",
+      },
+      {
+        q: "I already have a website — can you redo it?",
+        a: "Yes, and it's the same work for the same price. The domain stays yours and keeps the same address; your old site stays up until the new one is ready, so you're never offline for a day. And if the old one turns up in Google, I keep its addresses working, so nobody who searched for you lands on nothing.",
       },
       {
         q: "What if I need an online shop or an app?",
