@@ -9,8 +9,22 @@
    forty businesses with a reason to answer.
 
    Needs GOOGLE_PLACES_API_KEY in the environment or in .env.local.
-   Check the current free tier in your Google Cloud console before a big run;
-   a full pass over the list below is a few dozen requests, not thousands.
+
+   What this costs. The field mask below asks for websiteUri, phone, rating and
+   review count, which puts every request in the Text Search **Enterprise**
+   SKU — the dearest tier. That is not an oversight: websiteUri is the "they
+   have no website" signal, which is the entire point, and there is no cheaper
+   field that carries it.
+
+   The sums, though, are small. 25 districts × 2 phrasings = 50 queries, each
+   walking at most 3 pages, so a full sweep of Barcelona is 50–150 billable
+   requests. The Enterprise free allowance is 1,000 requests a month per
+   billing account. A full sweep is therefore free, and you would need about
+   seven of them in one calendar month before Google charged anything at all.
+
+   Two things worth knowing anyway: a query that returns nothing is still
+   billed, and attaching a billing account removes the daily cap that was
+   protecting you. Set a quota ceiling — see outreach/README.md.
 
      node outreach/scripts/harvest-places.mjs
      node outreach/scripts/harvest-places.mjs --districts Gràcia,Sants --max-reviews 400
@@ -83,6 +97,56 @@ function apiKey() {
 
 /* ------------------------------------------------------------------ fetch */
 
+/* The four ways this fails on day one, each with the fix rather than the
+   status code. Without this the script grinds through fifty queries printing
+   the same JSON blob and hands over an empty file. */
+function diagnose(status, body) {
+  const text = JSON.stringify(body);
+  const reason = body?.error?.details?.[0]?.reason ?? "";
+
+  if (reason === "API_KEY_INVALID" || /API key not valid/i.test(text)) {
+    return `Ключ не принят.
+  · Проверь, что скопировал его целиком, без пробелов и кавычек.
+  · Ключ начинается с AIza и длиной около 39 символов.
+  · Если только что создал — Google иногда думает пару минут.`;
+  }
+  if (reason === "SERVICE_DISABLED" || /has not been used in project|is disabled/i.test(text)) {
+    return `Ключ рабочий, но Places API (New) в проекте не включён.
+  Google Cloud Console → APIs & Services → Library → «Places API (New)» → Enable.
+  Именно New: старый «Places API» — другой продукт, и в новых проектах его
+  вообще больше нельзя включить.
+  Если только что нажал Enable — подожди пару минут, включение расходится
+  по серверам Google не мгновенно, и первые запросы падают с этой же ошибкой.
+  В ответе Google обычно есть прямая ссылка на нужную страницу — открой её.`;
+  }
+  if (/billing/i.test(text)) {
+    return `К этому проекту не привязан платёжный аккаунт.
+  Google Cloud Console → Billing → Link a billing account.
+  Аккаунт должен быть привязан именно к тому проекту, которому принадлежит
+  ключ: наличие карты на аккаунте Google само по себе не считается.
+  Карта обязательна даже ради бесплатного лимита — без неё API молчит.`;
+  }
+  if (status === 429 || reason === "RATE_LIMIT_EXCEEDED") {
+    return `Упёрлись в квоту. Подожди минуту и запусти снова, либо сузь список
+  районов: --districts "Gràcia,Sant Antoni".`;
+  }
+  if (status === 403) {
+    return `Доступ запрещён. Чаще всего это ограничения ключа: если поставил
+  «HTTP referrers», сними — для скрипта с ноутбука такой ключ не работает.
+  Credentials → твой ключ → Application restrictions → None или IP addresses.`;
+  }
+  return "";
+}
+
+class PlacesError extends Error {
+  constructor(status, body) {
+    const hint = diagnose(status, body);
+    super(hint || `Places ответил ${status}: ${JSON.stringify(body).slice(0, 300)}`);
+    this.fatal = Boolean(hint); // a key/billing problem will not fix itself on the next district
+    this.status = status;
+  }
+}
+
 async function searchPage(key, textQuery, pageToken) {
   const res = await fetch(ENDPOINT, {
     method: "POST",
@@ -91,16 +155,21 @@ async function searchPage(key, textQuery, pageToken) {
       "X-Goog-Api-Key": key,
       "X-Goog-FieldMask": FIELDS,
     },
+    /* No page-size parameter on purpose. 20 is both the default and the
+       maximum for Text Search, and the field was renamed (maxResultCount →
+       pageSize) when pagination arrived — sending neither asks for exactly
+       what sending either would get, and cannot break on the rename. */
     body: JSON.stringify({
       textQuery,
       languageCode: "es",
       regionCode: "ES",
-      maxResultCount: 20,
       ...(pageToken ? { pageToken } : {}),
     }),
   });
   if (!res.ok) {
-    throw new Error(`Places ответил ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    let body;
+    try { body = JSON.parse(await res.text()); } catch { body = {}; }
+    throw new PlacesError(res.status, body);
   }
   return res.json();
 }
@@ -203,6 +272,10 @@ for (const district of districts) {
       }
       console.log(`${district.padEnd(20)} ${q.padEnd(28)} → ${places.length} найдено, в списке ${seen.size}`);
     } catch (err) {
+      if (err.fatal) {
+        console.error(`\n${err.message}\n\nНичего не собрано. Почини это и запусти снова.\n`);
+        process.exit(1);
+      }
       console.error(`${district}: ${err.message}`);
     }
   }
