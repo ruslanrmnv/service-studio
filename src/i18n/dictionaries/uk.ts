@@ -48,6 +48,16 @@ export const uk: Dictionary = {
     resultLabel: "Результат",
     openLabel: "Відкрити приклад",
     items: [
+      // First, and therefore the wide card at the top of the grid.
+      {
+        task: "Пекарня",
+        image: "/cases/halfpastsix-bakery.webp",
+        built:
+          "Табло залишків у першому екрані: скільки чого лежить на полиці цієї хвилини, що вже розібрали і о котрій, що вийде з печі об одинадцятій. Бронь на самовивіз без реєстрації, оплата на касі.",
+        result:
+          "Людина не їде через усе місто по хліб, якого вже немає.",
+        link: "https://bakery.servicestudiobyruslan.com/",
+      },
       {
         task: "Салон краси",
         image: "/cases/maison-salon.webp",

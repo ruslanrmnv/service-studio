@@ -58,6 +58,16 @@ export const ru = {
     resultLabel: "Результат",
     openLabel: "Открыть пример",
     items: [
+      // First, and therefore the wide card at the top of the grid.
+      {
+        task: "Пекарня",
+        image: "/cases/halfpastsix-bakery.webp",
+        built:
+          "Табло остатков в первом экране: сколько чего лежит на полке в эту минуту, что уже разобрали и во сколько, что выйдет из печи в одиннадцать. Бронь на самовывоз без регистрации, оплата на кассе.",
+        result:
+          "Человек не едет через весь город за хлебом, которого уже нет.",
+        link: "https://bakery.servicestudiobyruslan.com/",
+      },
       {
         task: "Салон красоты",
         image: "/cases/maison-salon.webp",

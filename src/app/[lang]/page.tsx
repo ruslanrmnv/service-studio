@@ -226,34 +226,57 @@ function SeoJsonLd({
    add them in the dictionaries (task → what was built → result). */
 function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
   if (copy.items.length === 0) return null;
-  /* How wide a card actually lands, so the browser stops fetching a 3840px
-     cover to paint it a third of a screen. Tracks the column count chosen
-     below; the phone pinned on the cover is 24% of the same width. */
   const thirds = copy.items.length === 3;
+  /* An odd number of cards in two columns leaves the last one alone on its
+     own row. Rather than accept the orphan, the first card takes the full
+     width and the rest pair off under it: five cases read as one wide card
+     above two rows of two. Exactly three still take a third column each. */
+  const feature = !thirds && copy.items.length % 2 === 1;
+
+  /* How wide a card actually lands, so the browser stops fetching a 1440px
+     cover to paint it a third of a screen. Tracks the column count chosen
+     below; the phone pinned on the cover is 24% of the same width. The wide
+     card splits in two from md, so its picture is 58% of 1104 rather than
+     the whole of it. */
   const coverSizes = thirds
     ? "(min-width: 1152px) 357px, (min-width: 1024px) 33vw, (min-width: 768px) 46vw, 100vw"
     : "(min-width: 1152px) 544px, (min-width: 768px) 46vw, 100vw";
   const phoneSizes = thirds
     ? "(min-width: 1152px) 86px, (min-width: 1024px) 8vw, (min-width: 768px) 11vw, 24vw"
     : "(min-width: 1152px) 131px, (min-width: 768px) 11vw, 24vw";
+  const featureCoverSizes = "(min-width: 1152px) 640px, (min-width: 768px) 54vw, 100vw";
+  const featurePhoneSizes = "(min-width: 1152px) 154px, (min-width: 768px) 13vw, 24vw";
   return (
     /* On the tonal band: it follows the hero directly now, and two sections
        on the same tone read as one endless document. */
     <section id="cases" aria-labelledby="cases-heading" className="bg-surface">
       <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <SectionHeader id="cases-heading" title={copy.heading} intro={copy.intro} />
-        {/* Three cases take a third column. Two or four stay two across — a
-            fourth card in a three-column grid is one orphan on its own row. */}
+        {/* Three cases take a third column. Everything else is two across —
+            a fourth card in a three-column grid is one orphan on its own
+            row, and so is a fifth in two columns, which is what `feature`
+            above answers. */}
         <div
           className={`mt-12 grid gap-4 md:grid-cols-2${
             thirds ? " lg:grid-cols-3" : ""
           }`}
         >
           {copy.items.map((c, i) => {
+            /* The wide one, when there is one: full width, and from md the
+               picture and the words sit side by side instead of stacked —
+               at 1104px a 3:2 cover would otherwise be 736px tall and the
+               card would swallow the screen. */
+            const wide = feature && i === 0;
             const body = (
               <>
                 {c.image && (
-                  <div className="relative aspect-[3/2] overflow-hidden border-b border-line">
+                  <div
+                    className={`relative overflow-hidden border-b border-line ${
+                      wide
+                        ? "aspect-[3/2] md:aspect-auto md:w-[58%] md:shrink-0 md:border-b-0 md:border-r"
+                        : "aspect-[3/2]"
+                    }`}
+                  >
                     {/* Taller than the frame and started high, so the drift has
                         room to travel without ever showing an edge. */}
                     <div className="media-parallax absolute inset-x-0 top-[-6%] h-[112%]">
@@ -262,18 +285,24 @@ function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
                         alt={c.task}
                         width={1440}
                         height={1000}
-                        sizes={coverSizes}
+                        sizes={wide ? featureCoverSizes : coverSizes}
                         className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                       />
                     </div>
                     {/* The same page on a phone, pinned over the cover. It
                         holds still while the desktop drifts behind it — two
                         planes — and answers "will it look right on my phone"
-                        without a word of copy. */}
-                    {c.phone && (
+                        without a word of copy.
+
+                        Not on the wide card. The phone is pinned bottom right,
+                        which is exactly where the bakery keeps its stock board,
+                        so it landed as a second board on top of the first and
+                        the corner turned to noise. The wide card's whole job is
+                        one clear look at that board. */}
+                    {c.phone && !wide && (
                       <PhoneWindow
                         src={c.phone}
-                        sizes={phoneSizes}
+                        sizes={wide ? featurePhoneSizes : phoneSizes}
                         size="sm"
                         aspectClass="aspect-[9/16]"
                         className="absolute bottom-3 right-3 w-[24%] shadow-[0_12px_28px_rgba(0,0,0,0.25)]"
@@ -281,7 +310,11 @@ function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
                     )}
                   </div>
                 )}
-                <div className="flex flex-1 flex-col p-6">
+                <div
+                  className={`flex flex-1 flex-col p-6${
+                    wide ? " md:justify-center md:p-8" : ""
+                  }`}
+                >
                   <p className="text-xs text-faint">{copy.taskLabel}</p>
                   <p className="mt-1 font-display text-lg leading-snug text-ink">
                     {c.task}
@@ -306,12 +339,20 @@ function CasesSection({ copy }: { copy: Dictionary["cases"] }) {
                 </div>
               </>
             );
-            const cardClass =
-              "flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface-2";
+            /* min-h on the wide one so its picture keeps a shape of its own:
+               side by side, the row's height comes from the words, and a short
+               paragraph would otherwise squash the cover into a letterbox. */
+            const cardClass = `flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface-2${
+              wide ? " md:min-h-[21rem] md:flex-row" : ""
+            }`;
             return (
               /* media-frame: the card is clipped, so the drift inside it reads
                  its timeline from here, where the page still scrolls. */
-              <Reveal key={i} delay={i * 60} className="media-frame">
+              <Reveal
+                key={i}
+                delay={i * 60}
+                className={`media-frame${wide ? " md:col-span-2" : ""}`}
+              >
                 {c.link ? (
                   <a
                     href={c.link}

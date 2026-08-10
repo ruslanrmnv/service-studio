@@ -48,6 +48,16 @@ export const en: Dictionary = {
     resultLabel: "Result",
     openLabel: "Open the example",
     items: [
+      // First, and therefore the wide card at the top of the grid.
+      {
+        task: "Bakery",
+        image: "/cases/halfpastsix-bakery.webp",
+        built:
+          "A stock board in the first screen: how many of each loaf are on the shelf this minute, what went and at what time, what leaves the oven at eleven. Pickup reserved without an account, paid at the counter.",
+        result:
+          "Nobody drives across town for bread that has already gone.",
+        link: "https://bakery.servicestudiobyruslan.com/",
+      },
       {
         task: "Beauty salon",
         image: "/cases/maison-salon.webp",
