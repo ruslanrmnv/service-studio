@@ -109,7 +109,7 @@ export const es: Dictionary = {
 
   formats: {
     heading: "Cómo empezar",
-    note: "El precio lo fijo antes de empezar y no lo cambio por el camino. Lo que quede fuera de la lista se presupuesta aparte, también antes de empezar. Los cambios pequeños son gratis el primer mes después del lanzamiento; después, un paquete de 5 cambios por $60.",
+    note: "El precio lo fijo antes de empezar y no lo cambio por el camino. Lo que quede fuera de la lista se presupuesta aparte, también antes de empezar. Los cambios pequeños son gratis el primer mes después del lanzamiento; después, un paquete de 5 cambios por 60 €.",
     mockupFirst:
       "Primero la maqueta, después el dinero: solo cobro el 30% de anticipo cuando ya has visto tu página principal y te ha gustado.",
     ctaText: "¿No sabes qué necesitas?",
@@ -124,7 +124,7 @@ export const es: Dictionary = {
     items: [
       {
         title: "Web de negocio",
-        price: "$450",
+        price: "450 €",
         description:
           "Una primera web para un profesional por su cuenta, un salón o un estudio: para que te encuentren y te escriban directamente.",
         includes: [
@@ -139,7 +139,7 @@ export const es: Dictionary = {
       },
       {
         title: "Web con catálogo",
-        price: "$850",
+        price: "850 €",
         description:
           "Para cuando una página no basta: una casa de huéspedes, una tienda, una clínica con agenda.",
         includes: [
@@ -219,7 +219,7 @@ export const es: Dictionary = {
       },
       {
         q: "¿Y si necesito una tienda online o una aplicación?",
-        a: "Entonces no soy la persona indicada. Una tienda con pagos, stock y cuentas de cliente, o una aplicación móvil, es otro trabajo, otro plazo y otro dinero, y no lo voy a aceptar solo por quedarme el encargo. Un catálogo con reserva o con solicitud de un artículo concreto sí lo hago — eso entra en la web de $850.",
+        a: "Entonces no soy la persona indicada. Una tienda con pagos, stock y cuentas de cliente, o una aplicación móvil, es otro trabajo, otro plazo y otro dinero, y no lo voy a aceptar solo por quedarme el encargo. Un catálogo con reserva o con solicitud de un artículo concreto sí lo hago — eso entra en la web de 850 €.",
       },
       {
         q: "¿Cómo funciona el pago?",
@@ -227,11 +227,11 @@ export const es: Dictionary = {
       },
       {
         q: "¿De quién son la web y el dominio?",
-        a: "Tuyos. El dominio se compra a tu nombre — son unos $10–15 al año y sigue siendo tuyo pase lo que pase. El alojamiento para webs como estas es gratuito. Comprarlo, configurarlo y conectarlo corre de mi cuenta.",
+        a: "Tuyos. El dominio se compra a tu nombre — son unos 10–15 € al año y sigue siendo tuyo pase lo que pase. El alojamiento para webs como estas es gratuito. Comprarlo, configurarlo y conectarlo corre de mi cuenta.",
       },
       {
         q: "¿Podré cambiar yo mismo los textos y las fotos?",
-        a: "Por defecto los cambios los hago yo: los pequeños son gratis el primer mes tras el lanzamiento y después van en paquetes de 5 cambios por $60. Si prefieres cambiar el contenido tú, te monto un panel de administración sencillo — dímelo antes de empezar, porque cambia cómo se construye la web.",
+        a: "Por defecto los cambios los hago yo: los pequeños son gratis el primer mes tras el lanzamiento y después van en paquetes de 5 cambios por 60 €. Si prefieres cambiar el contenido tú, te monto un panel de administración sencillo — dímelo antes de empezar, porque cambia cómo se construye la web.",
       },
       {
         q: "Tú estás en Barcelona y yo en otro país, ¿es un problema?",
@@ -239,7 +239,7 @@ export const es: Dictionary = {
       },
       {
         q: "¿Y si no tengo textos ni fotos buenas?",
-        a: "No es un impedimento. Los textos los escribo yo — basta con que me describas tus servicios y precios en un mensaje o en un audio. Para las fotos te digo qué hacer con el móvil, y donde encaje elijo imágenes de banco adecuadas. Puede que tampoco tengas logotipo: te lo hago junto con la web por $150.",
+        a: "No es un impedimento. Los textos los escribo yo — basta con que me describas tus servicios y precios en un mensaje o en un audio. Para las fotos te digo qué hacer con el móvil, y donde encaje elijo imágenes de banco adecuadas. Puede que tampoco tengas logotipo: te lo hago junto con la web por 150 €.",
       },
     ],
   },

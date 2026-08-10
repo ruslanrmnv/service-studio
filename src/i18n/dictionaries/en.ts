@@ -102,7 +102,7 @@ export const en: Dictionary = {
 
   formats: {
     heading: "How to start",
-    note: "I set the price before the work starts and don't change it along the way. Anything outside the list is priced separately, also before we start. Small edits are free for the first month after launch, then it's a pack of 5 edits for $60.",
+    note: "I set the price before the work starts and don't change it along the way. Anything outside the list is priced separately, also before we start. Small edits are free for the first month after launch, then it's a pack of 5 edits for €60.",
     mockupFirst:
       "Mockup first, money after: I only take the 30% deposit once you've seen your home page and liked it.",
     ctaText: "Not sure what you need?",
@@ -117,7 +117,7 @@ export const en: Dictionary = {
     items: [
       {
         title: "Business website",
-        price: "$450",
+        price: "€450",
         description:
           "A first website for a solo pro, salon, or studio: so people find you and write to you directly.",
         includes: [
@@ -132,7 +132,7 @@ export const en: Dictionary = {
       },
       {
         title: "Website with a catalogue",
-        price: "$850",
+        price: "€850",
         description:
           "For when one page isn't enough: a guest house, a shop, a clinic with a schedule.",
         includes: [
@@ -209,7 +209,7 @@ export const en: Dictionary = {
       },
       {
         q: "What if I need an online shop or an app?",
-        a: "Then I'm the wrong person for it. A shop with payments, stock and customer accounts, or a mobile app, is different work on a different timeline for different money, and I won't take it on just to keep the order. A catalogue with booking or a request for a specific item I do make — that's part of the $850 site.",
+        a: "Then I'm the wrong person for it. A shop with payments, stock and customer accounts, or a mobile app, is different work on a different timeline for different money, and I won't take it on just to keep the order. A catalogue with booking or a request for a specific item I do make — that's part of the €850 site.",
       },
       {
         q: "How does payment work?",
@@ -217,11 +217,11 @@ export const en: Dictionary = {
       },
       {
         q: "Who owns the site and the domain?",
-        a: "You do. The domain is bought in your name — that's roughly $10–15 a year, and it stays yours no matter what. Hosting for sites like these is free. Buying, configuring, and connecting it is on me.",
+        a: "You do. The domain is bought in your name — that's roughly €10–15 a year, and it stays yours no matter what. Hosting for sites like these is free. Buying, configuring, and connecting it is on me.",
       },
       {
         q: "Will I be able to change the text and photos myself?",
-        a: "By default I make the edits: small ones are free for the first month after launch, then it's a pack of 5 edits for $60. If you'd rather change the content yourself, I'll build a simple admin panel — tell me before we start, it affects how the site is built.",
+        a: "By default I make the edits: small ones are free for the first month after launch, then it's a pack of 5 edits for €60. If you'd rather change the content yourself, I'll build a simple admin panel — tell me before we start, it affects how the site is built.",
       },
       {
         q: "You're in Barcelona and I'm in another country — is that a problem?",
@@ -229,7 +229,7 @@ export const en: Dictionary = {
       },
       {
         q: "What if I have no copy and no good photos?",
-        a: "That's not a blocker. I write the copy myself — it's enough for you to describe your services and prices in a message or a voice note. For photos I'll tell you what to shoot on your phone, and where it fits I'll pick suitable stock images. You may have no logo either: I'll make one alongside the site for $150.",
+        a: "That's not a blocker. I write the copy myself — it's enough for you to describe your services and prices in a message or a voice note. For photos I'll tell you what to shoot on your phone, and where it fits I'll pick suitable stock images. You may have no logo either: I'll make one alongside the site for €150.",
       },
     ],
   },
