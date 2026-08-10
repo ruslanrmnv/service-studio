@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "city": "Barcelona",
+  "niche": "barbershop",
+  "campaign": "barbers-bcn",
+  "discountSlotsTotal": 3,
+  "leads": [
+    {
+      "id": "ejemplo-barberia-gracia",
+      "name": "Ejemplo Barbería",
+      "niche": "barbershop",
+      "district": "Gràcia",
+      "address": "Carrer d'Exemple 1, 08012 Barcelona",
+      "maps": "https://maps.google.com/?cid=0",
+      "instagram": "ejemplo_barberia",
+      "phone": "+34 900 000 000",
+      "whatsapp": "+34900000000",
+      "email": "",
+      "website": "",
+      "rating": 4.7,
+      "reviews": 128,
+      "owner": "Marc",
+      "lang": "es",
+      "verified": true,
+      "signals": ["no_website"],
+      "angle": "no_website",
+      "hook": "he visto que no tenéis web propia — quien os busca en Google llega al perfil y ahí no ve ni los precios ni las horas libres",
+      "status": "queued",
+      "priority": 1,
+      "channel": "instagram",
+      "touches": [],
+      "nextActionAt": "",
+      "discountOffered": false,
+      "notes": "Смена мастеров по вечерам, пишут сторис каждый день — аккаунт живой.",
+      "createdAt": "2026-08-10",
+      "updatedAt": "2026-08-10"
+    }
+  ]
+}

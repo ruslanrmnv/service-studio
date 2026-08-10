@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "outreach": "node outreach/cli.mjs",
+    "outreach:harvest": "node outreach/scripts/harvest-places.mjs",
+    "outreach:audit": "node outreach/scripts/audit-sites.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

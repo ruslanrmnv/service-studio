@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-08-10",
+  "source": "открытые подборки и справочники — только названия и районы",
+  "warning": "Телефоны, Instagram и наличие сайта здесь НЕ проверены. Это стартовая разведка, чтобы было с чем работать до первого запуска harvest-places. Большинство этих барбершопов попали в подборки «лучших» — значит, у них с большой вероятностью уже есть сайт, и после проверки половина уйдёт в skip. Настоящая очередь приходит из harvest-places.mjs с фильтром --only-no-website.",
+  "leads": [
+    { "name": "La Barberia de Gràcia", "district": "Gràcia", "instagram": "labarberia", "priority": 3, "notes": "Награды «лучшая барбершоп Испании» — почти наверняка есть сайт и агентство. Проверить и, скорее всего, skip. Полезны как ориентир: посмотреть, как выглядит сильный сайт барбершопа в Барселоне." },
+    { "name": "Minore Barber", "district": "Eixample", "priority": 2 },
+    { "name": "Barbería Donde Charlie", "district": "Eixample", "priority": 2 },
+    { "name": "Ángel Mancebo Barbershop", "district": "Poble-sec", "priority": 2 },
+    { "name": "Tijera de Oro Bcn", "district": "Poble-sec", "priority": 2 },
+    { "name": "La Barbería de Sant Antoni", "district": "Sant Antoni", "priority": 1, "notes": "Районная, не сетевая — профиль близок к целевому." },
+    { "name": "Barbería BK", "district": "Sant Antoni", "priority": 1, "notes": "Маленькая команда, отзывы про личное отношение — это наш клиент." },
+    { "name": "Tris Tras by Emily Kalenberg", "district": "Paral·lel", "priority": 2 },
+    { "name": "Barbería Manolo's Centenaria", "district": "El Born", "priority": 2 },
+    { "name": "Escudellers 12", "district": "Barri Gòtic", "priority": 2 },
+    { "name": "Mustache Barcelona", "district": "El Born", "priority": 3 },
+    { "name": "Sharp Blendz", "district": "El Born", "priority": 2 },
+    { "name": "Yeeess Barbers", "district": "El Born", "priority": 2 },
+    { "name": "Elijah Barber", "district": "Barri Gòtic", "priority": 2 },
+    { "name": "Anthony Llobet", "district": "Barri Gòtic", "priority": 3, "notes": "Известное имя — почти наверняка есть сайт." },
+    { "name": "Bros Barber BCN", "district": "El Born", "priority": 2 },
+    { "name": "Barbería Vicenç Moretó", "district": "El Born", "priority": 2 },
+    { "name": "La Pelu", "district": "El Born", "priority": 3, "notes": "Скорее парикмахерская, чем барбершоп — проверить профиль." }
+  ]
+}

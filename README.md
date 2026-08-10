@@ -95,6 +95,24 @@ project in Vercel; until then `track()` is a no-op.
 > Add the env vars in Vercel **before** testing the production form — without
 > them the API returns the graceful `503` and no email is sent.
 
+## Finding clients (`outreach/`)
+
+The cold-outreach tracker that feeds this site its first clients lives in
+`outreach/` and has its own [README](outreach/README.md): lead list with
+statuses and follow-up dates, Spanish message templates, a Google Places
+harvester, and a site auditor that turns "they have a website" into a concrete
+reason to write to them. The links it builds carry `utm_content=<lead id>`, so
+a request that arrives names the business it came from.
+
+```bash
+npm run outreach today          # what to do today
+npm run outreach:harvest        # pull leads from Google Places
+npm run outreach:audit          # audit their existing sites
+```
+
+The lead file itself is git-ignored — this repository is public and the list is
+working notes about real businesses.
+
 ## Useful scripts
 
 ```bash

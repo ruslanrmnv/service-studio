@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Sales tooling, not the site: plain Node scripts that never reach the
+    // browser, linted by React and Next rules that have nothing to say to them.
+    "outreach/**",
   ]),
 ]);
 

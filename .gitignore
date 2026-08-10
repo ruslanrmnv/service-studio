@@ -51,6 +51,15 @@ dev-server.log
 /CONTEXT.md
 /design-assets/
 
+# outreach: the tooling is committed, the lead list is not. This repository is
+# public, and the file holds business phone numbers alongside notes like "their
+# site is broken" — written for me, not for them to read. If the repository
+# ever goes private, delete these four lines and the list travels with it.
+/outreach/data/*
+!/outreach/data/leads.example.json
+!/outreach/data/seed-barcelona.json
+/outreach/BOARD.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
