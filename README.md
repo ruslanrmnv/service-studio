@@ -1,6 +1,6 @@
 # Service Studio by Ruslan
 
-A one-page, multilingual (RU / EN / UK) portfolio + lead-capture site for AI,
+A one-page, multilingual (RU / EN / UK / ES) portfolio + lead-capture site for AI,
 chat, and form automations. Built with **Next.js (App Router)**, **TypeScript**,
 and **Tailwind CSS**, in a warm dark style.
 
@@ -47,6 +47,31 @@ the email using the official **Resend Node.js SDK** (`resend` package,
 `await resend.emails.send()`). The API key is read only on the server from
 `RESEND_API_KEY` and is never sent to the browser. Email field labels are
 localized (RU / EN / UK / ES) to match the submitting locale.
+
+## Campaign attribution
+
+Every email carries a **Campaign** row naming where the visit started —
+`source=coldmail · medium=email · campaign=barbers` — so a request from a
+mailout or an ad can be told apart from a direct one. A direct visit leaves the
+row out rather than printing it empty.
+
+The query string is read once, on the first page of the tab, and kept in
+`sessionStorage` (`src/lib/attribution.ts`, mounted by `AttributionCapture` in
+the layout). This is why it survives: a campaign link often lands on the case
+page or on the bare domain, and by the time the visitor scrolls to the form the
+`?utm_...` is long gone from the URL. `utm_source/medium/campaign/content/term`
+are recorded; `gclid`, `fbclid`, `ttclid` and `msclkid` are recorded by name
+only, since the id itself says nothing a human wants in an email. With no
+campaign on the link, an external referrer's host is used instead.
+
+Tag every link you send out — `?utm_source=…&utm_medium=…&utm_campaign=…`. The
+locale redirect keeps the query, so the bare domain works as a campaign target.
+
+A successful send also fires a `lead` custom event to Vercel Web Analytics with
+the campaign, locale, and chosen contact method. **Nothing typed into the form
+is sent with it** — no name, no contact details — so the site still needs no
+consent banner. Custom events require Web Analytics to be enabled for the
+project in Vercel; until then `track()` is a no-op.
 
 ## Email setup (Resend) & deploy to Vercel
 

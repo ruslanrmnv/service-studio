@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { track } from "@vercel/analytics";
+import { readAttribution } from "@/lib/attribution";
 import type { Dictionary, Locale } from "@/i18n/config";
 
 type ContactCopy = Dictionary["contact"];
@@ -51,16 +53,32 @@ export default function ContactForm({
       return;
     }
 
+    const campaign = readAttribution();
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, locale: lang }),
+        body: JSON.stringify({ ...data, locale: lang, campaign }),
       });
       const json = await res.json().catch(() => ({}));
 
       if (!res.ok) {
         throw new Error(json?.error || copy.error.generic);
+      }
+
+      /* Nothing typed into the form goes with this — only which campaign
+         brought the visitor, which language they read, and how they asked to be
+         reached back. That keeps the event as cookieless and as anonymous as
+         the pageview beside it, and the site still needs no consent banner.
+         A filled honeypot is answered with the same ok as a real send, so it is
+         excluded here, or the lead count quietly learns to include bots. */
+      if (!data.companyUrl?.trim()) {
+        track("lead", {
+          campaign: campaign || "direct",
+          locale: lang,
+          method: data.contactMethod,
+        });
       }
 
       setStatus("success");

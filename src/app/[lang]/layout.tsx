@@ -3,6 +3,7 @@ import { Golos_Text, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import AttributionCapture from "@/components/AttributionCapture";
 import SmoothScroll from "@/components/SmoothScroll";
 import "../globals.css";
 
@@ -162,6 +163,7 @@ export default async function LangLayout({
       <body className="min-h-dvh flex flex-col bg-background text-ink">
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         <SmoothScroll />
+        <AttributionCapture />
         {children}
         {/* Both are cookieless and store no identifier, so the site needs no
             consent banner to run them — which matters, selling from Spain.
